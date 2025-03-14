@@ -1,0 +1,12 @@
+<button
+  type="button"
+  class="btn btn-sm"
+  [class.btn-text]="clear()"
+  [class]="classList"
+  (click)="onClickHandler()"
+>
+  @if (icon()) {
+  <span class="icon-[tabler--{{ icon() }}]"></span>
+  }
+  {{ text() }}
+</button>

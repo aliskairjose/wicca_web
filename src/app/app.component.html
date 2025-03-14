@@ -1,2 +1,11 @@
 <h1 class="text-3xl font-bold underline">Hello world!</h1>
+<app-button shape="square" [icon]="'star'" />
+<app-button
+  text="press me"
+  [style]="'primary'"
+  [width]="'block'"
+  [clear]="true"
+/>
+<app-button shape="square" [style]="'primary'" icon="star" />
+<app-button [style]="'error'" [width]="'wide'" shape="circle" />
 <router-outlet></router-outlet>
