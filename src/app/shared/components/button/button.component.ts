@@ -15,6 +15,7 @@ export class ButtonComponent implements AfterViewInit {
   style = input<STYLE>('primary');
   shape = input<SHAPE>();
   clear = input<boolean>(false);
+  outline = input<boolean>(false);
   icon = input<string>();
   classList = '';
 

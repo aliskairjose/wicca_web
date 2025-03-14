@@ -2,11 +2,12 @@
   type="button"
   class="btn btn-sm"
   [class.btn-text]="clear()"
+  [class.btn-outline]="outline()"
   [class]="classList"
   (click)="onClickHandler()"
 >
+  {{ text() }}
   @if (icon()) {
   <span class="icon-[tabler--{{ icon() }}]"></span>
   }
-  {{ text() }}
 </button>
