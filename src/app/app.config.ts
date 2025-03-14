@@ -26,12 +26,12 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideStore(
       [],
-      withNgxsReduxDevtoolsPlugin(),
-      withNgxsFormPlugin(),
-      withNgxsLoggerPlugin(),
-      withNgxsRouterPlugin(),
-      // withNgxsStoragePlugin(),
-      withNgxsWebSocketPlugin()
+      // withNgxsReduxDevtoolsPlugin(),
+      // withNgxsFormPlugin(),
+      // withNgxsLoggerPlugin(),
+      // withNgxsRouterPlugin(),
+      // // withNgxsStoragePlugin(),
+      // withNgxsWebSocketPlugin()
     ),
   ],
 };
