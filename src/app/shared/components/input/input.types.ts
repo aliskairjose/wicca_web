@@ -9,4 +9,5 @@ export type Type =
   | 'file'
   | 'image'
   | 'password'
+  | 'checkbox'
   | 'hidden';

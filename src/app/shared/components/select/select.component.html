@@ -1,0 +1,24 @@
+<div class="max-w-sm">
+  <label class="label label-text">{{ label() }}</label>
+  <select
+    class="select"
+    aria-label="select"
+    [class.is-invalid]="
+      (control().invalid && control().dirty) ||
+      (control().invalid && isSubmitted())
+    "
+    [class.is-valid]="control().valid && control().dirty"
+    (change)="onValueChange($event.target)"
+  >
+    <!-- <option value="">{{ placeholder() }}</option> -->
+    @for (item of data(); track $index) {
+    <option [value]="item.val" [ngValue]="item">{{ item.title }}</option>
+    }
+  </select>
+  @if ( (control().invalid && control().dirty) || control().invalid &&
+  isSubmitted() ) {
+  <div class="label">
+    <span class="label-text-alt">{{ errorMessage() }}</span>
+  </div>
+  }
+</div>
