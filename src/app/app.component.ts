@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AvatarComponent } from '@shared/components';
+import { InputComponent } from '@shared/components';
 import { Router, Event, NavigationEnd } from '@angular/router';
 
 import { IStaticMethods } from 'flyonui/flyonui';
@@ -12,7 +12,7 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AvatarComponent],
+  imports: [RouterOutlet, InputComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
