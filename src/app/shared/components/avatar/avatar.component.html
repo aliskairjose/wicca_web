@@ -1,0 +1,14 @@
+<div class="avatar online-bottom">
+  <div
+    class="rounded-full"
+    [ngClass]="{
+      'size-6': size() === 'sm',
+      'size-10': size() === 'md',
+      'size-14': size() === 'lg',
+      'rounded-md': !isRounded(),
+      'rounded-full': isRounded(),
+    }"
+  >
+    <img [src]="src()" alt="avatar" />
+  </div>
+</div>
