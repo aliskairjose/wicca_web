@@ -1,44 +1,98 @@
-@if (type()==='checkbox') {
-<div class="flex items-center gap-1">
-  <input
-    type="checkbox"
-    class="checkbox"
-    [id]="inputLabel"
-    [class.is-invalid]="
-      (control().invalid && control().dirty) ||
-      (control().invalid && isSubmitted())
-    "
-    [class.is-valid]="control().valid && control().dirty"
-  />
-  <label class="label label-text text-base" for="{{ inputLabel }}">{{
-    placeholder()
-  }}</label>
-</div>
-} @else {
-<div class="max-w-sm">
-  <label [id]="inputLabel" class="label label-text" for="labelAndHelperText">
-    {{ label() }}
-  </label>
-  <input
-    id="{{ inputLabel }}"
-    type="text"
-    [placeholder]="placeholder()"
-    [(ngModel)]="value"
-    (ngModelChange)="onValueChange($event)"
-    class="input input-{{ size() }} max-w-sm"
-    [class.is-invalid]="
-      (control().invalid && control().dirty) ||
-      (control().invalid && isSubmitted())
-    "
-    [class.is-valid]="control().valid && control().dirty"
-  />
-  <span class="label">
-    <span class="label-text-alt">{{ helperText() }}</span>
+@switch (type()) { @case ('checkbox') {
+<ng-container *ngTemplateOutlet="checkboxInput"></ng-container>
+} @case ('password') {
+<ng-container *ngTemplateOutlet="passwordInput"></ng-container>
+} @default {
+<ng-container *ngTemplateOutlet="otherwise"></ng-container>
+} }
 
-    @if ( (control().invalid && control().dirty) || (control().invalid &&
-    isSubmitted()) ) {
-    <span class="label-text-alt">{{ errorMessage() }}</span>
-    }
-  </span>
-</div>
-}
+<ng-template #checkboxInput>
+  <div class="flex items-center gap-1">
+    <input
+      type="checkbox"
+      class="checkbox"
+      [id]="inputLabel"
+      [class.is-invalid]="
+        (control().invalid && control().dirty) ||
+        (control().invalid && isSubmitted())
+      "
+      [class.is-valid]="control().valid && control().dirty"
+    />
+    <label class="label label-text text-base" for="{{ inputLabel }}">{{
+      placeholder()
+    }}</label>
+  </div>
+</ng-template>
+
+<ng-template #passwordInput>
+  <div>
+    <label class="label label-text" for="toggle-password-label">
+      {{ label() }}
+    </label>
+    <div class="input-group max-w-sm">
+      <input
+        id="toggle-password-label"
+        type="password"
+        [placeholder]="placeholder()"
+        [(ngModel)]="value"
+        (ngModelChange)="onValueChange($event)"
+        class="input"
+        placeholder="Enter password"
+        value="Pwd_1242@mA1"
+        [class.is-invalid]="
+          (control().invalid && control().dirty) ||
+          (control().invalid && isSubmitted())
+        "
+        [class.is-valid]="control().valid && control().dirty"
+      />
+      <span class="input-group-text">
+        <button
+          type="button"
+          data-toggle-password='{ "target": "#toggle-password-label" }'
+          class="block"
+          aria-label="password toggle"
+        >
+          <span
+            class="icon-[tabler--eye] text-base-content/80 password-active:block hidden size-5 flex-shrink-0"
+          ></span>
+          <span
+            class="icon-[tabler--eye-off] text-base-content/80 password-active:hidden block size-5 flex-shrink-0"
+          ></span>
+        </button>
+      </span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #otherwise>
+  <div class="max-w-sm">
+    <label
+      [id]="inputLabel"
+      class="label label-text-alt"
+      for="labelAndHelperText"
+    >
+      {{ label() }}
+    </label>
+    <input
+      id="{{ inputLabel }}"
+      type="text"
+      [placeholder]="placeholder()"
+      [(ngModel)]="value"
+      (ngModelChange)="onValueChange($event)"
+      class="input input-{{ size() }} max-w-sm"
+      [class.is-invalid]="
+        (control().invalid && control().dirty) ||
+        (control().invalid && isSubmitted())
+      "
+      [class.is-valid]="control().valid && control().dirty"
+    />
+    <span class="label">
+      <span class="label-text-alt">{{ helperText() }}</span>
+
+      @if ( (control().invalid && control().dirty) || (control().invalid &&
+      isSubmitted()) ) {
+      <span class="label-text-alt">{{ errorMessage() }}</span>
+      }
+    </span>
+  </div>
+</ng-template>

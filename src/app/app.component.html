@@ -1,5 +1,9 @@
 <h1 class="text-3xl font-bold underline">Hello world!</h1>
 
-<div class="flex w-full bg-cyan-200"></div>
-<app-select [data]="data" label="Seleccione data" />
+<!-- <app-input label="Password" type="password" /> -->
+<app-input label="Contraseña" type="password" />
 <router-outlet></router-outlet>
+
+<ng-container *ngTemplateOutlet="checkboxInput"></ng-container>
+<ng-container *ngTemplateOutlet="passwordInput"></ng-container>
+<ng-container *ngTemplateOutlet="otherwise"></ng-container>
