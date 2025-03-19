@@ -4,6 +4,7 @@ import { BadgeComponent ,ButtonComponent} from '@shared/components';
 import { Router, Event, NavigationEnd } from '@angular/router';
 
 import { IStaticMethods } from 'flyonui/flyonui';
+import { SwitchComponent } from "./shared/components/switch/switch.component";
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;
@@ -12,7 +13,7 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, BadgeComponent, ButtonComponent],
+  imports: [RouterOutlet, SwitchComponent, ButtonComponent, SwitchComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

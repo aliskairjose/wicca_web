@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-switch',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './switch.component.scss'
 })
 export class SwitchComponent {
-
+  text = input<string>();
 }
