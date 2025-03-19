@@ -2,21 +2,21 @@ import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpReq
 import { inject, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { ToastTypeEnum } from '@shared/enums';
+import { RoutesEnum, ToastTypeEnum } from '@shared/enums';
 import { ToastService } from '@shared/services';
-// import { AuthSelectors } from '@src/app/auth/store/auth.selector';
 import { catchError, map, throwError } from 'rxjs';
+import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
 
 export const httpInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const router = inject(Router);
   const store = inject(Store);
   const toast = inject(ToastService);
 
-  // const token: Signal<string | null> = store.selectSignal(AuthSelectors.token);
+  const token: Signal<string | null> = store.selectSignal(AuthSelectors.token);
 
   const cloneRequest = req.clone({
     setHeaders: {
-      // Authorization: `Bearer ${token()}`,
+      Authorization: `Bearer ${token()}`,
     },
   });
 
@@ -32,7 +32,7 @@ export const httpInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
           // Specific handling for unauthorized errors
           console.error('Unauthorized request:', error);
           toast.show(error.error.message, ToastTypeEnum.Error);
-          // router.navigate([RoutesEnum.Login]);
+          router.navigate([RoutesEnum.Login]);
           // You might trigger a re-authentication flow or redirect the user here
         } else {
           // Handle other HTTP error codes

@@ -1,7 +1,6 @@
 import { inject, Signal } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { AuthSelectors } from '@src/app/auth/store/auth.selector';
 import { ToastService } from '@shared/services';
 import {
   MessageEnum,
@@ -9,6 +8,7 @@ import {
   RoleEnum,
   ToastTypeEnum,
 } from '@shared/enums';
+import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
 
 export const authGuard: CanActivateFn = () => {
   const store = inject(Store);
