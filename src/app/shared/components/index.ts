@@ -1,3 +1,4 @@
+export { NavbarComponent } from "./navbar/navbar.component";
 export { BadgeComponent } from "./badge/badge.component";
 export { SwitchComponent } from "./switch/switch.component";
 export { InputComponent } from "./input/input.component";
