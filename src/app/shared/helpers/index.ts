@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environmentDev } from '@envs/env.devs';
 
 type ErrorMapCallBackFn = (result: string) => void;
 interface Rates {
@@ -8,6 +9,7 @@ interface Rates {
 
 @Injectable()
 export class Helper {
+  static baseUrl = (slug: string): string => `${environmentDev.baseUrl}/${slug}`;
 
   static controlErrorMap(errorKey: string, errorValue: any, callbackfn: ErrorMapCallBackFn): void {
 

@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}", "./node_modules/flyonui/dist/js/*.js"],
+  content: [
+    "./src/**/*.{html,ts}",
+    "./node_modules/flyonui/dist/js/*.js",
+    "./node_modules/notyf/**/*.js",
+  ],
   theme: {
     extend: {},
   },
