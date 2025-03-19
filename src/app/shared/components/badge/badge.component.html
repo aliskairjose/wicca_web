@@ -1,0 +1,7 @@
+<span class="badge" [class.badge-outline]="outline()" #badge>
+  @if (shape() && icon()) {
+  <span #iconSpan></span>
+  }@else {
+  {{ text() }}
+  }
+</span>

@@ -1,0 +1,37 @@
+.warning{
+  @apply badge-warning;
+}
+.error{
+  @apply badge-error;
+}
+.success{
+  @apply badge-success;
+}
+.secondary{
+  @apply badge-secondary;
+}
+.accent{
+  @apply badge-accent;
+}
+.info{
+  @apply badge-info;
+}
+.primary{
+  @apply badge-primary;
+}
+.neutral{
+  @apply badge-neutral;
+}
+.circular{
+  @apply size-6 rounded-full p-0;
+}
+.square{
+  @apply size-6 p-0;
+}
+
+.sm{
+  @apply badge-sm;
+}
+.xs{
+  @apply badge-xs;
+}
