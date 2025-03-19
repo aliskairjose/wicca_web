@@ -1,0 +1,15 @@
+export enum MessageEnum {
+  UnAuthorized = 'No está autorizado',
+  Online = 'Online',
+  Offline = 'Offline',
+  Active = 'Activo',
+  Inactive = 'Inactivo',
+  Disconnected = 'Desconectado',
+  Connected = 'Conectado',
+  Welcome = 'Bienvenido',
+  Successful = 'Exitoso',
+  Completed = 'Completado',
+  Incompleted = 'Incompleto',
+  Error = 'Error',
+  GenericError = 'Ha ocurrido un error inesperado',
+}

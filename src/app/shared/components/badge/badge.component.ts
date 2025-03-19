@@ -1,6 +1,5 @@
-import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, ElementRef, inject, input, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, input, Renderer2, ViewChild } from '@angular/core';
 import { SHAPE, SIZE, STYLE } from './type';
-import { IonFab } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-badge',

@@ -3,4 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@plugin "@tailwindcss/typography";
+
+html, body {
+  @apply bg-zinc-50;
+}
