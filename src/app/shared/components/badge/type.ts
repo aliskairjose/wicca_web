@@ -8,5 +8,5 @@ export type STYLE =
   | 'warning'
   | 'error';
 
-  export type SIZE = 'xs' | 'sm' | undefined;
+  export type SIZE = 'xs' | 'sm' | 'lg' | undefined;
 export type SHAPE = 'circular' | 'square' | undefined;

@@ -1,7 +1,10 @@
-<span class="badge" [class.badge-outline]="outline()" #badge>
+<span class="badge" #badge>
   @if (shape() && icon()) {
   <span #iconSpan></span>
-  }@else {
+  }@else { @if (avatar() && size()==='lg') {
+  <img [src]="avatar()" alt="Anna" class="size-4.5 rounded-full" />
+  }
+
   {{ text() }}
   }
 </span>

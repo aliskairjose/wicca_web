@@ -14,8 +14,8 @@ export class BadgeComponent implements AfterViewInit {
   theme = input<STYLE>('neutral');
   size = input<SIZE>(undefined);
   shape = input<SHAPE>(undefined)
-  outline = input<boolean>(false);
   icon = input<string>();
+  avatar = input<string>();
 
   #renderer = inject(Renderer2);
   @ViewChild('badge') badge!: ElementRef;
