@@ -1,9 +1,9 @@
 import { Component, inject, Signal } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
-import { Router } from 'express';
 import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
 import { Store } from '@ngxs/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
