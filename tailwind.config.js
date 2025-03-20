@@ -15,6 +15,7 @@ module.exports = {
     require("flyonui/plugin"),
   ],
   flyonui: {
+    themes: ["corporate"],
     styled: true,
     vendors: true, // Enable vendor-specific CSS generation
   },

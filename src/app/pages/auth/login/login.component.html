@@ -21,8 +21,13 @@
         </div>
       </form>
     </div>
-    <div class="w-full flex justify-center">
-      <app-button (clickHandler)="onSubmit()" text="Ingresar" width="wide" />
+    <div class="w-full">
+      <app-button
+        (clickHandler)="onSubmit()"
+        text="Ingresar"
+        width="block"
+        theme="primary"
+      />
     </div>
   </div>
 </main>
