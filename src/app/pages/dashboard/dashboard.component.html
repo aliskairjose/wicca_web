@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="sidebar">
-    <div class="drawer-body px-0.5 md:pt-4 pt-10">
+    <div class="drawer-body px-0.5 md:pt-1.5 pt-10">
       <div class="border-b pb-4 mb-2.5">
         <h4>Wicca</h4>
       </div>
@@ -22,6 +22,9 @@
     </div>
   </div>
   <div class="main-panel">
-    <router-outlet></router-outlet>
+    <app-dashbar />
+    <div class="px-6 py-4">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

@@ -39,7 +39,7 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.Users,
-        title: 'listao de usuarios',
+        title: 'Listado de usuarios',
         loadComponent: () =>
           import('./pages/dashboard/users/users.component').then(
             (m) => m.UsersComponent

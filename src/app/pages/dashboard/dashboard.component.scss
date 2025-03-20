@@ -2,12 +2,11 @@
   @apply relative flex h-screen top-0;
   .sidebar{
     @apply bg-white w-64 p-4;
-
     .router-link-active{
       @apply bg-transparent text-primary;
     }
   }
   .main-panel{
-    @apply bg-zinc-50 px-10 py-4 relative float-start grow;
+    @apply bg-zinc-50 md:pt-4 pt-10 relative float-start grow;
   }
 }
