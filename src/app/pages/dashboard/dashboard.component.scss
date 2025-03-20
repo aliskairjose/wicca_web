@@ -1,0 +1,9 @@
+.wrapper {
+  @apply relative flex h-screen top-0;
+  .sidebar{
+    @apply bg-white w-64 p-4;
+  }
+  .main-panel{
+    @apply bg-zinc-50 px-10 py-4 relative float-start grow;
+  }
+}

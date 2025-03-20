@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
-import { RoutesEnum } from '@shared/enums';
+import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { authGuard } from '@shared/guards';
+import { HomeComponent } from './pages/dashboard/home/home.component';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,31 @@ export const routes: Routes = [
       import('./pages/dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
+    children: [
+      {
+        path: '',
+        title: 'Dashboard',
+        loadComponent: () =>
+          import('./pages/dashboard/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+      },
+      {
+        path: RoutesEnum.Users,
+        title: 'listao de usuarios',
+        loadComponent: () =>
+          import('./pages/dashboard/users/users.component').then(
+            (m) => m.UsersComponent
+          ),
+      },
+      {
+        path: `${RoutesEnum.Users}/${RoutesEnum.User}/:id`,
+        title: 'Detalle de usuario',
+        loadComponent: () =>
+          import('./pages/dashboard/users/user/user.component').then(
+            (m) => m.UserComponent
+          ),
+      },
+    ],
   },
 ];

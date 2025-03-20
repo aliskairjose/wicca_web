@@ -1,8 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BadgeComponent ,ButtonComponent, NavbarComponent} from '@shared/components';
 import { Router, Event, NavigationEnd } from '@angular/router';
-
 import { IStaticMethods } from 'flyonui/flyonui';
 declare global {
   interface Window {
@@ -12,7 +10,7 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { ButtonComponent, InputComponent } from '@shared/components';
 import { ToastService } from '@shared/services';
 import { AuthActions } from '../store/auth.actions';
-import { MessageEnum } from '@shared/enums';
+import { MessageEnum, RoutesEnum } from '@shared/enums';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -38,9 +38,7 @@ export class LoginComponent {
   private _login(data: any): void {
     this.#store.dispatch(new AuthActions.Login(data)).subscribe(() => {
       this.#toastService.show(MessageEnum.Welcome);
-      // setTimeout(() => {
-      //   this.#router.navigate([RoutesEnum.Dashboard]);
-      // }, 100);
+        this.#router.navigate([RoutesEnum.Dashboard]);
     });
   }
 
