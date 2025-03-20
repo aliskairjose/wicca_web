@@ -17,6 +17,12 @@ export const MENU: SideMenuInterface[] = [
   {
     icon: 'report-money',
     path: 'payments',
+    title: 'Histórico de chats',
+    role: [RoleEnum.Admin],
+  },
+  {
+    icon: 'report-money',
+    path: 'payments',
     title: 'Histórico de pagos',
     role: [RoleEnum.Admin],
   },
