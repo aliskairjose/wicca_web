@@ -36,7 +36,6 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class InputComponent implements ControlValueAccessor, Validators, OnChanges {
-  size = input<string>();
   placeholder = input<string>('');
   type = input<Type>('text');
   label = input<string>('');

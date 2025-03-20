@@ -24,12 +24,8 @@ export class NavbarComponent {
   }
 
   private _isAuthorized(): boolean {
-    const isAuth: Signal<boolean> = this.#store.selectSignal(
-      AuthSelectors.isAuthenticated
-    );
-    const role: Signal<string | undefined> = this.#store.selectSignal(
-      AuthSelectors.userRole
-    );
-    return isAuth() && role() === RoleEnum.Admin;
+    const isAuth = this.#store.selectSnapshot(AuthSelectors.isAuthenticated);
+    const role = this.#store.selectSnapshot(AuthSelectors.userRole);
+    return isAuth && role === RoleEnum.Admin;
   }
 }

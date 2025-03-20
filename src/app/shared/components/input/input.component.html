@@ -25,7 +25,7 @@
 </ng-template>
 
 <ng-template #passwordInput>
-  <div>
+  <div class="max-w-sm">
     <label class="label label-text" for="toggle-password-label">
       {{ label() }}
     </label>
@@ -68,7 +68,7 @@
   <div class="max-w-sm">
     <label
       [id]="inputLabel"
-      class="label label-text-alt"
+      class="label label-text"
       for="labelAndHelperText"
     >
       {{ label() }}
@@ -79,7 +79,7 @@
       [placeholder]="placeholder()"
       [(ngModel)]="value"
       (ngModelChange)="onValueChange($event)"
-      class="input input-{{ size() }} max-w-sm"
+      class="input  max-w-sm"
       [class.is-invalid]="
         (control().invalid && control().dirty) ||
         (control().invalid && isSubmitted())
