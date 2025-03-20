@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-users',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './users.component.scss'
 })
 export class UsersComponent {
-
+  #store = inject( Store );
 }
