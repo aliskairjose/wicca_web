@@ -10,6 +10,7 @@ import { debounce, debounceTime, distinctUntilChanged, firstValueFrom } from 'rx
 import { FilterPipe } from '@shared/pipes';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { PaginationInterface } from '@shared/interfaces';
 
 @Component({
   selector: 'app-users',
@@ -24,7 +25,10 @@ export class UsersComponent implements OnInit {
   users: UserInterface[] = [];
   #store = inject(Store);
   #fb = inject(FormBuilder);
-
+  pagination: PaginationInterface = {
+    page: 1,
+    limit:10
+  }
   ngOnInit(): void {
     this._loadForm();
     this.getData();
@@ -35,11 +39,7 @@ export class UsersComponent implements OnInit {
   }
 
   async getData() {
-    let params = new HttpParams();
-    params.set('page', 1);
-    params.set('limit', 10);
-
-    await firstValueFrom(this.#store.dispatch(new UserAction.List(params)));
+    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.pagination)));
     this.users = this.#store.selectSnapshot(UserSelectors.list);
   }
 
