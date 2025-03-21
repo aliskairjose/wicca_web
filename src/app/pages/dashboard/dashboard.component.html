@@ -8,7 +8,7 @@
         @for (m of menu; track $index) {
         <li>
           <a
-            class="font-thin hover:bg-transparent px-0 text-sm"
+            class="font-light hover:bg-transparent px-0 text-sm"
             [routerLink]="[m.path]"
             routerLinkActive="router-link-active"
             [routerLinkActiveOptions]="{ exact: true }"
@@ -20,11 +20,16 @@
         }
       </ul>
     </div>
+    <app-button text="Cerrar sesion" theme="error" [outline]="true" width="block" (clickHandler)="signout()"/>
+
   </div>
   <div class="main-panel">
     <app-dashbar />
     <div class="px-6 py-4">
       <router-outlet></router-outlet>
     </div>
+    <app-footer />
   </div>
 </div>
+
+<!-- <span class="icon-[tabler--brand-wechat] size-5"></span> -->

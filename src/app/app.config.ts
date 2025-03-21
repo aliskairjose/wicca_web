@@ -24,6 +24,7 @@ import { registerLocaleData } from '@angular/common';
 import { httpInterceptor } from './shared/interceptors';
 import { AuthState } from './pages/auth/store/auth.state';
 import { environmentDev } from '@envs/env.devs';
+import { UsersState } from './pages/dashboard/users/store/user.state';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -36,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(),
     provideStore(
-      [AuthState],
+      [AuthState, UsersState],
       {
         developmentMode: !environmentDev.production,
       },
@@ -45,7 +46,7 @@ export const appConfig: ApplicationConfig = {
       // withNgxsLoggerPlugin(),
       // withNgxsRouterPlugin(),
       withNgxsStoragePlugin({
-        keys: [AuthState],
+        keys: [AuthState, UsersState],
       })
       // withNgxsWebSocketPlugin()
     ),
