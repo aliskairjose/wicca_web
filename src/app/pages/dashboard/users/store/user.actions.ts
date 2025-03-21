@@ -1,4 +1,6 @@
+import { PaginationInterface } from '@shared/interfaces';
 import { UserInterface } from '../user.interface';
+import { HttpParams } from '@angular/common/http';
 
 const ACTION_SCOPE = '[Users API]';
 export namespace UserAction {
@@ -11,6 +13,7 @@ export namespace UserAction {
   }
   export class List {
     static readonly type = `${ACTION_SCOPE} List users`;
+    constructor(readonly payload?: HttpParams) {}
   }
   export class Get {
     static readonly type = `${ACTION_SCOPE} Get user`;

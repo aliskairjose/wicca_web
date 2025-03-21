@@ -43,9 +43,9 @@ export class UsersState {
   }
 
   @Action(UserAction.List)
-  list(ctx: StateContext<UsersStateModel>) {
+  list(ctx: StateContext<UsersStateModel>, { payload }: UserAction.List) {
     return this.#userService
-      .list()
+      .list(payload)
       .pipe(tap((users: UserInterface[]) => ctx.patchState({ users })));
   }
 
