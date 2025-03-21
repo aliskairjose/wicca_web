@@ -21,9 +21,7 @@ export const authGuard: CanActivateFn = () => {
 
   const user = store.selectSnapshot(AuthSelectors.userLogged);
 
-  if (isAuth() && user?.role === RoleEnum.Admin) {
-    return true;
-  }
+  if ( isAuth() && user?.role === RoleEnum.Admin ) return true;
 
   toastService.show(MessageEnum.UnAuthorized, ToastTypeEnum.Error);
 

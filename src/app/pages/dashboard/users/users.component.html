@@ -1,10 +1,11 @@
 
-<div class="w-full overflow-x-auto py-6 px-4 card">
+<div class="card w-full overflow-x-auto py-6 px-4">
   <table class="table">
     <thead>
       <tr>
-        <th>Usuario</th>
+        <th>Nombre completo</th>
         <th>Email</th>
+        <th>Usuario</th>
         <th>Estado</th>
         <th>Usuario desde</th>
         <th>Actions</th>
@@ -15,6 +16,7 @@
         <tr class="hover">
         <td class="text-nowrap">{{user.name}} {{user.lastName}}</td>
         <td>{{user.email}}</td>
+        <td>{{user.role}}</td>
         <td>
            <span [appStatus]="user.isActive"></span>
         </td>
@@ -26,39 +28,6 @@
         </td>
       </tr>
       }
-      <!-- <tr class="hover">
-        <td class="text-nowrap">Jane Smith</td>
-        <td>janesmith&#64;example.com</td>
-        <td><span class="badge badge-soft badge-error text-xs">Rejected</span></td>
-        <td class="text-nowrap">March 2, 2024</td>
-        <td>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></button>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
-        </td>
-      </tr>
-      <tr class="hover">
-        <td class="text-nowrap">Alice Johnson</td>
-        <td>alicejohnson&#64;example.com</td>
-        <td><span class="badge badge-soft badge-info text-xs">Applied</span></td>
-        <td class="text-nowrap">March 3, 2024</td>
-        <td>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></button>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
-        </td>
-      </tr>
-      <tr class="hover">
-        <td class="text-nowrap">Bob Brown</td>
-        <td>bobrown&#64;example.com</td>
-        <td><span class="badge badge-soft badge-primary text-xs">Current</span></td>
-        <td class="text-nowrap">March 4, 2024</td>
-        <td>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></button>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
-          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
-        </td>
-      </tr> -->
-    </tbody>
+     </tbody>
   </table>
 </div>

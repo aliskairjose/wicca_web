@@ -1,3 +1,4 @@
+export { StatusEnum } from "./status.enum"
 export { MessageEnum } from "./message.enum"
 export { RoutesEnum } from "./routes.enum"
 export { ToastTypeEnum } from "./toast.enum"
