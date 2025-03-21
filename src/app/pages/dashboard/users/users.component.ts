@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { StatusDirective } from '@shared/directives';
 import { ButtonComponent } from '@shared/components';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -19,10 +20,11 @@ export class UsersComponent implements OnInit {
   #store = inject(Store);
 
   ngOnInit(): void {
-    this.#store
-      .dispatch(new UserAction.List())
-      .subscribe(
-        () => (this.users = this.#store.selectSnapshot(UserSelectors.list))
-      );
+    this.getData();
+  }
+
+  async getData() {
+    await firstValueFrom(this.#store.dispatch(new UserAction.List()));
+    this.users = this.#store.selectSnapshot(UserSelectors.list);
   }
 }

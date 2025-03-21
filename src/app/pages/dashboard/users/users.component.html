@@ -1,4 +1,3 @@
-
 <div class="card w-full overflow-x-auto py-6 px-4">
   <table class="table">
     <thead>
@@ -13,21 +12,45 @@
     </thead>
     <tbody>
       @for (user of users; track $index) {
-        <tr class="hover">
-        <td class="text-nowrap">{{user.name}} {{user.lastName}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.role}}</td>
+      <tr class="hover">
+        <td class="text-nowrap">{{ user.name }} {{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
         <td>
-           <span [appStatus]="user.isActive"></span>
+          <span [appStatus]="user.isActive"></span>
         </td>
-        <td class="text-nowrap">{{user.createdAt | date}}</td>
+        <td class="text-nowrap">{{ user.createdAt | date }}</td>
         <td>
-          <app-button [clear]="true" icon="pencil" shape="circle" theme="secondary" />
-          <app-button [clear]="true" icon="trash" shape="circle" theme="secondary" />
-          <app-button [clear]="true" icon="dots-vertical" shape="circle" theme="secondary" />
+          <app-button
+            [clear]="true"
+            icon="pencil"
+            shape="circle"
+            theme="secondary"
+          />
+          <app-button
+            [clear]="true"
+            icon="trash"
+            shape="circle"
+            theme="secondary"
+          />
+          <app-button
+            [clear]="true"
+            icon="dots-vertical"
+            shape="circle"
+            theme="secondary"
+          />
         </td>
       </tr>
       }
-     </tbody>
+    </tbody>
   </table>
 </div>
+<!-- <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+  <span class="icon-[tabler--pencil] size-5"></span>
+</button>
+<button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+  <span class="icon-[tabler--trash] size-5"></span>
+</button>
+<button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+  <span class="icon-[tabler--dots-vertical] size-5"></span>
+</button> -->
