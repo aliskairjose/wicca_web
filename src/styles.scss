@@ -5,3 +5,15 @@
 @tailwind utilities;
 
 @import './assets/styles/typography.scss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+html, body{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  // font-size: 0.875 rem;
+}
+
+.table :where(th, td) {
+  @apply text-sm;
+}

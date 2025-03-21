@@ -1,1 +1,64 @@
-<p>users works!</p>
+
+<div class="w-full overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Email</th>
+        <th>Estado</th>
+        <th>Usuario desde</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track $index) {
+        <tr class="hover">
+        <td class="text-nowrap">{{user.name}} {{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>
+           <span [appStatus]="user.isActive"></span>
+        </td>
+        <td class="text-nowrap">{{user.createdAt | date}}</td>
+        <td>
+          <app-button [clear]="true" icon="pencil" shape="circle" theme="secondary" />
+          <app-button [clear]="true" icon="trash" shape="circle" theme="secondary" />
+          <app-button [clear]="true" icon="dots-vertical" shape="circle" theme="secondary" />
+        </td>
+      </tr>
+      }
+      <!-- <tr class="hover">
+        <td class="text-nowrap">Jane Smith</td>
+        <td>janesmith&#64;example.com</td>
+        <td><span class="badge badge-soft badge-error text-xs">Rejected</span></td>
+        <td class="text-nowrap">March 2, 2024</td>
+        <td>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></button>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
+        </td>
+      </tr>
+      <tr class="hover">
+        <td class="text-nowrap">Alice Johnson</td>
+        <td>alicejohnson&#64;example.com</td>
+        <td><span class="badge badge-soft badge-info text-xs">Applied</span></td>
+        <td class="text-nowrap">March 3, 2024</td>
+        <td>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></button>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
+        </td>
+      </tr>
+      <tr class="hover">
+        <td class="text-nowrap">Bob Brown</td>
+        <td>bobrown&#64;example.com</td>
+        <td><span class="badge badge-soft badge-primary text-xs">Current</span></td>
+        <td class="text-nowrap">March 4, 2024</td>
+        <td>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--pencil] size-5"></span></button>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--trash] size-5"></span></button>
+          <button class="btn btn-circle btn-text btn-sm" aria-label="Action button"><span class="icon-[tabler--dots-vertical] size-5"></span></button>
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+</div>

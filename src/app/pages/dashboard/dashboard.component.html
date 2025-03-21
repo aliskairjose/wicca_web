@@ -8,12 +8,12 @@
         @for (m of menu; track $index) {
         <li>
           <a
-            class="font-light hover:bg-transparent px-0 text-sm"
+            class="font-light hover:bg-transparent px-0"
             [routerLink]="[m.path]"
             routerLinkActive="router-link-active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <span class="icon-[tabler--{{ m.icon }}] size-5"></span>
+            <span class="icon-[tabler--{{ m.icon }}] size-6"></span>
             {{ m.title }}
           </a>
         </li>
@@ -33,3 +33,6 @@
 </div>
 
 <!-- <span class="icon-[tabler--brand-wechat] size-5"></span> -->
+<!-- <span class="icon-[tabler--users] size-5"></span> -->
+<!-- <span class="icon-[tabler--report-money] size-5"></span> -->
+<!-- <span class="icon-[tabler--layout-dashboard] size-5"></span> -->

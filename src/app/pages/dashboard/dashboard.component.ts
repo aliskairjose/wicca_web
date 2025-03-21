@@ -6,8 +6,6 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
 import { MENU } from '@shared/constansts/menu.constant';
 import { AuthActions } from '../auth/store/auth.actions';
 import { ToastService } from '@shared/services';
-import { ToastTypeEnum } from '@shared/enums';
-import { routes } from '../../app.routes';
 
 @Component({
   selector: 'app-dashboard',
