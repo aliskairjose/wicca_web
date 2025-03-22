@@ -5,22 +5,21 @@ import { UserAction } from './store/user.actions';
 import { CommonModule, DatePipe } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { StatusDirective } from '@shared/directives';
-import { ButtonComponent, InputComponent } from '@shared/components';
+import { ButtonComponent, InputComponent, PaginationComponent } from '@shared/components';
 import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { PaginationInterface } from '@shared/interfaces';
+import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule],
+  imports: [DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule,PaginationComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent implements OnInit {
   searchForm!: FormGroup;
   query = signal('');
-  users: UserInterface[] = [];
   #store = inject(Store);
   #fb = inject(FormBuilder);
   pagination: PaginationInterface = {
@@ -28,6 +27,7 @@ export class UsersComponent implements OnInit {
     limit: 20
   }
   search = '';
+  response: ResponseInterface<UserInterface> | undefined;
 
   ngOnInit(): void {
     this._loadForm();
@@ -43,9 +43,7 @@ export class UsersComponent implements OnInit {
 
   async getData() {
     await firstValueFrom(this.#store.dispatch(new UserAction.List(this.search, this.pagination)));
-    const res = this.#store.selectSnapshot(UserSelectors.list);
-    this.users = res!.results;
-    console.log(res)
+    this.response = this.#store.selectSnapshot(UserSelectors.list);
   }
 
   private _loadForm(): void {

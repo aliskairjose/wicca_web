@@ -1,3 +1,4 @@
+export { PaginationComponent } from './pagination/pagination.component';
 export { DashbarComponent } from "./dashbar/dashbar.component";
 export { NavbarComponent } from "./navbar/navbar.component";
 export { BadgeComponent } from "./badge/badge.component";
