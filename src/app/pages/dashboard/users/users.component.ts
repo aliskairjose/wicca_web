@@ -6,16 +6,14 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { StatusDirective } from '@shared/directives';
 import { ButtonComponent, InputComponent } from '@shared/components';
-import { debounce, debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
-import { FilterPipe } from '@shared/pipes';
+import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
 import { PaginationInterface } from '@shared/interfaces';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [DatePipe, StatusDirective, ButtonComponent, FilterPipe, InputComponent, CommonModule, ReactiveFormsModule],
+  imports: [DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -27,25 +25,32 @@ export class UsersComponent implements OnInit {
   #fb = inject(FormBuilder);
   pagination: PaginationInterface = {
     page: 1,
-    limit:10
+    limit: 20
   }
+  search = '';
+
   ngOnInit(): void {
     this._loadForm();
     this.getData();
     this.searchForm.valueChanges.pipe(
       distinctUntilChanged(),
-      debounceTime(300)
-    ).subscribe(({search}) => this.query.set(search));
+      debounceTime(500)
+    ).subscribe(({ search }) => {
+      this.search = search
+      this.getData();
+    });
   }
 
   async getData() {
-    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.pagination)));
-    this.users = this.#store.selectSnapshot(UserSelectors.list);
+    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.search, this.pagination)));
+    const res = this.#store.selectSnapshot(UserSelectors.list);
+    this.users = res!.results;
+    console.log(res)
   }
 
-  private _loadForm():void {
+  private _loadForm(): void {
     this.searchForm = this.#fb.group({
-      search:['']
+      search: ['']
     })
   }
 }

@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (user of users | filter: query(); track $index) {
+      @for (user of users; track $index) {
       <tr class="hover">
         <td class="text-nowrap">{{ user.name }} {{ user.lastName }}</td>
         <td>{{ user.email }}</td>

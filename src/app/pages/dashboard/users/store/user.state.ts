@@ -4,29 +4,30 @@ import { tap } from 'rxjs';
 import { UserInterface } from '../user.interface';
 import { UserService } from '../services/user.service';
 import { UserAction } from './user.actions';
+import { ResponseInterface } from '@shared/interfaces';
 
 export interface UsersStateModel {
-  users: UserInterface[];
-  user: UserInterface | undefined;
+  users: ResponseInterface<UserInterface> | undefined;
+  selectedUser: ResponseInterface<UserInterface> | undefined;
 }
 
 @State<UsersStateModel>({
   name: 'users',
   defaults: {
-    users: [],
-    user: undefined,
+    users: undefined,
+    selectedUser: undefined,
   },
 })
 @Injectable()
 export class UsersState {
   #userService = inject(UserService);
 
-  @Action(UserAction.Add)
-  add(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Add) {
-    const stateModel = ctx.getState();
-    stateModel.users = [...stateModel.users, payload];
-    ctx.setState(stateModel);
-  }
+  // @Action(UserAction.Add)
+  // add(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Add) {
+  //   const stateModel = ctx.getState();
+  //   stateModel.users = [...stateModel.users, payload];
+  //   ctx.setState(stateModel);
+  // }
 
   // @Action(UserAction.Update)
   // update(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Update) {
@@ -39,22 +40,21 @@ export class UsersState {
   get(ctx: StateContext<UsersStateModel>, { id }: UserAction.Get) {
     return this.#userService
       .byId(id)
-      .pipe(tap((user: UserInterface) => ctx.patchState({ user })));
+      .pipe(tap((selectedUser: ResponseInterface<UserInterface>) => ctx.patchState({ selectedUser })));
   }
 
   @Action(UserAction.List)
-  list ( ctx: StateContext<UsersStateModel>, { payload }: UserAction.List ) {
-    console.log(payload)
+  list ( ctx: StateContext<UsersStateModel>, {search, pagination}: UserAction.List ) {
     return this.#userService
-      .list(payload)
-      .pipe(tap((users: UserInterface[]) => ctx.patchState({ users })));
+      .list(search, pagination)
+      .pipe(tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })));
   }
 
   @Action(UserAction.Clear)
   clear(ctx: StateContext<UsersStateModel>) {
     ctx.patchState({
-      users: [],
-      user: undefined,
+      users: undefined,
+      selectedUser: undefined,
     });
   }
 }

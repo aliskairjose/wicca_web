@@ -1,4 +1,7 @@
 export interface ResponseInterface<T> {
-  data: T,
-  totalRecord: number,
+    itemPerPage:  number;
+    results:      T[];
+    totalRecords: number;
+    currentPage:  number;
+    lastPage:     number;
 }

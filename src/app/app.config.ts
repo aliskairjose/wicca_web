@@ -41,12 +41,12 @@ export const appConfig: ApplicationConfig = {
       {
         developmentMode: !environmentDev.production,
       },
-      // withNgxsReduxDevtoolsPlugin(),
+      withNgxsReduxDevtoolsPlugin(),
       // withNgxsFormPlugin(),
       // withNgxsLoggerPlugin(),
       // withNgxsRouterPlugin(),
       withNgxsStoragePlugin({
-        keys: [AuthState, UsersState],
+        keys: [AuthState],
       })
       // withNgxsWebSocketPlugin()
     ),

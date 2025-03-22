@@ -1,7 +1,7 @@
 .wrapper {
   @apply relative flex h-screen max-h-screen top-0;
   .sidebar{
-    @apply bg-white min-w-64 p-4 relative flex flex-col;
+    @apply hidden  bg-white min-w-64 p-4 relative lg:flex flex-col;
     .router-link-active{
       @apply bg-transparent text-primary;
     }
