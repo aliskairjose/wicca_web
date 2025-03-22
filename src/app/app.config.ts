@@ -45,9 +45,9 @@ export const appConfig: ApplicationConfig = {
       // withNgxsFormPlugin(),
       // withNgxsLoggerPlugin(),
       // withNgxsRouterPlugin(),
-      // withNgxsStoragePlugin({
-      //   keys: [AuthState, UsersState],
-      // })
+      withNgxsStoragePlugin({
+        keys: [AuthState, UsersState],
+      })
       // withNgxsWebSocketPlugin()
     ),
   ],
