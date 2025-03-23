@@ -21,14 +21,13 @@ import { LIMIT_PER_PAGE } from '@shared/constansts';
 })
 export class UsersComponent implements OnInit {
   searchForm!: FormGroup;
-  query = signal('');
   #store = inject(Store);
   #fb = inject(FormBuilder);
-  pagination: PaginationInterface = {
+  pagination = signal<PaginationInterface>( {
     page: 1,
     limit: LIMIT_PER_PAGE
-  }
-  search = '';
+  });
+  search = signal<string>('');
   users: UserInterface[] = [];
   paginationOptions = signal<PaginationType|undefined>(undefined);
 
@@ -39,13 +38,13 @@ export class UsersComponent implements OnInit {
       distinctUntilChanged(),
       debounceTime(500)
     ).subscribe(({ search }) => {
-      this.search = search
+      this.search.set(search)
       this.getData();
     });
   }
 
   async getData() {
-    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.search, this.pagination)));
+    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.search(), this.pagination())));
     const {results, ...options} = this.#store.selectSnapshot(UserSelectors.list)!;
     this.users = results;
     this.paginationOptions.set(options);
@@ -53,13 +52,13 @@ export class UsersComponent implements OnInit {
   }
 
   onPageChange(page: number): void {
-    this.pagination.page = page;
+    this.pagination.update(options=>({...options, page}));
     this.getData();
   }
 
   private _loadForm(): void {
     this.searchForm = this.#fb.group({
       search: ['']
-    })
+    });
   }
 }
