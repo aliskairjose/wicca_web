@@ -8,7 +8,7 @@ import { ResponseInterface } from '@shared/interfaces';
 
 export interface UsersStateModel {
   users: ResponseInterface<UserInterface> | undefined;
-  selectedUser: ResponseInterface<UserInterface> | undefined;
+  selectedUser: UserInterface | undefined;
 }
 
 @State<UsersStateModel>({
@@ -38,9 +38,14 @@ export class UsersState {
 
   @Action(UserAction.Get)
   get(ctx: StateContext<UsersStateModel>, { id }: UserAction.Get) {
+    const state = ctx.getState();
+    console.log('GetAction', state.selectedUser?._id, id)
+    if(state.selectedUser?._id===id){
+      return state.selectedUser;
+    }
     return this.#userService
-      .byId(id)
-      .pipe(tap((selectedUser: ResponseInterface<UserInterface>) => ctx.patchState({ selectedUser })));
+    .byId(id)
+    .pipe(tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })));
   }
 
   @Action(UserAction.List)

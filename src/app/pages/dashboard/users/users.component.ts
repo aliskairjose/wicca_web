@@ -5,17 +5,20 @@ import { UserAction } from './store/user.actions';
 import { CommonModule, DatePipe } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { StatusDirective } from '@shared/directives';
-import { ButtonComponent, InputComponent, PaginationComponent } from '@shared/components';
+import { AvatarComponent, ButtonComponent, InputComponent, PaginationComponent } from '@shared/components';
 import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
 import { PaginationType } from '@shared/types';
 import { LIMIT_PER_PAGE } from '@shared/constansts';
+import { IonSpinner } from "@ionic/angular/standalone";
+import { Router, RouterLink } from '@angular/router';
+import { RoutesEnum } from '@shared/enums';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule,PaginationComponent],
+  imports: [ DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule,PaginationComponent, AvatarComponent, RouterLink],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -30,6 +33,8 @@ export class UsersComponent implements OnInit {
   search = signal<string>('');
   users: UserInterface[] = [];
   paginationOptions = signal<PaginationType|undefined>(undefined);
+
+  routeEnum = RoutesEnum;
 
   constructor(){
     const res = this.#store.selectSnapshot(UserSelectors.list);

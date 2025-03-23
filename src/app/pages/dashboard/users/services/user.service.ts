@@ -27,7 +27,7 @@ export class UserService {
     });
   }
 
-  byId(id: string): Observable<ResponseInterface<UserInterface>> {
-    return this.http.get<ResponseInterface<UserInterface>>(`${Helper.baseUrl(Api.Users)}/${id}`);
+  byId(id: string): Observable<UserInterface> {
+    return this.http.get<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`);
   }
 }
