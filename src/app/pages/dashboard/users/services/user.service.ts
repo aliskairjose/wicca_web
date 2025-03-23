@@ -4,22 +4,23 @@ import { Observable } from 'rxjs';
 import { Helper } from '@shared/helpers';
 import { Api } from '@shared/apis';
 import { UserInterface } from '../user.interface';
-import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
+import { ParamsInterface, ResponseInterface } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
-  list(query = '', pagination?: PaginationInterface): Observable<ResponseInterface<UserInterface>> {
+  list(params: ParamsInterface): Observable<ResponseInterface<UserInterface>> {
     let httpParams = new HttpParams();
 
-    const params={query, ...pagination};
+    (params.query) && (httpParams = httpParams.set('query', params.query));
 
-    Object.entries( params ).forEach( ( [k, v ]) => {
-      (v) && (httpParams = httpParams.set(k, v));
-    });
+    (params.pagination) &&
+      Object.entries(params.pagination).forEach(([k, v]) => {
+        (v) && (httpParams = httpParams.set(k, v));
+      });
 
     return this.http.get<ResponseInterface<UserInterface>>(Helper.baseUrl(Api.Users), {
       params: httpParams,

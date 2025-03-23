@@ -1,4 +1,4 @@
-import { PaginationInterface } from '@shared/interfaces';
+import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { UserInterface } from '../user.interface';
 
 const ACTION_SCOPE = '[Users API]';
@@ -12,7 +12,7 @@ export namespace UserAction {
   }
   export class List {
     static readonly type = `${ACTION_SCOPE} List users`;
-    constructor( readonly pagination?: PaginationInterface, readonly search?: string) {}
+    constructor( readonly payload: ParamsInterface) {}
   }
   export class Get {
     static readonly type = `${ACTION_SCOPE} Get user`;
