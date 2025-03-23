@@ -11,16 +11,16 @@ export interface UsersStateModel {
   selectedUser: UserInterface | undefined;
 }
 
-@State<UsersStateModel>({
+@State<UsersStateModel>( {
   name: 'users',
   defaults: {
     users: undefined,
     selectedUser: undefined,
   },
-})
+} )
 @Injectable()
 export class UsersState {
-  #userService = inject(UserService);
+  #userService = inject( UserService );
 
   // @Action(UserAction.Add)
   // add(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Add) {
@@ -36,31 +36,29 @@ export class UsersState {
   //   ctx.setState(stateModel);
   // }
 
-  @Action(UserAction.Get)
-  get(ctx: StateContext<UsersStateModel>, { id }: UserAction.Get) {
+  @Action( UserAction.Get )
+  get ( ctx: StateContext<UsersStateModel>, { id }: UserAction.Get ) {
     const state = ctx.getState();
-    console.log('GetAction', state.selectedUser?._id, id)
-    if(state.selectedUser?._id===id){
-      return state.selectedUser;
-    }
-    return this.#userService
-    .byId(id)
-    .pipe(tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })));
+    return ( state.selectedUser?._id === id )
+      ? ctx
+      : this.#userService
+        .byId( id )
+        .pipe( tap( ( selectedUser: UserInterface ) => ctx.patchState( { selectedUser } ) ) );
   }
 
-  @Action(UserAction.List)
-  list ( ctx: StateContext<UsersStateModel>, {payload}: UserAction.List ) {
+  @Action( UserAction.List )
+  list ( ctx: StateContext<UsersStateModel>, { payload }: UserAction.List ) {
     payload ??= {};
     return this.#userService
-      .list(payload)
-      .pipe(tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })));
+      .list( payload )
+      .pipe( tap( ( users: ResponseInterface<UserInterface> ) => ctx.patchState( { users } ) ) );
   }
 
-  @Action(UserAction.Clear)
-  clear(ctx: StateContext<UsersStateModel>) {
-    ctx.patchState({
+  @Action( UserAction.Clear )
+  clear ( ctx: StateContext<UsersStateModel> ) {
+    ctx.patchState( {
       users: undefined,
       selectedUser: undefined,
-    });
+    } );
   }
 }

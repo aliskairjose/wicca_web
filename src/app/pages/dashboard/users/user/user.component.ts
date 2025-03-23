@@ -20,14 +20,9 @@ export class UserComponent implements OnInit {
   #route = inject(ActivatedRoute);
   #store = inject(Store);
 
-  constructor() {
-  }
-
   async ngOnInit() {
     const params:Params = await firstValueFrom(this.#route.params);
-    this.#store.dispatch(new UserAction.Get(params['id']))
+    await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
     this.user = this.#store.selectSnapshot(UserSelectors.selectedUser)!;
-    console.log(this.user);
-
   }
 }

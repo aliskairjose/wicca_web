@@ -11,8 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
 import { PaginationType } from '@shared/types';
 import { LIMIT_PER_PAGE } from '@shared/constansts';
-import { IonSpinner } from "@ionic/angular/standalone";
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { RoutesEnum } from '@shared/enums';
 
 @Component({
