@@ -9,6 +9,8 @@ import { ButtonComponent, InputComponent, PaginationComponent } from '@shared/co
 import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
+import { PaginationType } from '@shared/types';
+import { LIMIT_PER_PAGE } from '@shared/constansts';
 
 @Component({
   selector: 'app-users',
@@ -24,10 +26,11 @@ export class UsersComponent implements OnInit {
   #fb = inject(FormBuilder);
   pagination: PaginationInterface = {
     page: 1,
-    limit: 20
+    limit: LIMIT_PER_PAGE
   }
   search = '';
-  response: ResponseInterface<UserInterface> | undefined;
+  users: UserInterface[] = [];
+  paginationOptions = signal<PaginationType|undefined>(undefined);
 
   ngOnInit(): void {
     this._loadForm();
@@ -43,7 +46,15 @@ export class UsersComponent implements OnInit {
 
   async getData() {
     await firstValueFrom(this.#store.dispatch(new UserAction.List(this.search, this.pagination)));
-    this.response = this.#store.selectSnapshot(UserSelectors.list);
+    const {results, ...options} = this.#store.selectSnapshot(UserSelectors.list)!;
+    this.users = results;
+    this.paginationOptions.set(options);
+
+  }
+
+  onPageChange(page: number): void {
+    this.pagination.page = page;
+    this.getData();
   }
 
   private _loadForm(): void {

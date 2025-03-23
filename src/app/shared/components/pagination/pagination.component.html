@@ -1,30 +1,37 @@
 <div
   class="flex justify-between items-center font-medium w-full border-t border-secondary-content mt-6 pt-4 text-sm px-6"
 >
-  <span>Mostrando 1 de 3 usuarios</span>
+  <span>
+    Mostrando
+    <span class="font-semibold text-black"
+      >{{ lowerLimit() }} a {{ upperLimit() }}</span
+    >
+    de
+    <span class="font-medium">{{ options()?.totalRecords }}</span>
+  </span>
   <nav class="flex items-center gap-x-1">
-    <button type="button" class="btn btn-text btn-sm">Previous</button>
+    <app-button
+      text="Anterior"
+      [clear]="true"
+      theme="secondary"
+      (click)="nextPrevPage(options()!.currentPage - 1)"
+    />
     <div class="flex items-center gap-x-1">
-      <button
-        type="button"
-        class="btn btn-text btn-sm btn-square aria-[current='page']:text-bg-primary"
-      >
-        1
-      </button>
-      <button
-        type="button"
-        class="btn btn-text btn-sm btn-square aria-[current='page']:text-bg-primary"
-        aria-current="page"
-      >
-        2
-      </button>
-      <button
-        type="button"
-        class="btn btn-text btn-sm btn-square aria-[current='page']:text-bg-primary"
-      >
-        3
-      </button>
+      @for (page of controlPages(); track $index) {
+      <app-button
+        [text]="page"
+        [clear]="options()?.currentPage !== page"
+        shape="square"
+        theme="primary"
+        (clickHandler)="selectPage(page)"
+      />
+      }
     </div>
-    <button type="button" class="btn btn-text btn-sm">Next</button>
+    <app-button
+      text="Siguiente"
+      [clear]="true"
+      theme="secondary"
+      (click)="nextPrevPage(options()!.currentPage + 1)"
+    />
   </nav>
 </div>
