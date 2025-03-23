@@ -15,7 +15,7 @@ import { LIMIT_PER_PAGE } from '@shared/constansts';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule,PaginationComponent],
+  imports: [DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule, PaginationComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -23,17 +23,23 @@ export class UsersComponent implements OnInit {
   searchForm!: FormGroup;
   #store = inject(Store);
   #fb = inject(FormBuilder);
-  pagination = signal<PaginationInterface>( {
+  pagination = signal<PaginationInterface>({
     page: 1,
     limit: LIMIT_PER_PAGE
   });
   search = signal<string>('');
   users: UserInterface[] = [];
-  paginationOptions = signal<PaginationType|undefined>(undefined);
+  paginationOptions = signal<PaginationType | undefined>(undefined);
+
+  constructor() {
+    const res = this.#store.selectSnapshot(UserSelectors.list);
+    (res)
+      ? this.setData(res)
+      : this.getData();
+  }
 
   ngOnInit(): void {
     this._loadForm();
-    this.getData();
     this.searchForm.valueChanges.pipe(
       distinctUntilChanged(),
       debounceTime(500)
@@ -44,15 +50,19 @@ export class UsersComponent implements OnInit {
   }
 
   async getData() {
-    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.search(), this.pagination())));
-    const {results, ...options} = this.#store.selectSnapshot(UserSelectors.list)!;
+    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.pagination(), this.search())));
+    const response = this.#store.selectSnapshot(UserSelectors.list)!;
+    this.setData(response);
+  }
+
+  private setData(data: ResponseInterface<UserInterface>): void {
+    const { results, ...options } = data;
     this.users = results;
     this.paginationOptions.set(options);
-
   }
 
   onPageChange(page: number): void {
-    this.pagination.update(options=>({...options, page}));
+    this.pagination.update(options => ({ ...options, page }));
     this.getData();
   }
 

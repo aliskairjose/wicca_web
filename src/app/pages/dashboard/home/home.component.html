@@ -1,1 +1,26 @@
-<p>home works!</p>
+<main class="flex gap-4">
+  <div class="float-start w-8/12 card-bordered"></div>
+  <div class="float-end grow card-bordered">
+    <h5>Nuevos registros</h5>
+    <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+      @for (user of users; track $index) {
+      <li class="flex items-start sm:items-center">
+        <app-avatar [src]="user.avatar" size="lg" class="me-3" />
+        <div class="flex grow flex-col items-start justify-between sm:flex-row">
+          <div class="user-info">
+            <h6 class="text-base text-base-content">
+              {{ user.name }} {{ user.lastName }}
+            </h6>
+            <small class="text-base-content/50 text-sm">{{
+              user.createdAt | date
+            }}</small>
+          </div>
+          <div class="action max-sm:mt-1">
+            <!-- <button class="btn btn-primary btn-sm">Add</button> -->
+          </div>
+        </div>
+      </li>
+      }
+    </ul>
+  </div>
+</main>

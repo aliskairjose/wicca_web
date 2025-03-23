@@ -12,7 +12,7 @@ import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
 export class UserService {
   constructor(private readonly http: HttpClient) {}
 
-  list(query = '', pagination: PaginationInterface): Observable<ResponseInterface<UserInterface>> {
+  list(query = '', pagination?: PaginationInterface): Observable<ResponseInterface<UserInterface>> {
     let httpParams = new HttpParams();
 
     const params={query, ...pagination};

@@ -17,3 +17,7 @@ html, body{
 .table :where(th, td) {
   @apply text-sm;
 }
+
+.card-bordered {
+  @apply bg-white rounded-lg border-2 border-gray-300 p-4;
+}

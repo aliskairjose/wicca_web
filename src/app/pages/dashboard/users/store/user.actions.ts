@@ -12,7 +12,7 @@ export namespace UserAction {
   }
   export class List {
     static readonly type = `${ACTION_SCOPE} List users`;
-    constructor(readonly search: string, readonly pagination: PaginationInterface) {}
+    constructor( readonly pagination?: PaginationInterface, readonly search?: string) {}
   }
   export class Get {
     static readonly type = `${ACTION_SCOPE} Get user`;
