@@ -1,26 +1,30 @@
-<main class="flex gap-4">
-  <div class="float-start w-9/12 card-bordered"></div>
-  <div class="float-end grow card-bordered">
-    <h5>Nuevos registros</h5>
-    <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-      @for (user of users.slice(0,10); track $index) {
-      <li class="flex items-start sm:items-center">
-        <app-avatar [src]="user.avatar" class="me-3" />
-        <div class="flex grow flex-col items-start justify-between sm:flex-row">
-          <div class="user-info flex flex-col">
-            <span class="text-sm text-base-content font-medium">
-              {{ user.name }} {{ user.lastName }}
-            </span>
-            <small class="text-base-content/50">{{
-              user.createdAt | date
-            }}</small>
+<main class="flex gap-x-8">
+  <div class="float-start w-8/12 card"></div>
+  <div class="card grow">
+    <div class="card-body">
+      <h5>Nuevos registros</h5>
+      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+        @for (user of users.slice(0,10); track $index) {
+        <li class="flex items-start sm:items-center">
+          <app-avatar [src]="user.avatar" class="me-3" />
+          <div
+            class="flex grow flex-col items-start justify-between sm:flex-row"
+          >
+            <div class="user-info flex flex-col">
+              <span class="text-sm text-base-content font-medium">
+                {{ user.name }} {{ user.lastName }}
+              </span>
+              <small class="text-base-content/50">{{
+                user.createdAt | date
+              }}</small>
+            </div>
+            <div class="action max-sm:mt-1">
+              <!-- <button class="btn btn-primary btn-sm">Add</button> -->
+            </div>
           </div>
-          <div class="action max-sm:mt-1">
-            <!-- <button class="btn btn-primary btn-sm">Add</button> -->
-          </div>
-        </div>
-      </li>
-      }
-    </ul>
+        </li>
+        }
+      </ul>
+    </div>
   </div>
 </main>

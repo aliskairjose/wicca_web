@@ -15,7 +15,6 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   ValidationErrors,
-  Validator,
   Validators,
 } from '@angular/forms';
 import { Helper } from '@shared/helpers';

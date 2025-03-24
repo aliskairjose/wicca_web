@@ -1,1 +1,69 @@
-<p>user works!</p>
+<div class="grid grid-cols-12 gap-8 w-full">
+  <div class="col-span-4 space-y-6">
+    <div class="card">
+      <div class="card-header flex flex-col items-center gap-y-4">
+        <div class="avatar">
+          <div class="size-28 rounded-full">
+            <img [src]="user()?.avatar" alt="avatar" />
+          </div>
+        </div>
+        <div class="card-title text-primary/80">
+          {{ fullName() }}
+          <p class="text-base text-secondary font-light text-center">
+            {{ user()?.email }}
+          </p>
+        </div>
+      </div>
+      <div class="card-footer">
+        @if (user()?.role === role.Asesor) {
+        <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
+        }
+      </div>
+    </div>
+    @if (user()?.role=== role.Asesor) {
+    <ng-container [ngTemplateOutlet]="clients"></ng-container>
+    }
+  </div>
+
+  <div class="col-span-8">
+    <div class="card">
+      <div class="card-body">dhah</div>
+    </div>
+  </div>
+</div>
+
+<!-- Listado de clientes del asesor -->
+<ng-template #clients>
+  <div class="card">
+    <div class="card-body">
+      <h6>Clientes recientes</h6>
+      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+        @for (user of users.slice(0,5); track $index) {
+        <li class="flex items-start sm:items-center">
+          <app-avatar [src]="user.avatar" class="me-3" />
+          <div
+            class="flex grow flex-col items-start justify-between sm:flex-row"
+          >
+            <div class="user-info flex flex-col">
+              <span class="text-sm text-base-content font-medium">
+                {{ user.name }} {{ user.lastName }}
+              </span>
+            </div>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #ratesTemplate>
+  <div class="w-full text-xs">
+    <ul
+      class="divide-base-content/25 rounded-md flex w-full flex-col *:w-full *:cursor-pointer max-sm:divide-y sm:flex-row sm:divide-x *:p-3"
+    >
+      <li class="w-full text-center">Calificación: {{ rates().rate }}</li>
+      <li class="w-full text-center">Votos: {{ rates().votes }}</li>
+    </ul>
+  </div>
+</ng-template>
