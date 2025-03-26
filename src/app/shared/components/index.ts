@@ -1,3 +1,4 @@
+export { IconComponent } from './icon/icon.component';
 export { PaginationComponent } from './pagination/pagination.component';
 export { DashbarComponent } from "./dashbar/dashbar.component";
 export { NavbarComponent } from "./navbar/navbar.component";

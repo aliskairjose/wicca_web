@@ -20,12 +20,17 @@
         }
       </ul>
     </div>
-    <app-button text="Cerrar sesion" theme="error" [outline]="true" width="block" (clickHandler)="signout()"/>
-
+    <app-button
+      text="Cerrar sesion"
+      theme="error"
+      [outline]="true"
+      width="block"
+      (clickHandler)="signout()"
+    />
   </div>
   <div class="main-panel">
     <app-dashbar />
-    <div class="px-6 py-4">
+    <div class="px-6 py-4 grow">
       <router-outlet></router-outlet>
     </div>
     <app-footer />

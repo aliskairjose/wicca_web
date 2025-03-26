@@ -7,13 +7,13 @@ import { UserInterface } from '../user.interface';
 import { firstValueFrom } from 'rxjs';
 import { Helper } from '@shared/helpers';
 import { RoleEnum } from '@shared/enums';
-import { AvatarComponent } from '@shared/components';
+import { AvatarComponent, IconComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [ AvatarComponent, CommonModule],
+  imports: [ AvatarComponent, CommonModule, IconComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })

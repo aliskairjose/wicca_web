@@ -36,7 +36,7 @@
 <ng-template #clients>
   <div class="card">
     <div class="card-body">
-      <h6>Clientes recientes</h6>
+      <h5>Últimos clientes</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
         @for (user of users.slice(0,5); track $index) {
         <li class="flex items-start sm:items-center">
@@ -62,8 +62,14 @@
     <ul
       class="divide-base-content/25 rounded-md flex w-full flex-col *:w-full *:cursor-pointer max-sm:divide-y sm:flex-row sm:divide-x *:p-3"
     >
-      <li class="w-full text-center">Calificación: {{ rates().rate }}</li>
+      <li class="w-full text-center">
+        Calificación:
+        <app-icon icon="star-filled" class="text-warning" />
+        {{ rates().rate }}/5
+      </li>
       <li class="w-full text-center">Votos: {{ rates().votes }}</li>
     </ul>
   </div>
 </ng-template>
+
+<!-- <span class="icon-[tabler--star-filled] size-4.5 shrink-0 bg-warning"></span> -->
