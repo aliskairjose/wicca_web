@@ -1,8 +1,8 @@
 export interface ResponseInterface<T> {
-    itemPerPage:  number;
-    results:      T[];
-    resultsLength: number;
-    totalRecords: number;
-    currentPage:  number;
-    totalPages:     number;
+  results: T[];
+  itemPerPage: number;
+  resultsLength: number;
+  totalRecords: number;
+  currentPage: number;
+  totalPages: number;
 }
