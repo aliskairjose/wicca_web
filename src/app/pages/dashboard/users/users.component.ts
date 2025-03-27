@@ -5,7 +5,7 @@ import { UserAction } from './store/user.actions';
 import { CommonModule, DatePipe } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { StatusDirective } from '@shared/directives';
-import { AvatarComponent, ButtonComponent, InputComponent, PaginationComponent } from '@shared/components';
+import { AvatarComponent, ButtonComponent, InputComponent, PaginationComponent, SelectComponent } from '@shared/components';
 import { debounceTime, distinctUntilChanged, firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
@@ -13,11 +13,12 @@ import { PaginationType } from '@shared/types';
 import { LIMIT_PER_PAGE } from '@shared/constansts';
 import { RouterLink } from '@angular/router';
 import { RoutesEnum } from '@shared/enums';
+import { OPTION_DATA } from '@shared/components/select/select.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [ DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule,PaginationComponent, AvatarComponent, RouterLink],
+  imports: [ DatePipe, StatusDirective, ButtonComponent, InputComponent, CommonModule, ReactiveFormsModule,PaginationComponent, AvatarComponent, RouterLink, SelectComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -29,6 +30,13 @@ export class UsersComponent implements OnInit {
     page: 1,
     limit: LIMIT_PER_PAGE
   });
+  defaultValue= LIMIT_PER_PAGE;
+  itemPerPage: OPTION_DATA[] = [
+      {val:5, title: '5'},
+      {val:10, title: '10'},
+      {val:20, title: '20'},
+      {val:50, title: '50'},
+    ];
   search = signal<string>('');
   users: UserInterface[] = [];
   paginationOptions = signal<PaginationType|undefined>(undefined);
@@ -72,6 +80,14 @@ export class UsersComponent implements OnInit {
   onPageChange(page: number): void {
     this.pagination.update(options=>({...options, page}));
     this.getData();
+  }
+
+  onChanteItemPerPage(limit: number): void {
+    this.pagination.update(() =>( {limit, page: 1}));
+    this.getData();
+  }
+
+  changeHandler(itemPerPage: number): void {
   }
 
   private _loadForm(): void {

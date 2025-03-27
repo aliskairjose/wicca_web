@@ -9,29 +9,31 @@
     de
     <span class="font-medium">{{ options()?.totalRecords }}</span>
   </span>
-  <nav class="flex items-center gap-x-1">
-    <app-button
-      text="Anterior"
-      [clear]="true"
-      theme="secondary"
-      (click)="nextPrevPage(options()!.currentPage - 1)"
-    />
-    <div class="flex items-center gap-x-1">
-      @for (page of controlPages(); track $index) {
+  <div class="flex">
+    <nav class="flex items-center gap-x-1">
       <app-button
-        [text]="page"
-        [clear]="options()?.currentPage !== page"
-        shape="square"
-        theme="primary"
-        (clickHandler)="selectPage(page)"
+        text="Anterior"
+        [clear]="true"
+        theme="secondary"
+        (click)="nextPrevPage(options()!.currentPage - 1)"
       />
-      }
-    </div>
-    <app-button
-      text="Siguiente"
-      [clear]="true"
-      theme="secondary"
-      (click)="nextPrevPage(options()!.currentPage + 1)"
-    />
-  </nav>
+      <div class="flex items-center gap-x-1">
+        @for (page of controlPages(); track $index) {
+        <app-button
+          [text]="page"
+          [clear]="options()?.currentPage !== page"
+          shape="square"
+          theme="primary"
+          (clickHandler)="selectPage(page)"
+        />
+        }
+      </div>
+      <app-button
+        text="Siguiente"
+        [clear]="true"
+        theme="secondary"
+        (click)="nextPrevPage(options()!.currentPage + 1)"
+      />
+    </nav>
+  </div>
 </div>

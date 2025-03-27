@@ -1,22 +1,31 @@
 import { Component,computed,input, output } from '@angular/core';
 import { PaginationType } from '@shared/types';
 import { ButtonComponent } from '../button/button.component';
+import { OPTION_DATA, SelectComponent } from '../select/select.component';
+import { LIMIT_PER_PAGE } from '@shared/constansts';
+import { PaginationInterface } from '@shared/interfaces';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, SelectComponent],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })
 export class PaginationComponent {
+  defaultValue = LIMIT_PER_PAGE;
+  itemPerPage: OPTION_DATA[] = [
+    {val:5, title: '5'},
+    {val:10, title: '10'},
+    {val:20, title: '20'},
+    {val:50, title: '50'},
+  ];
   options = input<PaginationType>();
   onChangePage = output<number>();
 
   currentPage = computed(() => this.options()?.currentPage);
   controlPages = computed(() => [...new Array(this.options()?.totalPages)].map((_, i) => i + 1));
   upperLimit = computed(()=> this.currentPage()! * this.options()?.resultsLength!)
-
   lowerLimit = computed(()=> (this.upperLimit() - this.options()?.resultsLength!) + 1);
 
   nextPrevPage(page: number): void {

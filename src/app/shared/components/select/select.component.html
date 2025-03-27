@@ -12,7 +12,13 @@
   >
     <!-- <option value="">{{ placeholder() }}</option> -->
     @for (item of data(); track $index) {
-    <option [value]="item.val" [ngValue]="item">{{ item.title }}</option>
+    <option
+      [value]="item.val"
+      [ngValue]="item"
+      [selected]="defaultValue() === item.val"
+    >
+      {{ item.title }}
+    </option>
     }
   </select>
   @if ( (control().invalid && control().dirty) || control().invalid &&
