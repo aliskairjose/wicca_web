@@ -13,6 +13,12 @@
             {{ user()?.email }}
           </p>
         </div>
+        @if(user()?.role === role.Asesor){
+        <div>
+          <h6>{{ user()?.title }}</h6>
+          <p>{{ user()?.description }}</p>
+        </div>
+        }
       </div>
       <div class="card-footer">
         @if (user()?.role === role.Asesor) {
@@ -20,23 +26,17 @@
         }
       </div>
     </div>
-    @if (user()?.role=== role.Asesor) {
-    <ng-container [ngTemplateOutlet]="clients"></ng-container>
-    }
+    <ng-container [ngTemplateOutlet]="chats"></ng-container>
   </div>
 
-  <div class="col-span-8">
-    <div class="card">
-      <div class="card-body">dhah</div>
-    </div>
-  </div>
+  <div class="col-span-8"></div>
 </div>
 
 <!-- Listado de clientes del asesor -->
-<ng-template #clients>
+<ng-template #chats>
   <div class="card">
     <div class="card-body">
-      <h5>Últimos clientes</h5>
+      <h5>Últimas conversaciones</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
         @for (user of users.slice(0,5); track $index) {
         <li class="flex items-start sm:items-center">

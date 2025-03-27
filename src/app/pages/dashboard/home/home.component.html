@@ -4,7 +4,7 @@
     <div class="card-body">
       <h5>Nuevos registros</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-        @for (user of users.slice(0,10); track $index) {
+        @for (user of users.slice(0,5); track $index) {
         <li class="flex items-start sm:items-center">
           <app-avatar [src]="user.avatar" class="me-3" />
           <div

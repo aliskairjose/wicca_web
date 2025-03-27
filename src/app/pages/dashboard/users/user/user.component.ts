@@ -9,11 +9,12 @@ import { Helper } from '@shared/helpers';
 import { RoleEnum } from '@shared/enums';
 import { AvatarComponent, IconComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
+import { IonTitle } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [ AvatarComponent, CommonModule, IconComponent],
+  imports: [IonTitle, AvatarComponent, CommonModule, IconComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
@@ -23,14 +24,14 @@ export class UserComponent implements OnInit {
 
   #route = inject(ActivatedRoute);
   #store = inject(Store);
-  users:any[] = [];
+  users: any[] = [];
 
-  rates = computed(()=> Helper.calculateRate(this.user()!.rates));
-  fullName = computed(()=> `${this.user()?.name} ${this.user()?.lastName}` );
+  rates = computed(() => Helper.calculateRate(this.user()!.rates));
+  fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
 
   async ngOnInit() {
-    const params:Params = await firstValueFrom(this.#route.params);
+    const params: Params = await firstValueFrom(this.#route.params);
     await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
-      this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
+    this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
   }
 }

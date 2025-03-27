@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent {
-
+  avatar = 'https://ionicframework.com/docs/img/demos/avatar.svg';
   isRounded = input<boolean>(true);
   size = input<SIZE>('md');
   src = input.required<string>();

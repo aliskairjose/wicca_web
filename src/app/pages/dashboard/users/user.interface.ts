@@ -8,6 +8,10 @@ export interface UserInterface {
   lastName: string;
   email: string;
   role: RoleEnum;
+  title?: string;
+  price?: number;
+  description?: string;
+  category?: string;
   isActive: boolean;
   isOnline?: boolean;
   socketId?: string;
@@ -15,17 +19,9 @@ export interface UserInterface {
   phone: string;
   createdAt: Date;
   updatedAt: Date;
-  info?: InfoInterface;
   wallet?: WalletInterface;
   rates: RateInterface[];
   payments?: any;
-}
-
-interface InfoInterface {
-  title: string;
-  prince: number;
-  description: string;
-  category: string;
 }
 
 interface WalletInterface {
