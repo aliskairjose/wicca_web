@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs';
-import { UserInterface } from '../user.interface';
+import { TotalUsersInterface, UserInterface } from '../user.interface';
 import { UserService } from '../services/user.service';
 import { UserAction } from './user.actions';
 import { ResponseInterface } from '@shared/interfaces';
@@ -9,18 +9,20 @@ import { ResponseInterface } from '@shared/interfaces';
 export interface UsersStateModel {
   users: ResponseInterface<UserInterface> | undefined;
   selectedUser: UserInterface | undefined;
+  totalUsers: TotalUsersInterface | undefined;
 }
 
-@State<UsersStateModel>( {
+@State<UsersStateModel>({
   name: 'users',
   defaults: {
     users: undefined,
     selectedUser: undefined,
+    totalUsers: undefined
   },
-} )
+})
 @Injectable()
 export class UsersState {
-  #userService = inject( UserService );
+  #userService = inject(UserService);
 
   // @Action(UserAction.Add)
   // add(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Add) {
@@ -36,29 +38,28 @@ export class UsersState {
   //   ctx.setState(stateModel);
   // }
 
-  @Action( UserAction.Get )
-  get ( ctx: StateContext<UsersStateModel>, { id }: UserAction.Get ) {
+  @Action(UserAction.Get)
+  get(ctx: StateContext<UsersStateModel>, { id }: UserAction.Get) {
     const state = ctx.getState();
-    return ( state.selectedUser?._id === id )
+    return (state.selectedUser?._id === id)
       ? ctx
       : this.#userService
-        .byId( id )
-        .pipe( tap( ( selectedUser: UserInterface ) => ctx.patchState( { selectedUser } ) ) );
+        .byId(id)
+        .pipe(tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })));
   }
 
-  @Action( UserAction.List )
-  list ( ctx: StateContext<UsersStateModel>, { payload }: UserAction.List ) {
+  @Action(UserAction.List)
+  list(ctx: StateContext<UsersStateModel>, { payload }: UserAction.List) {
     payload ??= {};
     return this.#userService
-      .list( payload )
-      .pipe( tap( ( users: ResponseInterface<UserInterface> ) => ctx.patchState( { users } ) ) );
+      .list(payload)
+      .pipe(tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })));
+  }
+  @Action(UserAction.TotalUsers)
+  totalUsers(ctx: StateContext<UsersStateModel>) {
+    return this.#userService
+      .totalUsers()
+      .pipe(tap((totalUsers: TotalUsersInterface) => ctx.patchState({ totalUsers })));
   }
 
-  @Action( UserAction.Clear )
-  clear ( ctx: StateContext<UsersStateModel> ) {
-    ctx.patchState( {
-      users: undefined,
-      selectedUser: undefined,
-    } );
-  }
 }

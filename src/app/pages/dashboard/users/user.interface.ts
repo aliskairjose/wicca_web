@@ -12,6 +12,7 @@ export interface UserInterface {
   price?: number;
   description?: string;
   category?: string;
+  language?: string[];
   isActive: boolean;
   isOnline?: boolean;
   socketId?: string;
@@ -28,4 +29,11 @@ interface WalletInterface {
   amount: number;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface TotalUsersInterface {
+  totalUsers: number;
+  totalAsesors: number;
+  totalRegister: number;
+  totalNewUsers: number;
 }

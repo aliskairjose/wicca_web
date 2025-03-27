@@ -14,7 +14,7 @@ import { IonTitle } from "@ionic/angular/standalone";
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [IonTitle, AvatarComponent, CommonModule, IconComponent],
+  imports: [AvatarComponent, CommonModule, IconComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })

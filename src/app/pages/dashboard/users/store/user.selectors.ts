@@ -1,6 +1,5 @@
 import { createPropertySelectors, createSelector } from '@ngxs/store';
 import { UsersState, UsersStateModel } from './user.state';
-import { Helper } from '@shared/helpers';
 import { UserInterface } from '../user.interface';
 
 export class UserSelectors {
@@ -10,6 +9,11 @@ export class UserSelectors {
   static list = createSelector(
     [UserSelectors.getSlices.users],
     (users) => users
+  );
+
+  static totalUsers = createSelector(
+    [UserSelectors.getSlices.totalUsers],
+    (totalUsers) => totalUsers
   );
 
   static latestRegistered = createSelector(

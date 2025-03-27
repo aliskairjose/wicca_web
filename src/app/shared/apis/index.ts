@@ -4,5 +4,6 @@ export enum Api {
   Logout = 'auth/logout',
   Register = 'auth/register',
   Menu = 'web-menu',
-  Users = 'users'
+  Users = 'users',
+  UsersTotals = 'users/dashboard-totals-cards'
 }

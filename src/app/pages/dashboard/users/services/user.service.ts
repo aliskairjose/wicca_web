@@ -30,4 +30,8 @@ export class UserService {
   byId(id: string): Observable<UserInterface> {
     return this.http.get<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`);
   }
+
+  totalUsers(): Observable<any> {
+    return this.http.get(Helper.baseUrl(Api.UsersTotals));
+  }
 }

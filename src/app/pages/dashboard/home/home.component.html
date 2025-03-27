@@ -1,30 +1,67 @@
-<main class="flex gap-x-8">
-  <div class="float-start w-8/12 card"></div>
-  <div class="card grow">
-    <div class="card-body">
-      <h5>Nuevos registros</h5>
-      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-        @for (user of users.slice(0,5); track $index) {
-        <li class="flex items-start sm:items-center">
-          <app-avatar [src]="user.avatar" class="me-3" />
-          <div
-            class="flex grow flex-col items-start justify-between sm:flex-row"
-          >
-            <div class="user-info flex flex-col">
-              <span class="text-sm text-base-content font-medium">
-                {{ user.name }} {{ user.lastName }}
-              </span>
-              <small class="text-base-content/50">{{
-                user.createdAt | date
-              }}</small>
+<main class="space-y-8">
+  <div class="grid grid-cols-4 gap-4">
+    <div class="card">
+      <div class="card-body flex flex-row justify-between items-center">
+        <h6>Total usuarios</h6>
+        <div class="flex gap-1">
+          <h1 class="text-primary/80">{{ totalUsers?.totalRegister }}</h1>
+          <app-icon icon="users-group" size="10" class="text-primary/80" />
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body flex flex-row justify-between items-center">
+        <h6>Total Clientes</h6>
+        <h1 class="text-warning/80">{{ totalUsers?.totalUsers }}</h1>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body flex flex-row justify-between items-center">
+        <h6>Total Asesores</h6>
+        <h1 class="text-info/80">{{ totalUsers?.totalAsesors }}</h1>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body flex flex-row justify-between items-center">
+        <h6>Nuevos usuarios</h6>
+        <div class="flex gap-1">
+          <h1 class="text-success/80">{{ totalUsers?.totalNewUsers }}</h1>
+          <app-icon icon="users-plus" size="10" class="text-success/80" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-x-8">
+    <div class="float-start w-8/12 card"></div>
+    <div class="card grow">
+      <div class="card-body">
+        <h5>Nuevos registros</h5>
+        <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+          @for (user of users.slice(0,5); track $index) {
+          <li class="flex items-start sm:items-center">
+            <app-avatar [src]="user.avatar" class="me-3" />
+            <div
+              class="flex grow flex-col items-start justify-between sm:flex-row"
+            >
+              <div class="user-info flex flex-col">
+                <span class="text-sm text-base-content font-medium">
+                  {{ user.name }} {{ user.lastName }}
+                </span>
+                <small class="text-base-content/50">{{
+                  user.createdAt | date
+                }}</small>
+              </div>
+              <div class="action max-sm:mt-1">
+                <!-- <button class="btn btn-primary btn-sm">Add</button> -->
+              </div>
             </div>
-            <div class="action max-sm:mt-1">
-              <!-- <button class="btn btn-primary btn-sm">Add</button> -->
-            </div>
-          </div>
-        </li>
-        }
-      </ul>
+          </li>
+          }
+        </ul>
+      </div>
     </div>
   </div>
 </main>
+
+<!-- <span class="icon-[tabler--users-plus]"></span> -->

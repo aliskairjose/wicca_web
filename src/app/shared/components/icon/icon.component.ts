@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, input, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-icon',
@@ -7,12 +7,19 @@ import { Component, computed, input } from '@angular/core';
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.scss'
 })
-export class IconComponent {
+export class IconComponent implements AfterViewInit {
   icon = input.required<string>()
   size = input<string>('');
 
-  iconClass = computed(() => {
-    const size = this.size() ? `size-${this.size()}` : '';
-    return `icon-[tabler--${this.icon()}] ${size}`;
-  });
+  #renderer = inject(Renderer2);
+  @ViewChild('iconSpan') iconSpan!: ElementRef;
+
+  ngAfterViewInit(): void {
+    const el = this.iconSpan.nativeElement;
+    this.#renderer.addClass(el, `icon-[tabler--${this.icon()}]`);
+    if (this.size()) {
+      this.#renderer.addClass(el, `size-${this.size()}`);
+    }
+  }
+
 }
