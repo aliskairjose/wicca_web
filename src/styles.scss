@@ -11,6 +11,7 @@ html, body{
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  color: black;
   // font-size: 0.875 rem;
 }
 
@@ -24,4 +25,7 @@ html, body{
 
 .card {
   @apply shadow-md;
+  .card-body {
+    @apply p-4;
+  }
 }

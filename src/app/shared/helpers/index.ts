@@ -39,8 +39,10 @@ export class Helper {
 
     if (!rates || rates.length === 0) return _rates;
 
-    _rates.votes = rates.reduce((prev, curr) => prev + curr.rate, 0);
-    _rates.rate = _rates.votes / rates.length;
+    // _rates.votes = rates.reduce((prev, curr) => prev + curr.rate, 0);
+    // _rates.rate = _rates.votes / rates.length;
+    _rates.votes = rates.length;
+    _rates.rate = rates.reduce((prev, curr) => prev + curr.rate, 0) / rates.length;
 
     return _rates;
   }

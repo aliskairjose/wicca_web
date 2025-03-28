@@ -1,6 +1,6 @@
 <main class="space-y-8">
   <div class="grid grid-cols-4 gap-4">
-    <div class="card">
+    <!-- <div class="card">
       <div class="card-body flex flex-row justify-between items-center">
         <h6>Total usuarios</h6>
         <div class="flex gap-1">
@@ -8,26 +8,69 @@
           <app-icon icon="users-group" size="10" class="text-primary/80" />
         </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-body flex flex-row justify-between items-center">
-        <h6>Total Clientes</h6>
-        <h1 class="text-warning/80">{{ totalUsers?.totalUsers }}</h1>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body flex flex-row justify-between items-center">
-        <h6>Total Asesores</h6>
-        <h1 class="text-info/80">{{ totalUsers?.totalAsesors }}</h1>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body flex flex-row justify-between items-center">
-        <h6>Nuevos usuarios</h6>
-        <div class="flex gap-1">
-          <h1 class="text-success/80">{{ totalUsers?.totalNewUsers }}</h1>
-          <app-icon icon="users-plus" size="10" class="text-success/80" />
+    </div> -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-group" size="10" class="text-primary/80" />
+            </div>
+          </div>
         </div>
+        <div class="stat-title">Total registros</div>
+        <div class="stat-value text-primary/80">
+          {{ totalUsers?.totalRegister }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-group" size="10" class="text-warning/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Total clientes</div>
+        <div class="stat-value text-warning/80">
+          {{ totalUsers?.totalUsers }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-group" size="10" class="text-info/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Total asesores</div>
+        <div class="stat-value text-info/80">
+          {{ totalUsers?.totalAsesors }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-plus" size="10" class="text-success/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Nuevos usuario</div>
+        <div class="stat-value text-success/80">
+          {{ totalUsers?.totalNewUsers }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
       </div>
     </div>
   </div>
@@ -64,4 +107,4 @@
   </div>
 </main>
 
-<!-- <span class="icon-[tabler--users-plus]"></span> -->
+<!-- <span class="icon-[tabler--users-group]"></span> -->

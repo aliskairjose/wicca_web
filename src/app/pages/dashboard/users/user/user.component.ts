@@ -7,14 +7,13 @@ import { UserInterface } from '../user.interface';
 import { firstValueFrom } from 'rxjs';
 import { Helper } from '@shared/helpers';
 import { RoleEnum } from '@shared/enums';
-import { AvatarComponent, IconComponent } from '@shared/components';
+import { IconComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
-import { IonTitle } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [AvatarComponent, CommonModule, IconComponent],
+  imports: [CommonModule, IconComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
