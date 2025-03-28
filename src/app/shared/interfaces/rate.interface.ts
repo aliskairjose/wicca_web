@@ -6,4 +6,5 @@ export interface RateInterface {
   comment: string;
   createdAt: Date;
   user: UserInterface[];
+  asesor: UserInterface[];
 }
