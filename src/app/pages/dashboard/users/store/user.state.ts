@@ -9,7 +9,6 @@ import { ResponseInterface } from '@shared/interfaces';
 export interface UsersStateModel {
   users: ResponseInterface<UserInterface> | undefined;
   selectedUser: UserInterface | undefined;
-  totalUsers: TotalUsersInterface | undefined;
 }
 
 @State<UsersStateModel>({
@@ -17,7 +16,6 @@ export interface UsersStateModel {
   defaults: {
     users: undefined,
     selectedUser: undefined,
-    totalUsers: undefined
   },
 })
 @Injectable()
@@ -55,11 +53,6 @@ export class UsersState {
       .list(payload)
       .pipe(tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })));
   }
-  @Action(UserAction.TotalUsers)
-  totalUsers(ctx: StateContext<UsersStateModel>) {
-    return this.#userService
-      .totalUsers()
-      .pipe(tap((totalUsers: TotalUsersInterface) => ctx.patchState({ totalUsers })));
-  }
+
 
 }

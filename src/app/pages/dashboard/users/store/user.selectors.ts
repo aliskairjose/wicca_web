@@ -11,15 +11,15 @@ export class UserSelectors {
     (users) => users
   );
 
-  static totalUsers = createSelector(
-    [UserSelectors.getSlices.totalUsers],
-    (totalUsers) => totalUsers
-  );
+  // static totalUsers = createSelector(
+  //   [UserSelectors.getSlices.totalUsers],
+  //   (totalUsers) => totalUsers
+  // );
 
-  static latestRegistered = createSelector(
-    [UserSelectors.getSlices.users],
-    (users: UserInterface[]) => users.slice(0, 11)
-  );
+  // static latestRegistered = createSelector(
+  //   [UserSelectors.getSlices.users],
+  //   (users: UserInterface[]) => users.slice(0, 11)
+  // );
 
   static selectedUser = createSelector([UserSelectors.getSlices.selectedUser], (selectedUser) => selectedUser);
 }

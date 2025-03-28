@@ -1,12 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TotalUsersInterface, UserInterface } from '../users/user.interface';
-import { ResponseInterface } from '@shared/interfaces';
 import { Store } from '@ngxs/store';
-import { UserAction } from '../users/store/user.actions';
-import { UserSelectors } from '../users/store/user.selectors';
 import { AvatarComponent, IconComponent } from '@shared/components';
 import { DatePipe } from '@angular/common';
+import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
+import { HomeAction } from './store/home.actions';
 
 @Component({
   selector: 'app-home',
@@ -17,18 +15,19 @@ import { firstValueFrom } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
-  users: UserInterface[] = [];
-  totalUsers: TotalUsersInterface | undefined;
-  response!: ResponseInterface<UserInterface>;
-
   #store = inject(Store);
+  dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
 
-  ngOnInit(): void {
-    this.#store.dispatch([new UserAction.List(), new UserAction.TotalUsers]).subscribe(() => {
-      this.totalUsers = this.#store.selectSnapshot(UserSelectors.totalUsers);
-      this.response = this.#store.selectSnapshot(UserSelectors.list)!;
-      this.users = this.response.results;
-    })
+  async ngOnInit() {
+    (!this.dashboard) && this.loadData();
+  }
+
+  private async loadData() {
+    console.log('LoadData')
+    await firstValueFrom(this.#store.dispatch(new HomeAction.Get));
+    this.dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
+    console.log(this.dashboard)
+
   }
 
 }

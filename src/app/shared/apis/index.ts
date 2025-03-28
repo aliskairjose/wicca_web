@@ -1,4 +1,5 @@
 export enum Api {
+  Dashboard = 'dashboard',
   Settings = 'settings',
   Login = 'auth/login',
   Logout = 'auth/logout',

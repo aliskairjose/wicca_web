@@ -20,7 +20,7 @@
         </div>
         <div class="stat-title">Total registros</div>
         <div class="stat-value text-primary/80">
-          {{ totalUsers?.totalRegister }}
+          {{ dashboard?.totalRegister }}
         </div>
         <div class="stat-desc">21% ↗︎ than last month</div>
       </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="stat-title">Total clientes</div>
         <div class="stat-value text-warning/80">
-          {{ totalUsers?.totalUsers }}
+          {{ dashboard?.totalUsers }}
         </div>
         <div class="stat-desc">21% ↗︎ than last month</div>
       </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="stat-title">Total asesores</div>
         <div class="stat-value text-info/80">
-          {{ totalUsers?.totalAsesors }}
+          {{ dashboard?.totalAsesors }}
         </div>
         <div class="stat-desc">21% ↗︎ than last month</div>
       </div>
@@ -68,7 +68,7 @@
         </div>
         <div class="stat-title">Nuevos usuario</div>
         <div class="stat-value text-success/80">
-          {{ totalUsers?.totalNewUsers }}
+          {{ dashboard?.totalNewUsers }}
         </div>
         <div class="stat-desc">21% ↗︎ than last month</div>
       </div>
@@ -79,9 +79,9 @@
     <div class="float-start w-8/12 card"></div>
     <div class="card grow">
       <div class="card-body">
-        <h5>Nuevos registros</h5>
+        <h5 class="title">Nuevos registros</h5>
         <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-          @for (user of users.slice(0,5); track $index) {
+          @for (user of dashboard.newUsers; track $index) {
           <li class="flex items-start sm:items-center">
             <app-avatar [src]="user.avatar" class="me-3" />
             <div
@@ -91,9 +91,9 @@
                 <span class="text-sm text-base-content font-medium">
                   {{ user.name }} {{ user.lastName }}
                 </span>
-                <small class="text-base-content/50">{{
-                  user.createdAt | date
-                }}</small>
+                <small class="text-base-content/50">
+                  {{ user.createdAt | date }}
+                </small>
               </div>
               <div class="action max-sm:mt-1">
                 <!-- <button class="btn btn-primary btn-sm">Add</button> -->
@@ -107,4 +107,4 @@
   </div>
 </main>
 
-<!-- <span class="icon-[tabler--users-group]"></span> -->
+<!-- <span class="icon-[tabler--users-plus]"></span> -->
