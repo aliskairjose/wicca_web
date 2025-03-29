@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AvatarComponent, IconComponent } from '@shared/components';
-import { DatePipe } from '@angular/common';
+import { AvatarComponent, BadgeComponent, IconComponent } from '@shared/components';
+import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
@@ -9,7 +9,7 @@ import { HomeAction } from './store/home.actions';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, DecimalPipe, BadgeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -23,11 +23,8 @@ export class HomeComponent implements OnInit {
   }
 
   private async loadData() {
-    console.log('LoadData')
     await firstValueFrom(this.#store.dispatch(new HomeAction.Get));
     this.dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
-    console.log(this.dashboard)
-
   }
 
 }

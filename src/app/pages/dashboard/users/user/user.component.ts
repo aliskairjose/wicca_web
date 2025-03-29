@@ -25,7 +25,6 @@ export class UserComponent implements OnInit {
   #store = inject(Store);
   users: any[] = [];
 
-  rates = computed(() => Helper.calculateRate(this.user()!.rates));
   fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
 
   async ngOnInit() {

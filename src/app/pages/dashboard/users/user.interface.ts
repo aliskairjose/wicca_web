@@ -10,6 +10,7 @@ export interface UserInterface {
   role: RoleEnum;
   title?: string;
   price?: number;
+  rate?: number;
   description?: string;
   category?: string;
   language?: string[];

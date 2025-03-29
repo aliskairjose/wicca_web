@@ -65,9 +65,9 @@
           <li class="w-full">
             Calificación:
             <app-icon icon="star-filled" class="text-warning" />
-            {{ rates().rate | number : "1.1-1" }}/5
+            {{ user()?.rate }}/5
           </li>
-          <li class="w-full">Votos: {{ rates().votes }}</li>
+          <li class="w-full">Votos: {{ user()?.rates?.length }}</li>
           <li class="w-full">Consultas: 0</li>
         </ul>
       </div>
