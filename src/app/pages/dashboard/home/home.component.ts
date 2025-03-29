@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AvatarComponent, BadgeComponent, IconComponent } from '@shared/components';
-import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
+import { AvatarComponent, IconComponent } from '@shared/components';
+import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
@@ -9,7 +9,7 @@ import { HomeAction } from './store/home.actions';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, DecimalPipe, BadgeComponent],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, DecimalPipe, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

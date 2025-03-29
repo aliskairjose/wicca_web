@@ -3,9 +3,10 @@ import { Action, State, StateContext } from "@ngxs/store";
 import { HomeService } from "../home.service";
 import { HomeAction } from "./home.actions";
 import { tap } from "rxjs";
+import { DashboardInterface } from "../interfaces/dashboard.interface";
 
 export interface HomeStateModel {
-  dashboard: any;
+  dashboard: DashboardInterface | undefined;
 }
 
 @State<HomeStateModel>({
