@@ -1,4 +1,7 @@
-<app-table-container [metadata]="metadata" (onChange)="onChangeTable($event)">
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
   <table class="table">
     <thead>
       <tr>

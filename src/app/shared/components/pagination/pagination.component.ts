@@ -1,14 +1,13 @@
 import { Component, computed, input, output } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
-import { OPTION_DATA, SelectComponent } from '../select/select.component';
+import { OPTION_DATA } from '../select/select.component';
 import { LIMIT_PER_PAGE } from '@shared/constansts';
-import { PaginationInterface } from '@shared/interfaces';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [ButtonComponent, SelectComponent],
+  imports: [ButtonComponent],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })
@@ -20,16 +19,19 @@ export class PaginationComponent {
     { val: 20, title: '20' },
     { val: 50, title: '50' },
   ];
-  options = input<MetadataInterface>();
+  metadata = input.required<MetadataInterface>();
   onChangePage = output<number>();
 
-  currentPage = computed(() => this.options()?.currentPage);
-  controlPages = computed(() => [...new Array(this.options()?.totalPages)].map((_, i) => i + 1));
-  upperLimit = computed(() => this.currentPage()! * this.options()?.resultsLength!)
-  lowerLimit = computed(() => (this.upperLimit() - this.options()?.resultsLength!) + 1);
+  currentPage = computed(() => {
+    console.log(this.metadata())
+    return this.metadata().currentPage
+  });
+  controlPages = computed(() => [...new Array(this.metadata().totalPages)].map((_, i) => i + 1));
+  upperLimit = computed(() => this.currentPage() * this.metadata().resultsLength)
+  lowerLimit = computed(() => (this.upperLimit() - this.metadata().resultsLength) + 1);
 
   nextPrevPage(page: number): void {
-    if (page < 1 || page > this.options()!.totalPages) return;
+    if (page < 1 || page > this.metadata()!.totalPages) return;
     this.onChangePage.emit(page);
   }
 

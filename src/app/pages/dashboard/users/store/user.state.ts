@@ -22,20 +22,6 @@ export interface UsersStateModel {
 export class UsersState {
   #userService = inject(UserService);
 
-  // @Action(UserAction.Add)
-  // add(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Add) {
-  //   const stateModel = ctx.getState();
-  //   stateModel.users = [...stateModel.users, payload];
-  //   ctx.setState(stateModel);
-  // }
-
-  // @Action(UserAction.Update)
-  // update(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Update) {
-  //   const stateModel = ctx.getState();
-  //   stateModel.users = [...stateModel.users, payload];
-  //   ctx.setState(stateModel);
-  // }
-
   @Action(UserAction.Get)
   get(ctx: StateContext<UsersStateModel>, { id }: UserAction.Get) {
     const state = ctx.getState();

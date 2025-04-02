@@ -31,11 +31,12 @@ export class UsersComponent {
   #store = inject(Store);
 
   users: UserInterface[] = [];
-  metadata: MetadataInterface | undefined;
+  metadata = signal<MetadataInterface | undefined>(undefined);
   routeEnum = RoutesEnum;
 
   constructor() {
     const res = this.#store.selectSnapshot(UserSelectors.list);
+    console.log(res);
     (res)
       ? this.setData(res)
       : this.getData();
@@ -56,7 +57,7 @@ export class UsersComponent {
   private setData(data: ResponseInterface<UserInterface>): void {
     const { results, metadata } = data;
     this.users = results;
-    this.metadata = metadata;
+    this.metadata.set(metadata);
   }
 
 
