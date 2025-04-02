@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
       .isStable.pipe(first((isStable) => isStable))
       .subscribe(() => {
         this.#socket.connect();
-        console.log({ client: this.#socket.connected })
+        console.log({ client: this.#socket })
       });
   }
 

@@ -10,12 +10,12 @@ export class StatusDirective implements OnInit {
   #el = inject(ElementRef);
   #renderer = inject(Renderer2);
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     const text = this.appStatus ? 'Activo' : 'Inactivo';
-    const statusClass = this.appStatus ? 'badge-success' : ' badge-error';
-    const status = this.#renderer.createText( text );
+    const statusClass = this.appStatus ? 'badge-success' : 'badge-error';
+    const status = this.#renderer.createText(text);
 
-    this.#renderer.appendChild( this.#el.nativeElement, status );
+    this.#renderer.appendChild(this.#el.nativeElement, status);
     this.#renderer.addClass(this.#el.nativeElement, 'badge');
     this.#renderer.addClass(this.#el.nativeElement, 'badge-sm');
     this.#renderer.addClass(this.#el.nativeElement, 'badge-outline');

@@ -1,0 +1,1 @@
+export type ConnectStatusType = 'Online' | 'Offline' | 'Busy' | 'Away'; 

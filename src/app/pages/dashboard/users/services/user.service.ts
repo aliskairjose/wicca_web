@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Helper } from '@shared/helpers';
 import { Api } from '@shared/apis';
 import { UserInterface } from '../user.interface';
-import { ParamsInterface, ResponseInterface } from '@shared/interfaces';
+import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -12,19 +12,12 @@ import { ParamsInterface, ResponseInterface } from '@shared/interfaces';
 export class UserService {
   constructor(private readonly http: HttpClient) { }
 
-  list(params: ParamsInterface): Observable<ResponseInterface<UserInterface>> {
-    let httpParams = new HttpParams();
+  list(httpParams: ParamsInterface, pagination: PaginationInterface): Observable<ResponseInterface<UserInterface>> {
+    let params = new HttpParams();
+    Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
+    Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
 
-    (params.query) && (httpParams = httpParams.set('query', params.query));
-
-    (params.pagination) &&
-      Object.entries(params.pagination).forEach(([k, v]) => {
-        (v) && (httpParams = httpParams.set(k, v));
-      });
-
-    return this.http.get<ResponseInterface<UserInterface>>(Helper.baseUrl(Api.Users), {
-      params: httpParams,
-    });
+    return this.http.get<ResponseInterface<UserInterface>>(Helper.baseUrl(Api.Users), { params });
   }
 
   byId(id: string): Observable<UserInterface> {

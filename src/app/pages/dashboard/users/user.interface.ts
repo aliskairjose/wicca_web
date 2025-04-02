@@ -1,5 +1,6 @@
 import { RoleEnum } from '@shared/enums';
 import { RateInterface } from '@shared/interfaces';
+import { ConnectStatusType } from '@shared/types';
 
 export interface UserInterface {
   _id: string;
@@ -15,9 +16,9 @@ export interface UserInterface {
   category?: string;
   language?: string[];
   isActive: boolean;
-  isOnline?: boolean;
+  connectStatus: ConnectStatusType;
   socketId?: string;
-  lastConnect?: Date;
+  lastConnect: Date;
   phone: string;
   createdAt: Date;
   updatedAt: Date;

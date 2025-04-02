@@ -1,13 +1,13 @@
 import { Component, inject, input, OnInit, output, Signal, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { OPTION_DATA, SelectComponent } from '../select/select.component';
-import { PaginationType } from '@shared/types';
 import { PaginationInterface } from '@shared/interfaces';
 import { LIMIT_PER_PAGE } from '@shared/constansts';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { InputComponent } from '../input/input.component';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { MetadataInterface } from '@shared/interfaces/response.interface';
 
 @Component({
   selector: 'app-table-container',
@@ -18,7 +18,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 })
 export class TableContainerComponent implements OnInit {
   #term = '';
-  paginationOptions = input<PaginationType | undefined>(undefined);
+  metadata = input<MetadataInterface | undefined>(undefined);
   form!: FormGroup;
   #fb = inject(FormBuilder);
 

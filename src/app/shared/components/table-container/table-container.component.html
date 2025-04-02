@@ -24,7 +24,7 @@
   </div>
   <ng-content></ng-content>
   <app-pagination
-    [options]="paginationOptions()"
+    [options]="metadata()"
     (onChangePage)="onPageChange($event)"
   />
 </div>

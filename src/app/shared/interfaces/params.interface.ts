@@ -1,6 +1,5 @@
-import { PaginationInterface } from "./pagination.interface";
+import { RoleEnum } from "@shared/enums";
 
 export interface ParamsInterface {
-  query?: string;
-  pagination?:PaginationInterface,
+  [key: string]: string | boolean | RoleEnum;
 }

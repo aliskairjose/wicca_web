@@ -6,13 +6,12 @@ import { CommonModule } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { firstValueFrom } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PaginationInterface, ResponseInterface } from '@shared/interfaces';
-import { PaginationType } from '@shared/types';
+import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { RoutesEnum } from '@shared/enums';
 import { AvatarComponent, ButtonComponent, TableContainerComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
-import { LIMIT_PER_PAGE } from '@shared/constansts';
+import { MetadataInterface } from '@shared/interfaces/response.interface';
 
 @Component({
   selector: 'app-users',
@@ -22,12 +21,17 @@ import { LIMIT_PER_PAGE } from '@shared/constansts';
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
-  term = '';
-  pagination!: PaginationInterface
+  pagination: PaginationInterface = {
+    page: 1,
+    limit: 20
+  };
+  queryParams: ParamsInterface = {
+    search: ''
+  };
   #store = inject(Store);
 
   users: UserInterface[] = [];
-  paginationOptions = signal<PaginationType | undefined>(undefined);
+  metadata: MetadataInterface | undefined;
   routeEnum = RoutesEnum;
 
   constructor() {
@@ -38,25 +42,21 @@ export class UsersComponent {
   }
 
   async getData() {
-    const payload = {
-      pagination: this.pagination,
-      query: this.term
-    }
-    await firstValueFrom(this.#store.dispatch(new UserAction.List(payload)));
+    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
     const response = this.#store.selectSnapshot(UserSelectors.list)!;
     this.setData(response);
   }
 
   onChangeTable(e: any): void {
-    this.term = e.term;
+    this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
   }
 
   private setData(data: ResponseInterface<UserInterface>): void {
-    const { results, ...options } = data;
+    const { results, metadata } = data;
     this.users = results;
-    this.paginationOptions.set(options);
+    this.metadata = metadata;
   }
 
 
