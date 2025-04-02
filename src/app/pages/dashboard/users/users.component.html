@@ -17,7 +17,7 @@
       <tr class="hover">
         <td class="text-nowrap">
           <div class="flex">
-            <app-avatar [src]="user.avatar" />
+            <app-avatar [src]="user.avatar" [status]="user.connectStatus" />
             <div class="flex flex-col ms-1.5">
               <span class="font-medium"
                 >{{ user.name }} {{ user.lastName }}</span

@@ -14,7 +14,7 @@
 <ng-template #profile>
   <div class="card">
     <div class="card-header flex flex-col items-center gap-y-4">
-      <div class="avatar">
+      <div class="avatar" [class]="statusClass()">
         <div class="size-28 rounded-full">
           <img [src]="user()?.avatar" alt="avatar" />
         </div>
@@ -65,7 +65,7 @@
           <li class="w-full">
             Calificación:
             <app-icon icon="star-filled" class="text-warning" />
-            {{ user()?.rate }}/5
+            {{ user()?.rate ?? 0 }}/5
           </li>
           <li class="w-full">Votos: {{ user()?.rates?.length }}</li>
           <li class="w-full">Consultas: 0</li>

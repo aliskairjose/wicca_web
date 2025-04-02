@@ -10,6 +10,12 @@ import { RoleEnum } from '@shared/enums';
 import { IconComponent, AvatarComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 
+const ConnStatus = {
+  Online: 'online-top',
+  Offline: 'offline-top',
+  Busy: 'busy-top',
+  Away: 'away-top',
+}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -26,6 +32,8 @@ export class UserComponent implements OnInit {
   users: any[] = [];
 
   fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
+  statusClass = computed(() => `${ConnStatus[this.user()!.connectStatus]}`)
+
 
   async ngOnInit() {
     const params: Params = await firstValueFrom(this.#route.params);
