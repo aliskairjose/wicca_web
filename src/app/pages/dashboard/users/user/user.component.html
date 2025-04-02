@@ -1,6 +1,7 @@
 <main class="grid grid-cols-12 gap-8">
-  <div class="col-span-4">
+  <div class="col-span-4 space-y-6">
     <ng-container [ngTemplateOutlet]="profile"></ng-container>
+    <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
   </div>
   <div class="col-span-8 space-y-6">
     @if (user()?.role===role.Asesor) {
@@ -129,6 +130,35 @@
         <h6 class="text-center">¡No hay comentarios!</h6>
         }
       </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #dateInfo>
+  <div class="card">
+    <div class="card-body">
+      <div class="w-full">
+        <ul
+          class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse text-sm"
+        >
+          <li class="w-full text-left">
+            <!-- <small>Categoría</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.category }}
+            </p> -->
+            <small>Fecha registro</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.createdAt | date }}
+            </p>
+          </li>
+          <li class="w-full text-right">
+            <small>Última conexión</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.lastConnect | date : "medium" }}
+            </p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </ng-template>

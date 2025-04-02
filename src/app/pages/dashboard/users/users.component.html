@@ -9,6 +9,7 @@
         <th>Email</th>
         <th>Usuario</th>
         <th>Usuario desde</th>
+        <th>Última conexción</th>
         <th></th>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
           <span [appStatus]="user.isActive" class="w-full"></span>
         </td>
         <td class="text-nowrap">{{ user.createdAt | date }}</td>
+        <td class="text-nowrap">{{ user.lastConnect | date : "medium" }}</td>
         <td>
           <app-button
             [clear]="true"

@@ -11,11 +11,11 @@ import { IconComponent, AvatarComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 
 const ConnStatus = {
-  Online: 'online-top',
-  Offline: 'offline-top',
-  Busy: 'busy-top',
-  Away: 'away-top',
-}
+  Online: 'online-top', // Verde
+  Offline: 'busy-top', // Rojo cambia de offline a busy por el color
+  Busy: 'away-top', // Amarillo busy por away por el color
+  Away: 'offline-top', // blanco cambia de away a offline por el color
+};
 @Component({
   selector: 'app-user',
   standalone: true,
