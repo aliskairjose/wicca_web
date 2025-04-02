@@ -25,10 +25,7 @@ export class AppComponent implements OnInit {
     this.#socket = io(environmentDev.socket, { autoConnect: false });
     inject(ApplicationRef)
       .isStable.pipe(first((isStable) => isStable))
-      .subscribe(() => {
-        this.#socket.connect();
-        console.log({ client: this.#socket })
-      });
+      .subscribe(() => this.#socket.connect());
   }
 
   ngOnInit() {
