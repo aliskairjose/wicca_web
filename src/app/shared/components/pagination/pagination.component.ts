@@ -27,8 +27,8 @@ export class PaginationComponent {
     return this.metadata().currentPage
   });
   controlPages = computed(() => [...new Array(this.metadata().totalPages)].map((_, i) => i + 1));
-  upperLimit = computed(() => this.currentPage() * this.metadata().resultsLength)
-  lowerLimit = computed(() => (this.upperLimit() - this.metadata().resultsLength) + 1);
+  upperLimit = computed(() => ((this.metadata().currentPage - 1) * this.metadata().itemPerPage) + this.metadata().resultsLength);
+  lowerLimit = computed(() => (((this.metadata().currentPage - 1) * this.metadata().itemPerPage) + 1));
 
   nextPrevPage(page: number): void {
     if (page < 1 || page > this.metadata()!.totalPages) return;
