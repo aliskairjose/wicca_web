@@ -40,5 +40,16 @@ export class UsersState {
       .pipe(tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })));
   }
 
+  @Action(UserAction.Delete)
+  delete(ctx: StateContext<UsersStateModel>, { id }: UserAction.Delete) {
+    let state = ctx.getState();
+    let users = { ...state.users };
+    return this.#userService
+      .delete(id)
+      .pipe(tap((user: UserInterface) => {
+        users.results = state.users?.results.map(u => (u._id === user._id) ? user : u);
+        ctx.patchState({ users: state.users });
+      }));
+  }
 
 }

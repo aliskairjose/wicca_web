@@ -9,7 +9,7 @@
         <th>Email</th>
         <th>Usuario</th>
         <th>Usuario desde</th>
-        <th>Última conexción</th>
+        <th>Última conexión</th>
         <th></th>
       </tr>
     </thead>
@@ -48,6 +48,7 @@
             icon="trash"
             shape="circle"
             theme="secondary"
+            (clickHandler)="delete(user._id)"
           />
           <app-button
             [clear]="true"

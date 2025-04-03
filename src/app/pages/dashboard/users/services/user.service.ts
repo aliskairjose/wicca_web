@@ -5,6 +5,7 @@ import { Helper } from '@shared/helpers';
 import { Api } from '@shared/apis';
 import { UserInterface } from '../user.interface';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
+import { ConnectStatusEnum } from '@shared/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,10 @@ export class UserService {
 
   totalUsers(): Observable<any> {
     return this.http.get(Helper.baseUrl(Api.UsersTotals));
+  }
+
+  delete(id: string): Observable<UserInterface> {
+    const body = { isActive: false, connectStatus: ConnectStatusEnum.Away }
+    return this.http.patch<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`, body);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Action, Store } from '@ngxs/store';
 import { UserInterface } from './user.interface';
 import { UserAction } from './store/user.actions';
 import { CommonModule } from '@angular/common';
@@ -43,6 +43,7 @@ export class UsersComponent {
   }
 
   async getData() {
+    console.log('GetData')
     await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
     const response = this.#store.selectSnapshot(UserSelectors.list)!;
     this.setData(response);
@@ -52,6 +53,10 @@ export class UsersComponent {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
+  }
+
+  delete(id: string): void {
+    this.#store.dispatch(new UserAction.Delete(id)).subscribe(() => this.getData());
   }
 
   private setData(data: ResponseInterface<UserInterface>): void {

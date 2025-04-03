@@ -1,7 +1,6 @@
 export enum ConnectStatusEnum {
-  Online = 'En línea',
-  Offline = 'Desconectado',
-  Busy = 'Opcupado',
-  Away = 'Fuera'
-
+  Online = 'Online',
+  Offline = 'Offline',
+  Busy = 'Busy',
+  Away = 'Away'
 }
