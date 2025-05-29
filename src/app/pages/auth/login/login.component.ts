@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { ButtonComponent, InputComponent } from '@shared/components';
-import { ToastService } from '@shared/services';
+import { SocketService, ToastService } from '@shared/services';
 import { AuthActions } from '../store/auth.actions';
 import { MessageEnum, RoutesEnum } from '@shared/enums';
 import { Router, RouterModule } from '@angular/router';
@@ -22,6 +22,7 @@ export class LoginComponent {
   #store = inject(Store);
   #router = inject(Router);
   #toastService = inject(ToastService);
+  #socketService = inject(SocketService);
 
   ngOnInit(): void {
     this._loadForm();
@@ -37,8 +38,9 @@ export class LoginComponent {
 
   private _login(data: any): void {
     this.#store.dispatch(new AuthActions.Login(data)).subscribe(() => {
+      this.#socketService.connect();
       this.#toastService.show(MessageEnum.Welcome);
-        this.#router.navigate([RoutesEnum.Dashboard]);
+      this.#router.navigate([RoutesEnum.Dashboard]);
     });
   }
 

@@ -26,6 +26,7 @@ import { AuthState } from './pages/auth/store/auth.state';
 import { environmentDev } from '@envs/env.devs';
 import { UsersState } from './pages/dashboard/users/store/user.state';
 import { HomeState } from './pages/dashboard/home/store/home.state';
+import { ChatState } from './pages/dashboard/chat/store/chat.state';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -38,7 +39,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(),
     provideStore(
-      [AuthState, UsersState, HomeState],
+      [AuthState, UsersState, HomeState, ChatState],
       {
         developmentMode: !environmentDev.production,
       },

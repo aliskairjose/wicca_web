@@ -2,6 +2,8 @@ import { ApplicationRef, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { environmentDev } from '@envs/env.devs';
+import { SocketEventEnum } from '@shared/enums/socket.events.enum';
+import { SocketService } from '@shared/services';
 import { IStaticMethods } from 'flyonui/flyonui';
 import { first } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
@@ -18,14 +20,14 @@ declare global {
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  #socket: Socket;
   router = inject(Router);
+  socketService = inject(SocketService);
 
   constructor() {
-    this.#socket = io(environmentDev.socket, { autoConnect: false });
     inject(ApplicationRef)
       .isStable.pipe(first((isStable) => isStable))
-      .subscribe(() => this.#socket.connect());
+      .subscribe(() => console.log('App is stable'));
+    // .subscribe(() => this.socketService.connect());
   }
 
   ngOnInit() {

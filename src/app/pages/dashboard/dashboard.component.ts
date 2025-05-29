@@ -5,7 +5,7 @@ import { ButtonComponent, DashbarComponent } from '@shared/components';
 import { FooterComponent } from '@shared/components/footer/footer.component';
 import { MENU } from '@shared/constansts/menu.constant';
 import { AuthActions } from '../auth/store/auth.actions';
-import { ToastService } from '@shared/services';
+import { SocketService, ToastService } from '@shared/services';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,14 +17,16 @@ import { ToastService } from '@shared/services';
 export class DashboardComponent {
 
   menu = MENU;
-  #store = inject( Store );
-  #router = inject( Router );
+  #store = inject(Store);
+  #router = inject(Router);
   #notify = inject(ToastService)
+  #socketService = inject(SocketService);
 
-  signout (): void {
-    this.#store.dispatch( new AuthActions.Logout() ).subscribe( () => {
-      this.#notify.show( 'Hasta luego' );
-      this.#router.navigate( [ '.' ] );
+  signout(): void {
+    this.#store.dispatch(new AuthActions.Logout()).subscribe(() => {
+      this.#socketService.disconnect(); 
+      this.#notify.show('Hasta luego');
+      this.#router.navigate(['.']);
     })
   }
 

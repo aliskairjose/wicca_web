@@ -46,6 +46,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: RoutesEnum.Chats,
+        title: 'Listado de chsta',
+        loadComponent: () =>
+          import('./pages/dashboard/chat/chat.component').then(
+            (m) => m.ChatComponent
+          ),
+      },
+      {
         path: `${RoutesEnum.Users}/${RoutesEnum.User}/:id`,
         title: 'Detalle de usuario',
         loadComponent: () =>

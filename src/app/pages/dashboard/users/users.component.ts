@@ -36,14 +36,12 @@ export class UsersComponent {
 
   constructor() {
     const res = this.#store.selectSnapshot(UserSelectors.list);
-    console.log(res);
     (res)
       ? this.setData(res)
       : this.getData();
   }
 
   async getData() {
-    console.log('GetData')
     await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
     const response = this.#store.selectSnapshot(UserSelectors.list)!;
     this.setData(response);

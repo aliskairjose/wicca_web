@@ -1,10 +1,14 @@
 export enum Api {
   Dashboard = 'dashboard',
   Settings = 'settings',
-  Login = 'auth/login',
-  Logout = 'auth/logout',
-  Register = 'auth/register',
+  Login = 'auth/sign-in',
+  Logout = 'auth/sign-out',
+  Register = 'auth/sign-up',
+  ForgotPassword = 'auth/forgot-password',
+  ResetPassword = 'auth/reset-password',
   Menu = 'web-menu',
   Users = 'users',
+  Rooms = 'chat/rooms',
+  Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards'
 }

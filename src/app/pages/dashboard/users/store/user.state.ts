@@ -29,7 +29,10 @@ export class UsersState {
       ? ctx
       : this.#userService
         .byId(id)
-        .pipe(tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })));
+        .pipe(
+          tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })
+          )
+        );
   }
 
   @Action(UserAction.List)
@@ -37,7 +40,10 @@ export class UsersState {
     payload ??= {};
     return this.#userService
       .list(payload, pagination)
-      .pipe(tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })));
+      .pipe(
+        tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })
+        )
+      );
   }
 
   @Action(UserAction.Delete)
@@ -48,7 +54,8 @@ export class UsersState {
       .pipe(tap((user: UserInterface) => {
         state.users?.results.map(u => (u._id === user._id) ? user : u);
         ctx.patchState({ users: state.users });
-      }));
+      })
+      );
   }
 
 }

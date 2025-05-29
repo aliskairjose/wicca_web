@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Api } from '@shared/apis';
+import { RoleEnum } from '@shared/enums';
 import { Helper } from '@shared/helpers';
 import { Observable } from 'rxjs';
 
@@ -8,9 +9,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
+
+    data = { ...data, role: RoleEnum.Admin };
     return this.http.post(Helper.baseUrl(Api.Login), data);
   }
 
