@@ -32,7 +32,6 @@ export class ChatState {
   ) {
     const state = ctx.getState();
     payload ??= {};
-    console.log('ChatActions RoomList', state.rooms);
     return state.rooms ??
       this.#chatService
         .rooms(payload, pagination)

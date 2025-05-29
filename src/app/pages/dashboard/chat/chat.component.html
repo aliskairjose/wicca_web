@@ -1,6 +1,37 @@
-<p>chat works!</p>
-<ul>
-  @for (room of rooms; track $index) {
-  <li>{{ room._id }}</li>
-  }
-</ul>
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Members</th>
+        <th>Messages</th>
+        <th>Fecha Creación</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (room of rooms; track $index) {
+      <tr class="hover">
+        <td>{{ room._id }}</td>
+        <td>{{ room.members.length }}</td>
+        <td>{{ room.messages.length }}</td>
+        <td class="text-nowrap">{{ room.createdAt | date }}</td>
+        <!-- <td class="text-nowrap">{{ user.lastConnect | date : "medium" }}</td> -->
+      </tr>
+      }
+    </tbody>
+  </table>
+</app-table-container>
+
+<!-- <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+  <span class="icon-[tabler--pencil] size-5"></span>
+</button>
+<button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+  <span class="icon-[tabler--trash] size-5"></span>
+</button>
+<button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
+  <span class="icon-[tabler--dots-vertical] size-5"></span>
+</button> -->
