@@ -9,12 +9,12 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TableContainerComponent } from '@shared/components';
+import { AvatarComponent, TableContainerComponent } from '@shared/components';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TableContainerComponent],
+  imports: [CommonModule, ReactiveFormsModule, TableContainerComponent, AvatarComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
