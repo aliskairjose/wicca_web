@@ -31,6 +31,14 @@
         </td>
         <td>{{ room.messages.length }}</td>
         <td class="text-nowrap">{{ room.createdAt | date }}</td>
+        <td>
+          <app-button
+            [clear]="true"
+            icon="eye"
+            shape="circle"
+            theme="secondary"
+          />
+        </td>
       </tr>
       }
     </tbody>
@@ -40,6 +48,6 @@
 <ng-template #user let-user="user">
   <div class="flex items-center gap-2">
     <app-avatar [src]="user.avatar" size="sm" />
-    <span>{{ user.name }} {{ user.lastName }}</span>
+    <span class="text-sm">{{ user.name }} {{ user.lastName }}</span>
   </div>
 </ng-template>
