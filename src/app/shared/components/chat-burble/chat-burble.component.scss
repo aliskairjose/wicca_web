@@ -1,0 +1,19 @@
+.chat-burble {
+  @apply  min-w-[25%] max-w-[60%] p-2 rounded text-sm;
+  &.burble-l{
+    @apply place-self-start bg-gray-100;
+  }
+  &.burble-r{
+    @apply place-self-end bg-primary-content;
+  }
+
+  small.user{
+    @apply gap-1 font-semibold;
+  }
+  small.role {
+    @apply text-secondary ;
+  }
+  .time {
+    @apply text-secondary text-xs place-self-end text-[0.625rem];
+  }
+}

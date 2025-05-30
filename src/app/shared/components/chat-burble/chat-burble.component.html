@@ -1,0 +1,16 @@
+<li>
+  <div
+    class="chat-burble"
+    [class.burble-r]="message().sender.role === 'User'"
+    [class.burble-l]="message().sender.role === 'Asesor'"
+  >
+    <div class="flex justify-between">
+      <small class="user">
+        {{ message().sender.name }}
+      </small>
+      <small class="role">{{ role[message().sender.role] }}</small>
+    </div>
+    <p>{{ message().message }}</p>
+    <p class="time">{{ message().createdAt | date : "MMM d, y, h:mm a" }}</p>
+  </div>
+</li>

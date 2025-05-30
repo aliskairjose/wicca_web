@@ -8,7 +8,7 @@
         <th>Id</th>
         <th>Cliente</th>
         <th>Asesor</th>
-        <th>Messages</th>
+        <th>Mensajes</th>
         <th>Fecha Creación</th>
         <th></th>
       </tr>
@@ -66,7 +66,12 @@
   <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Room:{{ selectedRoom?._id }}</h3>
+        <h3 class="modal-title">
+          Room: {{ selectedRoom?._id }}
+          <span class="text-sm block">
+            Cuarto creado el: {{ selectedRoom?.createdAt | date }}
+          </span>
+        </h3>
         <button
           type="button"
           class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
@@ -77,56 +82,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="text-justify">
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel
-          scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
-          laoreet rutrum faucibus dolor auctorAenean lacinia bibendum nulla sed
-          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-          <br />
-          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
-          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
-          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
-          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
-          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-          vestibulum at eros.raesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
-          <br />
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
-          fringilla.Cras mattis consectetur purus sit amet fermentum. Cras justo
-          odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus,
-          porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus
-          magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-          augue laoreet rutrum faucibus dolor auctor.lacinia bibendum nulla sed
-          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-          <br />
-          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
-          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
-          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
-          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
-          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-          vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
-          fringilla.
-        </p>
+        <ul>
+          @for (m of selectedRoom?.messages; track $index) {
+          <app-chat-burble [message]="m" />
+          }
+        </ul>
       </div>
       <div class="modal-footer">
         <button
@@ -134,9 +94,8 @@
           class="btn btn-soft btn-secondary"
           (click)="closeModal()"
         >
-          Close
+          Cerrar
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

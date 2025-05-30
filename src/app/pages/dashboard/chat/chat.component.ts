@@ -9,13 +9,13 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AvatarComponent, ButtonComponent, TableContainerComponent } from '@shared/components';
+import { AvatarComponent, ButtonComponent, ChatBurbleComponent, TableContainerComponent } from '@shared/components';
 import { HSOverlay } from 'flyonui/flyonui';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TableContainerComponent, AvatarComponent, ButtonComponent],
+  imports: [CommonModule, ReactiveFormsModule, TableContainerComponent, AvatarComponent, ButtonComponent, ChatBurbleComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
