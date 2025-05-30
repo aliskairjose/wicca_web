@@ -1,5 +1,5 @@
 .chat-burble {
-  @apply  min-w-[25%] max-w-[60%] p-2 rounded text-sm;
+  @apply  min-w-[25%] max-w-[60%] p-2 rounded text-sm mb-1.5;
   &.burble-l{
     @apply place-self-start bg-gray-100;
   }
