@@ -1,0 +1,30 @@
+<div class="w-full overflow-x-auto py-6 px-4 card-bordered">
+  <div class="flex gap-4 items-center justify-between mb-6">
+    <div class="flex gap-2 items-center">
+      <span class="text-sm">Filtrar:</span>
+      <div class="w-full">
+        <form [formGroup]="form">
+          <app-input
+            formControlName="term"
+            [placeholder]="'Buscar...'"
+            [type]="'search'"
+          />
+        </form>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-sm">Item por página</span>
+      <app-select
+        [data]="itemsPerPage"
+        class="min-w-20"
+        [defaultValue]="20"
+        (changeHandler)="onChanteItemPerPage($event)"
+      />
+    </div>
+  </div>
+  <ng-content></ng-content>
+  <app-pagination
+    [metadata]="metadata()!"
+    (onChangePage)="onPageChange($event)"
+  />
+</div>

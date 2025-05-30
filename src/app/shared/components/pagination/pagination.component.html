@@ -1,0 +1,39 @@
+<div
+  class="flex justify-between items-center font-medium w-full border-t border-secondary-content mt-6 pt-4 text-sm px-6"
+>
+  <span>
+    Mostrando
+    <span class="font-semibold text-black"
+      >{{ lowerLimit() }} a {{ upperLimit() }}</span
+    >
+    de
+    <span class="font-medium">{{ metadata().totalRecords }}</span>
+  </span>
+  <div class="flex">
+    <nav class="flex items-center gap-x-1">
+      <app-button
+        text="Anterior"
+        [clear]="true"
+        theme="primary"
+        (click)="nextPrevPage(metadata().currentPage - 1)"
+      />
+      <div class="flex items-center gap-x-1">
+        @for (page of controlPages(); track $index) {
+        <app-button
+          [text]="page"
+          [clear]="metadata().currentPage !== page"
+          shape="square"
+          theme="primary"
+          (clickHandler)="selectPage(page)"
+        />
+        }
+      </div>
+      <app-button
+        text="Siguiente"
+        [clear]="true"
+        theme="primary"
+        (click)="nextPrevPage(metadata().currentPage + 1)"
+      />
+    </nav>
+  </div>
+</div>

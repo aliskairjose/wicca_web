@@ -25,11 +25,11 @@
 </ng-template>
 
 <ng-template #passwordInput>
-  <div>
+  <div class="w-full">
     <label class="label label-text" for="toggle-password-label">
       {{ label() }}
     </label>
-    <div class="input-group max-w-sm">
+    <div class="input-group w-full">
       <input
         id="toggle-password-label"
         type="password"
@@ -37,8 +37,6 @@
         [(ngModel)]="value"
         (ngModelChange)="onValueChange($event)"
         class="input"
-        placeholder="Enter password"
-        value="Pwd_1242@mA1"
         [class.is-invalid]="
           (control().invalid && control().dirty) ||
           (control().invalid && isSubmitted())
@@ -65,12 +63,8 @@
 </ng-template>
 
 <ng-template #otherwise>
-  <div class="max-w-sm">
-    <label
-      [id]="inputLabel"
-      class="label label-text-alt"
-      for="labelAndHelperText"
-    >
+  <div class="w-full">
+    <label [id]="inputLabel" class="label label-text" for="labelAndHelperText">
       {{ label() }}
     </label>
     <input
@@ -79,7 +73,7 @@
       [placeholder]="placeholder()"
       [(ngModel)]="value"
       (ngModelChange)="onValueChange($event)"
-      class="input input-{{ size() }} max-w-sm"
+      class="input"
       [class.is-invalid]="
         (control().invalid && control().dirty) ||
         (control().invalid && isSubmitted())

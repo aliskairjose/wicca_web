@@ -15,7 +15,6 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   ValidationErrors,
-  Validator,
   Validators,
 } from '@angular/forms';
 import { Helper } from '@shared/helpers';
@@ -36,7 +35,6 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class InputComponent implements ControlValueAccessor, Validators, OnChanges {
-  size = input<string>();
   placeholder = input<string>('');
   type = input<Type>('text');
   label = input<string>('');

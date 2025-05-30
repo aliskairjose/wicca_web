@@ -1,0 +1,173 @@
+<main class="space-y-8">
+  <div class="grid grid-cols-4 gap-4">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-group" size="10" class="text-primary/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Total registros</div>
+        <div class="stat-value text-primary/80">
+          {{ dashboard?.totalRegister }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-group" size="10" class="text-warning/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Total clientes</div>
+        <div class="stat-value text-warning/80">
+          {{ dashboard?.totalUsers }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-group" size="10" class="text-info/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Total asesores</div>
+        <div class="stat-value text-info/80">
+          {{ dashboard?.totalAsesors }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-figure">
+          <div class="avatar">
+            <div class="size-12 rounded-full">
+              <app-icon icon="users-plus" size="10" class="text-success/80" />
+            </div>
+          </div>
+        </div>
+        <div class="stat-title">Nuevos usuario</div>
+        <div class="stat-value text-success/80">
+          {{ dashboard?.totalNewUsers }}
+        </div>
+        <div class="stat-desc">21% ↗︎ than last month</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-x-6">
+    <div class="float-start w-5/12 card"></div>
+    <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
+    <ng-container [ngTemplateOutlet]="newUsers"></ng-container>
+  </div>
+
+  <div>
+    <h5>Top 10</h5>
+    <div class="flex overflow-x-auto gap-2 relative p-2">
+      @for (item of dashboard?.topAsesors; track $index) {
+      <div class="card sm:card-side w-72 min-h-16 ps-2">
+        <app-avatar [src]="item.avatar" size="lg" class="m-auto" />
+        <div class="card-body justify-between">
+          <p class="font-semibold mb-1.5">
+            {{ item.name }} {{ item.lastName }}
+          </p>
+          <small>{{ item.category }}</small>
+          <div class="flex justify-between mt-1.5">
+            <span>
+              <app-icon icon="star-filled" theme="warning" />
+              <small class="">
+                {{ item.rate ?? 0 | number : "1.1-1" }}/5
+              </small>
+            </span>
+            <span
+              class="badge badge-primary badge-outline place-self-end badge-sm"
+            >
+              {{ item.price | currency }}/min
+            </span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</main>
+
+<ng-template #topAsesors>
+  <div class="card grow">
+    <div class="card-body">
+      <h5 class="title">Top asesores</h5>
+      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+        @for (user of dashboard?.topAsesors; track $index) {
+        <li class="flex items-start sm:items-center">
+          <app-avatar [src]="user.avatar" class="me-3" />
+          <div
+            class="flex grow flex-col items-start justify-between sm:flex-row"
+          >
+            <div class="user-info flex flex-col">
+              <span class="text-sm text-base-content font-medium">
+                {{ user.name }} {{ user.lastName }}
+              </span>
+              <small class="text-base-content/50">
+                {{ user.category }}
+              </small>
+            </div>
+            <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
+              <span class="flex gap-1">
+                <app-icon icon="star-filled" theme="warning" size="3" />
+                <small>{{ user.rate ?? 0 | number : "1.1-1" }}/5</small>
+              </span>
+              <span class="badge badge-primary badge-outline badge-xs">
+                {{ user.price | currency }}
+              </span>
+            </div>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #newUsers>
+  <div class="card grow">
+    <div class="card-body">
+      <h5 class="title">Nuevos registros</h5>
+      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+        @for (user of dashboard?.newUsers; track $index) {
+        <li class="flex items-start sm:items-center">
+          <app-avatar [src]="user.avatar" class="me-3" />
+          <div
+            class="flex grow flex-col items-start justify-between sm:flex-row"
+          >
+            <div class="user-info flex flex-col">
+              <span class="text-sm text-base-content font-medium">
+                {{ user.name }} {{ user.lastName }}
+              </span>
+              <small class="text-base-content/50">
+                {{ user.createdAt | date }}
+              </small>
+            </div>
+            <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
+              <span class="badge badge-primary badge-outline badge-xs">
+                {{ user.role }}
+              </span>
+            </div>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+<!-- <span class="icon-[tabler--users-plus]"></span><span class="icon-[tabler--users-group]"></span> -->

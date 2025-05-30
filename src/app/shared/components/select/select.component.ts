@@ -13,7 +13,7 @@ import { Helper } from '@shared/helpers';
 import { CommonModule } from '@angular/common';
 
 export interface OPTION_DATA {
-  val: string;
+  val: string | number;
   title: string;
 }
 @Component({
@@ -31,7 +31,6 @@ export interface OPTION_DATA {
   ],
 })
 export class SelectComponent implements Validator, ControlValueAccessor, OnChanges {
-  // placeholder = input.required<string>();
   errorMessage = signal('');
   isSubmitted = input<boolean>(false);
   data = input.required<OPTION_DATA[]>();
@@ -39,6 +38,7 @@ export class SelectComponent implements Validator, ControlValueAccessor, OnChang
   changeHandler = output<any>();
   value = '';
   label = input<string>('');
+  defaultValue = input<string | number>();
 
   #onChange: any = () => {};
   #onTouched: any = () => {};

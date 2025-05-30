@@ -6,9 +6,11 @@
   [class.btn-outline]="outline()"
   (click)="onClickHandler()"
 >
-  @if(!shape()){
+  <!-- @if(!shape()){
   {{ text() }}
-  } @if (icon()) {
+  }  -->
+  {{ text() }}
+  @if (icon()) {
   <span class="icon-[tabler--{{ icon() }}]"></span>
   }
 </button>

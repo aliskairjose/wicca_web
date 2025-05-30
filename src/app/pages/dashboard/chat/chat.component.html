@@ -1,0 +1,143 @@
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Cliente</th>
+        <th>Asesor</th>
+        <th>Messages</th>
+        <th>Fecha Creación</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (room of rooms; track $index) {
+      <tr class="hover">
+        <td>{{ room._id }}</td>
+        <td>
+          <ng-container
+            [ngTemplateOutlet]="user"
+            [ngTemplateOutletContext]="{ user: room.members[0] }"
+          ></ng-container>
+        </td>
+        <td>
+          <ng-container
+            [ngTemplateOutlet]="user"
+            [ngTemplateOutletContext]="{ user: room.members[1] }"
+          ></ng-container>
+        </td>
+        <td>{{ room.messages.length }}</td>
+        <td class="text-nowrap">{{ room.createdAt | date }}</td>
+        <td>
+          <app-button
+            [clear]="true"
+            icon="eye"
+            shape="circle"
+            theme="secondary"
+            (clickHandler)="openModal(room._id)"
+          />
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</app-table-container>
+
+<ng-template #user let-user="user">
+  <span class="badge badge-outline badge-primary badge-lg">
+    <img
+      [src]="user.avatar"
+      alt="{{ user.name }}"
+      class="size-4.5 rounded-full"
+    />
+    {{ user.name }} {{ user.lastName }}
+  </span>
+</ng-template>
+
+<div
+  id="scroll-inside-modal"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Room:{{ selectedRoom?._id }}</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-justify">
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel
+          scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+          laoreet rutrum faucibus dolor auctorAenean lacinia bibendum nulla sed
+          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
+          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+          <br />
+          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
+          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
+          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
+          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
+          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
+          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
+          vestibulum at eros.raesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
+          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
+          <br />
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+          fringilla.Cras mattis consectetur purus sit amet fermentum. Cras justo
+          odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus,
+          porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus
+          magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
+          augue laoreet rutrum faucibus dolor auctor.lacinia bibendum nulla sed
+          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
+          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+          <br />
+          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
+          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
+          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
+          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
+          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
+          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
+          vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
+          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+          fringilla.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-secondary"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

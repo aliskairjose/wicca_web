@@ -1,10 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ApplicationRef, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BadgeComponent ,ButtonComponent} from '@shared/components';
 import { Router, Event, NavigationEnd } from '@angular/router';
-
+import { environmentDev } from '@envs/env.devs';
+import { SocketEventEnum } from '@shared/enums/socket.events.enum';
+import { SocketService } from '@shared/services';
 import { IStaticMethods } from 'flyonui/flyonui';
-import { SwitchComponent } from "./shared/components/switch/switch.component";
+import { first } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;
@@ -13,27 +15,29 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SwitchComponent, ButtonComponent, SwitchComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'Wicca';
   router = inject(Router);
+  socketService = inject(SocketService);
 
-  data = [
-    {val:'1', title:'The Godfather'},
-    {val:'2', title:'The Shawshank Redemption'},
-  ]
+  constructor() {
+    inject(ApplicationRef)
+      .isStable.pipe(first((isStable) => isStable))
+      .subscribe(() => console.log('App is stable'));
+    // .subscribe(() => this.socketService.connect());
+  }
 
-  image = "https://cdn.flyonui.com/fy-assets/avatar/avatar-1.png";
   ngOnInit() {
+
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
-         if(typeof window != 'undefined'){
-           window.HSStaticMethods.autoInit();
-         }
+          if (typeof window != 'undefined') {
+            window.HSStaticMethods.autoInit();
+          }
         }, 100);
       }
     });

@@ -1,0 +1,33 @@
+<main>
+  <div class="login-container">
+    <h3>Acceso al panel</h3>
+    <div class="w-full flex flex-col justify-center">
+      <form [formGroup]="form">
+        <div
+          class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
+        >
+          <app-input
+            [control]="f['email']"
+            formControlName="email"
+            label="Correo electrónico"
+            type="email"
+          />
+          <app-input
+            [control]="f['password']"
+            formControlName="password"
+            label="Contraseña"
+            type="password"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="w-full">
+      <app-button
+        (clickHandler)="onSubmit()"
+        text="Ingresar"
+        width="block"
+        theme="primary"
+      />
+    </div>
+  </div>
+</main>

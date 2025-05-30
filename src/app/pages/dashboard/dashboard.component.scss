@@ -1,0 +1,12 @@
+.wrapper {
+  @apply relative flex h-screen max-h-screen top-0;
+  .sidebar{
+    @apply hidden  bg-white min-w-64 p-4 relative lg:flex flex-col;
+    .router-link-active{
+      @apply bg-transparent text-primary;
+    }
+  }
+  .main-panel{
+    @apply flex flex-col justify-between bg-slate-100 md:pt-6 pt-10 relative float-start grow overflow-scroll px-6 py-4 h-screen;
+  }
+}

@@ -1,0 +1,161 @@
+<main class="grid grid-cols-12 gap-8">
+  <div class="col-span-4 space-y-6">
+    <ng-container [ngTemplateOutlet]="profile"></ng-container>
+    <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
+  </div>
+  <div class="col-span-8 space-y-6">
+    @if (user()?.role===role.Asesor) {
+    <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
+    <ng-container [ngTemplateOutlet]="bio"></ng-container>
+    }
+    <ng-container [ngTemplateOutlet]="rateList"></ng-container>
+  </div>
+</main>
+
+<ng-template #profile>
+  <div class="card">
+    <div class="card-header flex flex-col items-center gap-y-4">
+      <div class="avatar" [class]="statusClass()">
+        <div class="size-28 rounded-full">
+          <img [src]="user()?.avatar" alt="avatar" />
+        </div>
+      </div>
+      <div class="card-title text-primary/80 text-center">
+        {{ fullName() }}
+        <p class="text-base text-secondary font-light text-center">
+          {{ user()?.email }}
+        </p>
+      </div>
+    </div>
+    <div class="card-body">
+      @if(user()?.role === role.Asesor){
+      <div>
+        <ul class="list-none space-y-1.5">
+          <li>
+            <small>Categoría</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.category }}
+            </p>
+          </li>
+          <li>
+            <small>Idiomas</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.language }}
+            </p>
+          </li>
+          <li>
+            <small>Costo/min</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.price | currency }}/min.
+            </p>
+          </li>
+        </ul>
+      </div>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #ratesTemplate>
+  <div class="card">
+    <div class="card-body">
+      <div class="w-full">
+        <ul
+          class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md border *:p-3 first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse"
+        >
+          <li class="w-full">
+            Calificación:
+            <app-icon icon="star-filled" class="text-warning" />
+            {{ user()?.rate ?? 0 }}/5
+          </li>
+          <li class="w-full">Votos: {{ user()?.rates?.length }}</li>
+          <li class="w-full">Consultas: 0</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #bio>
+  <div class="card">
+    <div class="card-body">
+      @if(user()?.role === role.Asesor){
+      <div>
+        <h5 class="text-secondary">{{ user()?.title }}</h5>
+        <div class="mt-2.5">
+          <h6 class="mb-1.5 text-secondary">Acerca de mi</h6>
+          <p>{{ user()?.description }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #rateList>
+  <div class="card">
+    <div class="card-body space-y-3">
+      <h5 class="title">
+        {{
+          user()?.role === role.Asesor
+            ? "Comentarios de clientes"
+            : "Mis comentarios"
+        }}
+      </h5>
+      <ul
+        class="border-base-content/25 divide-base-content/25 divide-y-[1px] space-y-2"
+      >
+        @for (rate of user()?.rates; track $index;let first=$first) {
+        <li [class.pt-2]="!first">
+          <span class="text-sm font-medium">
+            {{ rate.title }}
+            <app-icon icon="star-filled" class="text-warning" />
+            {{ rate.rate }}/5
+          </span>
+          <p>{{ rate.comment }}</p>
+          <div class="flex justify-end gap-1.5">
+            @if (user()?.role===role.Asesor) {
+            <app-avatar [src]="rate.user[0].avatar" size="sm" />
+            <small>{{ rate.user[0].name }} {{ rate.user[0].lastName }},</small>
+            }@else {
+            <app-avatar [src]="rate.asesor[0].avatar" size="sm" />
+            <small
+              >{{ rate.asesor[0].name }} {{ rate.asesor[0].lastName }},</small
+            >
+            }
+            <small>{{ rate.createdAt | date }}</small>
+          </div>
+        </li>
+        }@empty {
+        <h6 class="text-center">¡No hay comentarios!</h6>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #dateInfo>
+  <div class="card">
+    <div class="card-body">
+      <div class="w-full">
+        <ul
+          class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse text-sm"
+        >
+          <li class="w-full text-left">
+            <small>Fecha registro</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.createdAt | date }}
+            </p>
+          </li>
+          <li class="w-full text-right">
+            <small>Última conexión</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user()?.lastConnect | date : "medium" }}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- <span class="icon-[tabler--star-filled]"></span> -->
