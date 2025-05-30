@@ -1,6 +1,5 @@
 import { ResponseInterface } from "@shared/interfaces";
 import { RoomInterface } from "../interfaces/room.interface";
-import { MessageInterface } from "../interfaces/message.interface";
 import { Action, State, StateContext } from "@ngxs/store";
 import { Injectable, inject } from '@angular/core';
 import { ChatService } from '../chat.service';
@@ -9,7 +8,6 @@ import { tap } from "rxjs";
 
 export interface ChatStateModel {
   rooms: ResponseInterface<RoomInterface> | undefined;
-  messages: ResponseInterface<MessageInterface> | undefined;
   selectedRoom: RoomInterface | undefined;
 }
 
@@ -17,7 +15,6 @@ export interface ChatStateModel {
   name: 'chats',
   defaults: {
     rooms: undefined,
-    messages: undefined,
     selectedRoom: undefined,
   }
 })
@@ -25,10 +22,10 @@ export interface ChatStateModel {
 export class ChatState {
   #chatService = inject(ChatService);
 
-  @Action(ChatActions.RoomList)
+  @Action(ChatActions.List)
   roomList(
     ctx: StateContext<ChatStateModel>,
-    { payload, pagination }: ChatActions.RoomList,
+    { payload, pagination }: ChatActions.List,
   ) {
     const state = ctx.getState();
     payload ??= {};
@@ -42,8 +39,8 @@ export class ChatState {
         );
   }
 
-  @Action(ChatActions.GetRoom)
-  getRoom(ctx: StateContext<ChatStateModel>, { id }: ChatActions.GetRoom) {
+  @Action(ChatActions.Get)
+  getRoom(ctx: StateContext<ChatStateModel>, { id }: ChatActions.Get) {
     const state = ctx.getState();
     return (state.selectedRoom?._id === id)
       ? ctx

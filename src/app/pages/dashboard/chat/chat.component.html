@@ -37,6 +37,7 @@
             icon="eye"
             shape="circle"
             theme="secondary"
+            (clickHandler)="openModal(room._id)"
           />
         </td>
       </tr>
@@ -46,8 +47,97 @@
 </app-table-container>
 
 <ng-template #user let-user="user">
-  <div class="flex items-center gap-2">
-    <app-avatar [src]="user.avatar" size="sm" />
-    <span class="text-sm">{{ user.name }} {{ user.lastName }}</span>
-  </div>
+  <span class="badge badge-outline badge-primary badge-lg">
+    <img
+      [src]="user.avatar"
+      alt="{{ user.name }}"
+      class="size-4.5 rounded-full"
+    />
+    {{ user.name }} {{ user.lastName }}
+  </span>
 </ng-template>
+
+<div
+  id="scroll-inside-modal"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Room:{{ selectedRoom?._id }}</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-justify">
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel
+          scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
+          laoreet rutrum faucibus dolor auctorAenean lacinia bibendum nulla sed
+          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
+          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+          <br />
+          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
+          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
+          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
+          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
+          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
+          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
+          vestibulum at eros.raesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
+          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
+          <br />
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+          fringilla.Cras mattis consectetur purus sit amet fermentum. Cras justo
+          odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus,
+          porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus
+          magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
+          augue laoreet rutrum faucibus dolor auctor.lacinia bibendum nulla sed
+          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
+          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+          <br />
+          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
+          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
+          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
+          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
+          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
+          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
+          vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl
+          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
+          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
+          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
+          fringilla.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-secondary"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

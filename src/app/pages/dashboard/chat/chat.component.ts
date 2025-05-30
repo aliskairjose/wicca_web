@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AvatarComponent, ButtonComponent, TableContainerComponent } from '@shared/components';
+import { HSOverlay } from 'flyonui/flyonui';
 
 @Component({
   selector: 'app-chat',
@@ -29,6 +30,7 @@ export class ChatComponent {
 
 
   rooms: RoomInterface[] = [];
+  selectedRoom: RoomInterface | undefined;
   metadata = signal<MetadataInterface | undefined>(undefined);
 
   constructor() {
@@ -41,9 +43,20 @@ export class ChatComponent {
     // this.getData()
   }
 
-  private async _getData() {
+  async openModal(id: string) {
+    await firstValueFrom(this.#store.dispatch(new ChatActions.Get(id)));
+    this.selectedRoom = this.#store.selectSnapshot(ChatSelectors.selectedRoom)!;
+    const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
+    modal.open();
+  }
 
-    await firstValueFrom(this.#store.dispatch(new ChatActions.RoomList(this.queryParams, this.pagination)));
+  closeModal() {
+    const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
+    modal.close();
+  }
+
+  private async _getData() {
+    await firstValueFrom(this.#store.dispatch(new ChatActions.List(this.queryParams, this.pagination)));
     const { results, metadata } = this.#store.selectSnapshot(ChatSelectors.roomList)!;
     this.rooms = results;
     this.metadata.set(metadata);

@@ -29,15 +29,5 @@ export class ChatService {
     return this.http.get<RoomInterface>(`${Helper.baseUrl(Api.Rooms)}/${id}`);
   }
 
-  messages(
-    httpParams: ParamsInterface,
-    pagination: PaginationInterface,
-  ): Observable<ResponseInterface<MessageInterface>> {
-    let params = new HttpParams();
-    Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
-    Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
-    return this.http.get<ResponseInterface<MessageInterface>>(Helper.baseUrl(Api.Messages), { params });
-  }
-
 
 }

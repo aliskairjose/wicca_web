@@ -8,10 +8,7 @@ export class ChatSelectors {
     [ChatSelectors.getSlices.rooms],
     (rooms) => rooms
   )
-  static messageList = createSelector(
-    [ChatSelectors.getSlices.messages],
-    (messages) => messages
-  )
+
   static selectedRoom = createSelector(
     [ChatSelectors.getSlices.selectedRoom],
     (selectedRoom) => selectedRoom
