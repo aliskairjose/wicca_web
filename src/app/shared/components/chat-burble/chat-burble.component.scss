@@ -9,14 +9,14 @@
 
   }
   .chat-burble-content {
-    @apply p-2 rounded-md rounded-tl-none text-sm mb-1.5 w-full;
+    @apply px-2 pt-0.5 rounded-lg rounded-tl-none text-sm mb-1.5 w-full;
 
     &.content-l {
-      @apply bg-gray-100 border;
+      @apply bg-secondary-content/30 border border-secondary/20;
     }
 
     &.content-r {
-      @apply bg-primary-content border border-primary/30;
+      @apply bg-primary-content border border-primary/20;
     }
   }
 

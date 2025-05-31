@@ -1,5 +1,5 @@
-<main class="grid grid-cols-12 gap-8">
-  <div class="col-span-4 space-y-6">
+<main class="grid grid-cols-12 gap-4">
+  <div class="col-span-4 space-y-4">
     <ng-container [ngTemplateOutlet]="profile"></ng-container>
     <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
   </div>
@@ -8,10 +8,10 @@
     <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
     <ng-container [ngTemplateOutlet]="bio"></ng-container>
     }
-    <ng-container [ngTemplateOutlet]="rateList"></ng-container>
+    <!-- <ng-container [ngTemplateOutlet]="rateList"></ng-container> -->
     <div class="grid grid-cols-2 gap-4">
       <ng-container [ngTemplateOutlet]="chats"></ng-container>
-      <ng-container [ngTemplateOutlet]="chats"></ng-container>
+      <ng-container [ngTemplateOutlet]="rateList"></ng-container>
     </div>
   </div>
 </main>
@@ -20,7 +20,7 @@
   <div class="card">
     <div class="card-header flex flex-col items-center gap-y-4">
       <div class="avatar" [class]="statusClass()">
-        <div class="size-28 rounded-full">
+        <div class="size-24 rounded-full">
           <img [src]="user()?.avatar" alt="avatar" />
         </div>
       </div>
@@ -175,8 +175,10 @@
             {{ room.members[1].name }}
             {{ room.members[1].lastName }}
           </div>
-          <small>{{ room.members[1].category }}</small>
+          <small class="italic">{{ room.members[1].category }}</small>
         </li>
+        }@empty {
+        <h6 class="text-center">¡Haz tu primera consulta!</h6>
         }
       </ul>
     </div>

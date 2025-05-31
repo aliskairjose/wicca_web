@@ -92,6 +92,12 @@
         </button>
       </div>
       <div class="modal-body">
+        <!-- @for (m of selectedRoom?.messages; track $index) {
+        <ng-container
+          [ngTemplateOutlet]="burble"
+          [ngTemplateOutletContext]="{ message: m }"
+        ></ng-container>
+        } -->
         <ul>
           @for (m of selectedRoom?.messages; track $index) {
           <app-chat-burble [message]="m" />
@@ -110,3 +116,27 @@
     </div>
   </div>
 </div>
+
+<ng-template #burble let-message="message">
+  <div
+    class="chat"
+    [class.chat-receiver]="message.sender.role === 'Asesor'"
+    [class.chat-sender]="message.sender.role === 'User'"
+  >
+    <div class="chat-avatar avatar">
+      <div class="size-8 rounded-full">
+        <img [src]="message.sender.avatar" alt="avatar" />
+      </div>
+    </div>
+    <div class="chat-header text-base-content">
+      {{ message.sender.name }}
+      <time class="text-base-content/50">{{
+        message.createdAt | date : "MMM d, y, h:mm a"
+      }}</time>
+    </div>
+    <div class="chat-bubble">{{ message.message }}</div>
+    <div class="chat-footer text-base-content/50">
+      <div>{{ message.sender.role }}</div>
+    </div>
+  </div>
+</ng-template>
