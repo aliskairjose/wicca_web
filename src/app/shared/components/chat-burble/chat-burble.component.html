@@ -4,13 +4,24 @@
     [class.burble-r]="message().sender.role === 'User'"
     [class.burble-l]="message().sender.role === 'Asesor'"
   >
-    <div class="flex justify-between">
-      <small class="user">
-        {{ message().sender.name }}
-      </small>
-      <small class="role">{{ role[message().sender.role] }}</small>
+    <div class="avatar">
+      <div class="size-6 rounded-full">
+        <img [src]="message().sender.avatar" alt="avatar" />
+      </div>
     </div>
-    <p>{{ message().message }}</p>
-    <p class="time">{{ message().createdAt | date : "MMM d, y, h:mm a" }}</p>
+    <div
+      class="chat-burble-content"
+      [ngClass]="{
+        'content-r': message().sender.role === 'User',
+        'content-l': message().sender.role === 'Asesor'
+      }"
+    >
+      <div class="flex justify-between">
+        <small class="user">{{ message().sender.name }}</small>
+        <small class="role">{{ role[message().sender.role] }}</small>
+      </div>
+      <p>{{ message().message }}</p>
+      <p class="time">{{ message().createdAt | date : "MMM d, y, h:mm a" }}</p>
+    </div>
   </div>
 </li>

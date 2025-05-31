@@ -9,6 +9,10 @@
     <ng-container [ngTemplateOutlet]="bio"></ng-container>
     }
     <ng-container [ngTemplateOutlet]="rateList"></ng-container>
+    <div class="grid grid-cols-2 gap-4">
+      <ng-container [ngTemplateOutlet]="chats"></ng-container>
+      <ng-container [ngTemplateOutlet]="chats"></ng-container>
+    </div>
   </div>
 </main>
 
@@ -155,6 +159,26 @@
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #chats>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="title">Mis conversaciones</h5>
+      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+        @for (room of user()?.rooms; track $index) {
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            <app-avatar [src]="room.members[1].avatar" size="sm" />
+            {{ room.members[1].name }}
+            {{ room.members[1].lastName }}
+          </div>
+          <small>{{ room.members[1].category }}</small>
+        </li>
+        }
+      </ul>
     </div>
   </div>
 </ng-template>

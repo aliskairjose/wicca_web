@@ -1,17 +1,30 @@
 .chat-burble {
-  @apply  min-w-[25%] max-w-[60%] p-2 rounded text-sm mb-1.5;
-  &.burble-l{
-    @apply place-self-start bg-gray-100;
+  @apply flex gap-x-1.5 min-w-[30%] max-w-[60%];
+
+  &.burble-l {
+    @apply place-self-start;
   }
-  &.burble-r{
-    @apply place-self-end bg-primary-content;
+  &.burble-r {
+    @apply place-self-end;
+
+  }
+  .chat-burble-content {
+    @apply p-2 rounded-md rounded-tl-none text-sm mb-1.5 w-full;
+
+    &.content-l {
+      @apply bg-gray-100 border;
+    }
+
+    &.content-r {
+      @apply bg-primary-content border border-primary/30;
+    }
   }
 
-  small.user{
+  small.user {
     @apply gap-1 font-semibold;
   }
   small.role {
-    @apply text-secondary ;
+    @apply text-secondary;
   }
   .time {
     @apply text-secondary text-xs place-self-end text-[0.625rem];

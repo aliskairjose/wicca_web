@@ -1,11 +1,11 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { MessageInterface } from 'src/app/pages/dashboard/chat/interfaces/message.interface';
 
 @Component({
   selector: 'app-chat-burble',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, CommonModule],
   templateUrl: './chat-burble.component.html',
   styleUrl: './chat-burble.component.scss'
 })
