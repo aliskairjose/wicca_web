@@ -65,11 +65,9 @@ export class UsersComponent {
   private changeUserStatus(user: UserInterface): void {
     const _user: Partial<UserInterface> = {
       isActive: !user.isActive,
+      connectStatus: user.isActive ? ConnectStatusEnum.Away : ConnectStatusEnum.Offline
     };
 
-    if (!user.isActive) {
-      _user['connectStatus'] = ConnectStatusEnum.Away
-    };
     this.update(user._id, _user);
   }
 
@@ -78,7 +76,6 @@ export class UsersComponent {
     const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
     this.users.set([]);
     setTimeout(() => this.users.set(results), 100);
-    // this.users.update(() => results);
     this.metadata.set(metadata);
   }
 
