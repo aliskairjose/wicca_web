@@ -92,12 +92,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- @for (m of selectedRoom?.messages; track $index) {
-        <ng-container
-          [ngTemplateOutlet]="burble"
-          [ngTemplateOutletContext]="{ message: m }"
-        ></ng-container>
-        } -->
         <ul>
           @for (m of selectedRoom?.messages; track $index) {
           <app-chat-burble [message]="m" />

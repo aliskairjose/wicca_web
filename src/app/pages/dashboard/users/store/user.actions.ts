@@ -21,12 +21,8 @@ export namespace UserAction {
     static readonly type = `${ACTION_SCOPE} Get user`;
     constructor(readonly id: string) { }
   }
-  export class Delete {
-    static readonly type = `${ACTION_SCOPE} Delete users`;
-    constructor(readonly id: string) { }
-  }
   export class Update {
     static readonly type = `${ACTION_SCOPE} Update users`;
-    constructor(readonly id: string, readonly payload: UserInterface) { }
+    constructor(readonly id: string, readonly payload: Partial<UserInterface>) { }
   }
 }

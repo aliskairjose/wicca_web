@@ -15,7 +15,7 @@ import { HSOverlay } from 'flyonui/flyonui';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TableContainerComponent, AvatarComponent, ButtonComponent, ChatBurbleComponent],
+  imports: [CommonModule, ReactiveFormsModule, TableContainerComponent, ButtonComponent, ChatBurbleComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })

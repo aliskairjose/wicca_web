@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (user of users; track $index) {
+      @for (user of users(); track $index) {
       <tr class="hover">
         <td class="text-nowrap">
           <div class="flex">
@@ -48,7 +48,7 @@
             icon="trash"
             shape="circle"
             theme="secondary"
-            (clickHandler)="delete(user._id)"
+            (clickHandler)="openModal(user)"
           />
           <app-button
             [clear]="true"
@@ -72,3 +72,46 @@
 <button class="btn btn-circle btn-text btn-sm" aria-label="Action button">
   <span class="icon-[tabler--dots-vertical] size-5"></span>
 </button> -->
+
+<div
+  id="basic-modal"
+  class="overlay modal overlay-open:opacity-100"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Cambio de estado</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal(false)"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Esta seguro que desea
+        {{ modalUser?.isActive ? "deshabilitar" : "habilitar" }} a
+        {{ modalUser?.name }}
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-secondary"
+          (click)="closeModal(false)"
+        >
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="closeModal(true)"
+        >
+          Si, deseo {{ modalUser?.isActive ? "deshabilitarlo" : "habilitarlo" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

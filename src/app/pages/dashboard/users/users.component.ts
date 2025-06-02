@@ -1,17 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
-import { Action, Store } from '@ngxs/store';
+import { Component, computed, inject, signal } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { UserInterface } from './user.interface';
 import { UserAction } from './store/user.actions';
 import { CommonModule } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { firstValueFrom } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
-import { RoutesEnum } from '@shared/enums';
+import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
+import { ConnectStatusEnum, RoutesEnum } from '@shared/enums';
 import { AvatarComponent, ButtonComponent, TableContainerComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
+import { HSOverlay } from 'flyonui/flyonui';
 
 @Component({
   selector: 'app-users',
@@ -30,36 +31,61 @@ export class UsersComponent {
   };
   #store = inject(Store);
 
-  users: UserInterface[] = [];
+  // users: UserInterface[] = [];
+  users = signal<UserInterface[] | undefined>(undefined);
+  modalUser: UserInterface | undefined;
   metadata = signal<MetadataInterface | undefined>(undefined);
   routeEnum = RoutesEnum;
 
-  constructor() {
-    const res = this.#store.selectSnapshot(UserSelectors.list);
-    (res)
-      ? this.setData(res)
-      : this.getData();
-  }
 
-  async getData() {
-    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
-    const response = this.#store.selectSnapshot(UserSelectors.list)!;
-    this.setData(response);
+  constructor() {
+    this.getData();
   }
 
   onChangeTable(e: any): void {
+    console.log('onChange')
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
   }
 
-  delete(id: string): void {
-    this.#store.dispatch(new UserAction.Delete(id)).subscribe(() => this.getData());
+  async openModal(user: UserInterface) {
+    this.modalUser = user;
+    const modal = new HSOverlay(document.querySelector('#basic-modal')!);
+    modal.open();
   }
 
-  private setData(data: ResponseInterface<UserInterface>): void {
-    const { results, metadata } = data;
-    this.users = results;
+  async closeModal(res: boolean) {
+    const modal = new HSOverlay(document.querySelector('#basic-modal')!);
+    modal.close();
+    (res) && this.changeUserStatus(this.modalUser!);
+    this.modalUser = undefined;
+  }
+
+  private changeUserStatus(user: UserInterface): void {
+    const _user: Partial<UserInterface> = {
+      isActive: !user.isActive,
+    };
+
+    if (!user.isActive) {
+      _user['connectStatus'] = ConnectStatusEnum.Away
+    };
+    this.update(user._id, _user);
+  }
+
+  private async update(id: string, payload: Partial<UserInterface>) {
+    await firstValueFrom(this.#store.dispatch(new UserAction.Update(id, payload)));
+    const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
+    this.users.set([]);
+    setTimeout(() => this.users.set(results), 100);
+    // this.users.update(() => results);
+    this.metadata.set(metadata);
+  }
+
+  private async getData() {
+    await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
+    const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
+    this.users.set(results);
     this.metadata.set(metadata);
   }
 

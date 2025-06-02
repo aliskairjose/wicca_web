@@ -6,6 +6,7 @@ import { ToastTypeEnum } from '@shared/enums';
   providedIn: 'root',
 })
 export class ToastService {
+  private notyf: Notyf | null = null;
   /**
    *
    *
@@ -14,7 +15,7 @@ export class ToastService {
    * @memberof ToastService
    */
   show(message: string, type: ToastTypeEnum = ToastTypeEnum.Success): void {
-    const notyf = new Notyf({
+    this.notyf = new Notyf({
       duration: 3000,
       ripple: true,
       dismissible: true,
@@ -23,7 +24,7 @@ export class ToastService {
         y: 'top',
       },
     });
-    notyf.open({
+    this.notyf.open({
       type,
       message,
     });
