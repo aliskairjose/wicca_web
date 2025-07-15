@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { environmentDev } from '@envs/env.devs';
-import { RateInterface } from '@shared/interfaces';
-import { RatesType } from '@shared/types/rates.type';
 
 type ErrorMapCallBackFn = (result: string) => void;
 
@@ -31,19 +29,4 @@ export class Helper {
       .normalize();
   }
 
-  static calculateRate(rates: RateInterface[]): RatesType {
-    const _rates: RatesType = {
-      rate: 0,
-      votes: 0,
-    };
-
-    if (!rates || rates.length === 0) return _rates;
-
-    // _rates.votes = rates.reduce((prev, curr) => prev + curr.rate, 0);
-    // _rates.rate = _rates.votes / rates.length;
-    _rates.votes = rates.length;
-    _rates.rate = rates.reduce((prev, curr) => prev + curr.rate, 0) / rates.length;
-
-    return _rates;
-  }
 }

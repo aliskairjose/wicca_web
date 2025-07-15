@@ -1,6 +1,6 @@
 import { UserInterface } from "src/app/pages/dashboard/users/user.interface";
 
-export interface RateInterface {
+export interface ReviewInterface {
   rate: number;
   title: string;
   comment: string;

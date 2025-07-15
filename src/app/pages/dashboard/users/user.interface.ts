@@ -1,5 +1,5 @@
 import { RoleEnum } from '@shared/enums';
-import { RateInterface } from '@shared/interfaces';
+import { ReviewInterface } from '@shared/interfaces';
 import { ConnectStatusType } from '@shared/types';
 import { RoomInterface } from '../chat/interfaces/room.interface';
 
@@ -12,7 +12,6 @@ export interface UserInterface {
   role: RoleEnum;
   title?: string;
   price?: number;
-  rate?: number;
   description?: string;
   category?: string;
   language?: string[];
@@ -27,6 +26,7 @@ export interface UserInterface {
   rates: RateInterface[];
   rooms: RoomInterface[];
   payments?: any;
+  rate?: RateInterface;
 }
 
 interface WalletInterface {
@@ -40,4 +40,14 @@ export interface TotalUsersInterface {
   totalAsesors: number;
   totalRegister: number;
   totalNewUsers: number;
+}
+
+export interface RateInterface {
+  average: number;
+  fiveStars: number;
+  fourStars: number;
+  oneStars: number;
+  reviews: ReviewInterface[];
+  threeStars: number;
+  twoStars: number;
 }
