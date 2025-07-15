@@ -28,8 +28,13 @@ export interface UserInterface {
   payments?: any;
   rate?: RateInterface;
   advisor?: Advisor;
+  requestLogs: RequestLogs[]
 }
 
+interface RequestLogs {
+  status: string;
+  createdAt: Date;
+}
 interface Advisor {
   callPrice: number;
   category: string;

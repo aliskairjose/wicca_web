@@ -7,6 +7,6 @@
     }
   }
   .main-panel{
-    @apply flex flex-col justify-between bg-slate-100 md:pt-6 pt-10 relative float-start grow overflow-scroll px-6 py-4 h-screen;
+    @apply flex flex-col justify-between bg-slate-100 md:pt-6 pt-10 relative float-start grow overflow-scroll md:px-6 md:py-4 p-2 h-screen;
   }
 }
