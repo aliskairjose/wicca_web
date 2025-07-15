@@ -27,6 +27,15 @@ export interface UserInterface {
   rooms: RoomInterface[];
   payments?: any;
   rate?: RateInterface;
+  advisor?: Advisor;
+}
+
+interface Advisor {
+  callPrice: number;
+  category: string;
+  chatPrice: number;
+  description: string;
+  enabledCall: boolean;
 }
 
 interface WalletInterface {
