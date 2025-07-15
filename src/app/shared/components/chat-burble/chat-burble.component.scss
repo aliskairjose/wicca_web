@@ -1,5 +1,5 @@
 .chat-burble {
-  @apply flex gap-x-1.5 min-w-[30%] max-w-[60%];
+  @apply flex gap-x-1.5 max-w-[60%];
 
   &.burble-l {
     @apply place-self-start;
@@ -9,14 +9,14 @@
 
   }
   .chat-burble-content {
-    @apply px-2 pt-0.5 rounded-lg rounded-tl-none text-sm mb-1.5 w-full;
+    @apply px-2 pt-0.5 rounded-lg rounded-tl-none text-sm mb-1.5 border;
 
     &.content-l {
-      @apply bg-secondary-content/30 border border-secondary/20;
+      @apply bg-secondary-content/30 border-secondary/20;
     }
 
     &.content-r {
-      @apply bg-primary-content border border-primary/20;
+      @apply bg-primary-content  border-primary/20;
     }
   }
 

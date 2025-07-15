@@ -4,7 +4,7 @@
     <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
   </div>
   <div class="col-span-8 space-y-6">
-    @if (user()?.role===role.Asesor) {
+    @if (user()?.role===role.Advisor) {
     <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
     <ng-container [ngTemplateOutlet]="bio"></ng-container>
     }
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="card-body">
-      @if(user()?.role === role.Asesor){
+      @if(user()?.role === role.Advisor){
       <div>
         <ul class="list-none space-y-1.5">
           <li>
@@ -83,7 +83,7 @@
 <ng-template #bio>
   <div class="card">
     <div class="card-body">
-      @if(user()?.role === role.Asesor){
+      @if(user()?.role === role.Advisor){
       <div>
         <h5 class="text-secondary">{{ user()?.title }}</h5>
         <div class="mt-2.5">
@@ -101,7 +101,7 @@
     <div class="card-body space-y-3">
       <h5 class="title">
         {{
-          user()?.role === role.Asesor
+          user()?.role === role.Advisor
             ? "Comentarios de clientes"
             : "Mis comentarios"
         }}
@@ -118,7 +118,7 @@
           </span>
           <p>{{ rate.comment }}</p>
           <div class="flex justify-end gap-1.5">
-            @if (user()?.role===role.Asesor) {
+            @if (user()?.role===role.Advisor) {
             <app-avatar [src]="rate.user[0].avatar" size="sm" />
             <small>{{ rate.user[0].name }} {{ rate.user[0].lastName }},</small>
             }@else {

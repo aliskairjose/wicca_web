@@ -6,7 +6,7 @@ export const MENU: SideMenuInterface[] = [
     icon: 'layout-dashboard',
     path: '.',
     title: 'Dashboard',
-    role: [RoleEnum.Admin, RoleEnum.Asesor],
+    role: [RoleEnum.Admin, RoleEnum.Advisor],
   },
   {
     icon: 'users',

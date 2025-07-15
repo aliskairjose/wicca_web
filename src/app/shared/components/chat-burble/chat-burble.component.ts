@@ -14,7 +14,7 @@ export class ChatBurbleComponent {
   message = input.required<MessageInterface>();
 
   role: any = {
-    Asesor: 'Asesor',
+    Advisor: 'Asesor',
     User: 'Cliente'
   }
 }
