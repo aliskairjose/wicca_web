@@ -36,7 +36,9 @@ export class TableContainerComponent implements OnInit {
 
   onChange = output<{ pagination: WritableSignal<PaginationInterface>, term: string }>();
 
-  constructor() { this.setForm(); }
+  constructor() {
+    this.setForm();
+  }
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(

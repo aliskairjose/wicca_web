@@ -1,0 +1,32 @@
+.chat-burble {
+  @apply flex gap-x-1.5 min-w-[30%] max-w-[60%];
+
+  &.burble-l {
+    @apply place-self-start;
+  }
+  &.burble-r {
+    @apply place-self-end;
+
+  }
+  .chat-burble-content {
+    @apply px-2 pt-0.5 rounded-lg rounded-tl-none text-sm mb-1.5 w-full;
+
+    &.content-l {
+      @apply bg-secondary-content/30 border border-secondary/20;
+    }
+
+    &.content-r {
+      @apply bg-primary-content border border-primary/20;
+    }
+  }
+
+  small.user {
+    @apply gap-1 font-semibold;
+  }
+  small.role {
+    @apply text-secondary;
+  }
+  .time {
+    @apply text-secondary text-xs place-self-end text-[0.625rem];
+  }
+}

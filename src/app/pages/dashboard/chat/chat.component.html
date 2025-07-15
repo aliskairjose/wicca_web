@@ -8,7 +8,7 @@
         <th>Id</th>
         <th>Cliente</th>
         <th>Asesor</th>
-        <th>Messages</th>
+        <th>Mensajes</th>
         <th>Fecha Creación</th>
         <th></th>
       </tr>
@@ -32,13 +32,23 @@
         <td>{{ room.messages.length }}</td>
         <td class="text-nowrap">{{ room.createdAt | date }}</td>
         <td>
-          <app-button
-            [clear]="true"
-            icon="eye"
-            shape="circle"
-            theme="secondary"
-            (clickHandler)="openModal(room._id)"
-          />
+          <div class="tooltip">
+            <app-button
+              [clear]="true"
+              icon="eye"
+              shape="circle"
+              theme="secondary"
+              (clickHandler)="openModal(room._id)"
+            />
+            <span
+              class="tooltip-content tooltip-shown:opacity-100 tooltip-shown:visible"
+              role="tooltip"
+            >
+              <span class="tooltip-body tooltip-secondary text-xs"
+                >Ver conversaciones</span
+              >
+            </span>
+          </div>
         </td>
       </tr>
       }
@@ -59,14 +69,19 @@
 
 <div
   id="scroll-inside-modal"
-  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"
   role="dialog"
   tabindex="-1"
 >
   <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Room:{{ selectedRoom?._id }}</h3>
+        <h3 class="modal-title">
+          Room: {{ selectedRoom?._id }}
+          <span class="text-sm block">
+            Cuarto creado el: {{ selectedRoom?.createdAt | date }}
+          </span>
+        </h3>
         <button
           type="button"
           class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
@@ -77,56 +92,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="text-justify">
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel
-          scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue
-          laoreet rutrum faucibus dolor auctorAenean lacinia bibendum nulla sed
-          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-          <br />
-          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
-          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
-          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
-          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
-          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-          vestibulum at eros.raesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
-          <br />
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
-          fringilla.Cras mattis consectetur purus sit amet fermentum. Cras justo
-          odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus,
-          porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus
-          magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel
-          augue laoreet rutrum faucibus dolor auctor.lacinia bibendum nulla sed
-          consectetur. Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-          auctor fringilla.Cras mattis consectetur purus sit amet fermentum.
-          Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-          <br />
-          Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent
-          commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-          sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.Aenean
-          lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
-          vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-          ullamcorper nulla non metus auctor fringilla.Cras mattis consectetur
-          purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-          egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-          vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl
-          consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-          faucibus dolor auctor.Aenean lacinia bibendum nulla sed consectetur.
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-          Donec sed odio dui. Donec ullamcorper nulla non metus auctor
-          fringilla.
-        </p>
+        <ul>
+          @for (m of selectedRoom?.messages; track $index) {
+          <app-chat-burble [message]="m" />
+          }
+        </ul>
       </div>
       <div class="modal-footer">
         <button
@@ -134,10 +104,33 @@
           class="btn btn-soft btn-secondary"
           (click)="closeModal()"
         >
-          Close
+          Cerrar
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #burble let-message="message">
+  <div
+    class="chat"
+    [class.chat-receiver]="message.sender.role === 'Asesor'"
+    [class.chat-sender]="message.sender.role === 'User'"
+  >
+    <div class="chat-avatar avatar">
+      <div class="size-8 rounded-full">
+        <img [src]="message.sender.avatar" alt="avatar" />
+      </div>
+    </div>
+    <div class="chat-header text-base-content">
+      {{ message.sender.name }}
+      <time class="text-base-content/50">{{
+        message.createdAt | date : "MMM d, y, h:mm a"
+      }}</time>
+    </div>
+    <div class="chat-bubble">{{ message.message }}</div>
+    <div class="chat-footer text-base-content/50">
+      <div>{{ message.sender.role }}</div>
+    </div>
+  </div>
+</ng-template>

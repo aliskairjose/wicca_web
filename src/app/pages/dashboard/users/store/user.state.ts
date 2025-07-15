@@ -38,7 +38,9 @@ export class UsersState {
   @Action(UserAction.List)
   list(ctx: StateContext<UsersStateModel>, { payload, pagination }: UserAction.List) {
     payload ??= {};
-    return this.#userService
+    let state = ctx.getState();
+
+    return state.users ?? this.#userService
       .list(payload, pagination)
       .pipe(
         tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })
@@ -46,14 +48,18 @@ export class UsersState {
       );
   }
 
-  @Action(UserAction.Delete)
-  delete(ctx: StateContext<UsersStateModel>, { id }: UserAction.Delete) {
+  @Action(UserAction.Update)
+  update(ctx: StateContext<UsersStateModel>, { id, payload }: UserAction.Update) {
     let state = ctx.getState();
     return this.#userService
-      .delete(id)
+      .update(id, payload)
       .pipe(tap((user: UserInterface) => {
-        state.users?.results.map(u => (u._id === user._id) ? user : u);
-        ctx.patchState({ users: state.users });
+        const data: ResponseInterface<UserInterface> = {
+          metadata: state.users!.metadata,
+          results: []
+        }
+        data.results = state.users!.results.map(u => (u._id === id) ? user : u);
+        ctx.patchState({ users: data });
       })
       );
   }

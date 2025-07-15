@@ -29,8 +29,7 @@ export class UserService {
     return this.http.get(Helper.baseUrl(Api.UsersTotals));
   }
 
-  delete(id: string): Observable<UserInterface> {
-    const body = { isActive: false, connectStatus: ConnectStatusEnum.Away }
-    return this.http.patch<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`, body);
+  update(id: string, data: Partial<UserInterface>): Observable<UserInterface> {
+    return this.http.patch<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`, data);
   }
 }

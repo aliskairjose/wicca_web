@@ -1,3 +1,4 @@
+import { ChatBurbleComponent } from './chat-burble/chat-burble.component';
 export { TableContainerComponent } from './table-container/table-container.component';
 
 export { IconComponent } from './icon/icon.component';
@@ -10,3 +11,4 @@ export { InputComponent } from "./input/input.component";
 export { AvatarComponent } from "./avatar/avatar.component";
 export { ButtonComponent } from "./button/button.component";
 export { SelectComponent } from "./select/select.component";
+export { ChatBurbleComponent } from "./chat-burble/chat-burble.component";

@@ -1,6 +1,7 @@
 import { RoleEnum } from '@shared/enums';
 import { RateInterface } from '@shared/interfaces';
 import { ConnectStatusType } from '@shared/types';
+import { RoomInterface } from '../chat/interfaces/room.interface';
 
 export interface UserInterface {
   _id: string;
@@ -24,6 +25,7 @@ export interface UserInterface {
   updatedAt: Date;
   wallet?: WalletInterface;
   rates: RateInterface[];
+  rooms: RoomInterface[];
   payments?: any;
 }
 
