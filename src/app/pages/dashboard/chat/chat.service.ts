@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { RoomInterface } from './interfaces/room.interface';
-import { Helper } from '@shared/helpers';
 import { Api } from '@shared/apis';
-import { MessageInterface } from './interfaces/message.interface';
+import { AppConfig } from '@shared/classes/app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +21,11 @@ export class ChatService {
     Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
     Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
 
-    return this.http.get<ResponseInterface<RoomInterface>>(Helper.baseUrl(Api.Rooms), { params });
+    return this.http.get<ResponseInterface<RoomInterface>>(AppConfig.baseUrl(Api.Rooms), { params });
   }
 
   roomById(id: string): Observable<RoomInterface> {
-    return this.http.get<RoomInterface>(`${Helper.baseUrl(Api.Rooms)}/${id}`);
+    return this.http.get<RoomInterface>(`${AppConfig.baseUrl(Api.Rooms)}/${id}`);
   }
 
 

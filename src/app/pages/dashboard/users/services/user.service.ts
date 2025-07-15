@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Helper } from '@shared/helpers';
 import { Api } from '@shared/apis';
 import { UserInterface } from '../user.interface';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
-import { ConnectStatusEnum } from '@shared/enums';
+import { AppConfig } from '@shared/classes/app.config';
 
 @Injectable({
   providedIn: 'root',
@@ -18,18 +17,18 @@ export class UserService {
     Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
     Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
 
-    return this.http.get<ResponseInterface<UserInterface>>(Helper.baseUrl(Api.Users), { params });
+    return this.http.get<ResponseInterface<UserInterface>>(AppConfig.baseUrl(Api.Users), { params });
   }
 
   byId(id: string): Observable<UserInterface> {
-    return this.http.get<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`);
+    return this.http.get<UserInterface>(`${AppConfig.baseUrl(Api.Users)}/${id}`);
   }
 
   totalUsers(): Observable<any> {
-    return this.http.get(Helper.baseUrl(Api.UsersTotals));
+    return this.http.get(AppConfig.baseUrl(Api.UsersTotals));
   }
 
   update(id: string, data: Partial<UserInterface>): Observable<UserInterface> {
-    return this.http.patch<UserInterface>(`${Helper.baseUrl(Api.Users)}/${id}`, data);
+    return this.http.patch<UserInterface>(`${AppConfig.baseUrl(Api.Users)}/${id}`, data);
   }
 }

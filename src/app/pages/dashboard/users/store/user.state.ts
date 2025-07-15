@@ -39,7 +39,12 @@ export class UsersState {
   list(ctx: StateContext<UsersStateModel>, { payload, pagination }: UserAction.List) {
     payload ??= {};
     let state = ctx.getState();
-
+    return this.#userService
+      .list(payload, pagination)
+      .pipe(
+        tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })
+        )
+      );
     return state.users ?? this.#userService
       .list(payload, pagination)
       .pipe(

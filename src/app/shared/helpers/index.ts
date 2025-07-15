@@ -5,7 +5,6 @@ type ErrorMapCallBackFn = (result: string) => void;
 
 @Injectable()
 export class Helper {
-  static baseUrl = (slug: string): string => `${environmentDev.baseUrl}/${slug}`;
 
   static controlErrorMap(errorKey: string, errorValue: any, callbackfn: ErrorMapCallBackFn): void {
 
