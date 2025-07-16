@@ -2,11 +2,12 @@ import { Routes } from '@angular/router';
 import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { authGuard } from '@shared/guards';
 import { HomeComponent } from './pages/dashboard/home/home.component';
+import { AppConfig } from '@shared/classes/app.config';
 
 export const routes: Routes = [
   {
     path: RoutesEnum.Landing,
-    title: 'Wicca',
+    title: AppConfig.APP_NAME,
     loadComponent: () =>
       import('./pages/landing/landing.component').then(
         (m) => m.LandingComponent
@@ -51,6 +52,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/dashboard/chat/chat.component').then(
             (m) => m.ChatComponent
+          ),
+      },
+      {
+        path: RoutesEnum.RequestLogs,
+        title: 'Histórico de solicitudes',
+        loadComponent: () =>
+          import('./pages/dashboard/request-logs/request-logs.component').then(
+            (m) => m.RequestLogsComponent
           ),
       },
       {

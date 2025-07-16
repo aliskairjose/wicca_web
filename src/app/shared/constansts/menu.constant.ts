@@ -21,6 +21,12 @@ export const MENU: SideMenuInterface[] = [
     role: [RoleEnum.Admin],
   },
   {
+    icon: 'logs',
+    path: 'request-logs',
+    title: 'Histórico de solicitudes',
+    role: [RoleEnum.Admin],
+  },
+  {
     icon: 'report-money',
     path: 'payments',
     title: 'Pagos',

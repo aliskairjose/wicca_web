@@ -1,32 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
-import { Observable } from 'rxjs';
-import { RoomInterface } from './interfaces/room.interface';
 import { Api } from '@shared/apis';
 import { AppConfig } from '@shared/classes/app.config';
+import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
+import { Observable } from 'rxjs';
+import { RequestLogInterface } from './interfaces/request-logs.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ChatService {
+export class RequestLogsService {
 
   constructor(private readonly http: HttpClient) { }
 
-  rooms(
+  list(
     httpParams: ParamsInterface,
     pagination: PaginationInterface,
-  ): Observable<ResponseInterface<RoomInterface>> {
+  ): Observable<ResponseInterface<RequestLogInterface>> {
     let params = new HttpParams();
     Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
     Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
 
-    return this.http.get<ResponseInterface<RoomInterface>>(AppConfig.baseUrl(Api.Rooms), { params });
+    return this.http.get<ResponseInterface<RequestLogInterface>>(AppConfig.baseUrl(Api.RequestLogs), { params });
   }
-
-  roomById(id: string): Observable<RoomInterface> {
-    return this.http.get<RoomInterface>(`${AppConfig.baseUrl(Api.Rooms)}/${id}`);
-  }
-
-
 }

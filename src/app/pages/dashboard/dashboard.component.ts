@@ -6,6 +6,7 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
 import { MENU } from '@shared/constansts/menu.constant';
 import { AuthActions } from '../auth/store/auth.actions';
 import { SocketService, ToastService } from '@shared/services';
+import { AppConfig } from '@shared/classes/app.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { SocketService, ToastService } from '@shared/services';
 })
 export class DashboardComponent {
 
+  appName = AppConfig.APP_NAME;
   menu = MENU;
   #store = inject(Store);
   #router = inject(Router);
@@ -24,7 +26,7 @@ export class DashboardComponent {
 
   signout(): void {
     this.#store.dispatch(new AuthActions.Logout()).subscribe(() => {
-      this.#socketService.disconnect(); 
+      this.#socketService.disconnect();
       this.#notify.show('Hasta luego');
       this.#router.navigate(['.']);
     })

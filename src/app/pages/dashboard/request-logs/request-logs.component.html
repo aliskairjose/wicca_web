@@ -1,0 +1,34 @@
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Asesor</th>
+        <th>Solicitud</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (log of logs; track $index){
+      <tr class="hover">
+        <td>
+          <span class="flex flex-row items-center gap-2">
+            <app-avatar [src]="log.asesor.avatar" size="md" />
+            {{ log.asesor.name }} {{ log.asesor.lastName }}
+          </span>
+        </td>
+        <td>
+          @if (log.status==='Aceptado') {
+          <app-badge [text]="log.status" [outline]="true" [theme]="'success'" />
+          }@else {
+          <app-badge [text]="log.status" [outline]="true" [theme]="'error'" />
+          }
+        </td>
+        <td>{{ log.createdAt | date : "medium" }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</app-table-container>

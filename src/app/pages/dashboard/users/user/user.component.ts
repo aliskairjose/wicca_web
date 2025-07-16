@@ -40,4 +40,13 @@ export class UserComponent implements OnInit {
     await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
     this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
   }
+
+  get requestsStatus() {
+    const rejects = this.user()?.requestLogs.filter(logs => logs.status === 'Rechazado');
+    const accepts = this.user()?.requestLogs.filter(logs => logs.status === 'Aceptado');
+    return {
+      rejects: rejects?.length,
+      accepts: accepts?.length,
+    }
+  }
 }

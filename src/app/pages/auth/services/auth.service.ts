@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Api } from '@shared/apis';
+import { AppConfig } from '@shared/classes/app.config';
 import { RoleEnum } from '@shared/enums';
-import { Helper } from '@shared/helpers';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,10 +14,10 @@ export class AuthService {
   login(data: any): Observable<any> {
 
     data = { ...data, role: RoleEnum.Admin };
-    return this.http.post(Helper.baseUrl(Api.Login), data);
+    return this.http.post(AppConfig.baseUrl(Api.Login), data);
   }
 
   logout(): Observable<any> {
-    return this.http.get(Helper.baseUrl(Api.Logout));
+    return this.http.get(AppConfig.baseUrl(Api.Logout));
   }
 }

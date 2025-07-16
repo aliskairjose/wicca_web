@@ -43,7 +43,7 @@ export class UsersComponent {
   }
 
   onChangeTable(e: any): void {
-    console.log('onChange')
+    console.log('onChange', e.pagination())
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
@@ -80,6 +80,7 @@ export class UsersComponent {
   }
 
   private async getData() {
+    console.log('getData')
     await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
     const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
     this.users.set(results);
