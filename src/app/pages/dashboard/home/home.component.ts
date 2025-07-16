@@ -1,14 +1,15 @@
 import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AvatarComponent, IconComponent } from '@shared/components';
+import { AvatarComponent, IconComponent, BadgeComponent } from '@shared/components';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
 import { RequestPieChart } from './interfaces/request-pie-chart.interface';
 import { ApexChart, ApexNonAxisChartSeries, ApexResponsive, NgApexchartsModule } from 'ng-apexcharts';
+import { RouterLink } from '@angular/router';
 
-export type ChartOptions = {
+type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   responsive: ApexResponsive[];
@@ -17,12 +18,12 @@ export type ChartOptions = {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, NgApexchartsModule],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, NgApexchartsModule, RouterLink, BadgeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   #store = inject(Store);
   dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
@@ -50,7 +51,7 @@ export class HomeComponent {
   };
 
 
-  constructor() {
+  ngOnInit() {
     this.loadData();
   }
 

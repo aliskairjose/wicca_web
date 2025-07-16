@@ -5,6 +5,11 @@ export interface ReviewInterface {
   title: string;
   comment: string;
   createdAt: Date;
-  user: UserInterface[];
-  asesor: UserInterface[];
+  reviewedBy: ReviwedUser;
+  reviewedTo: ReviwedUser;
+}
+interface ReviwedUser {
+  name: string;
+  lastName: string;
+  avatar: string;
 }

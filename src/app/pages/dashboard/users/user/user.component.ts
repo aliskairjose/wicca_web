@@ -1,15 +1,21 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { UserAction } from '../store/user.actions';
 import { UserSelectors } from '../store/user.selectors';
 import { UserInterface } from '../user.interface';
 import { firstValueFrom } from 'rxjs';
-import { Helper } from '@shared/helpers';
 import { RoleEnum } from '@shared/enums';
 import { IconComponent, AvatarComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
+import { ApexChart, ApexFill, ApexNonAxisChartSeries, ApexResponsive, NgApexchartsModule } from 'ng-apexcharts';
 
+type ChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
 const ConnStatus = {
   Online: 'online-top', // Verde
   Offline: 'busy-top', // Rojo cambia de offline a busy por el color
@@ -19,9 +25,10 @@ const ConnStatus = {
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule, IconComponent, AvatarComponent],
+  imports: [CommonModule, IconComponent, AvatarComponent, NgApexchartsModule],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrl: './user.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class UserComponent implements OnInit {
   role = RoleEnum;
@@ -31,9 +38,30 @@ export class UserComponent implements OnInit {
   #store = inject(Store);
   users: any[] = [];
 
+  chartOptions: Partial<ChartOptions> = {
+    series: [],
+    chart: {
+      width: '100%',
+      type: 'pie',
+    },
+    labels: ['Aceptados', 'Rechazados'],
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200,
+          },
+          legend: {
+            position: 'bottom',
+          },
+        },
+      },
+    ],
+  };
+
   fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
   statusClass = computed(() => `${ConnStatus[this.user()!.connectStatus]}`)
-
 
   async ngOnInit() {
     const params: Params = await firstValueFrom(this.#route.params);
