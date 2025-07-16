@@ -22,7 +22,7 @@ export class BadgeComponent implements AfterViewInit {
   @ViewChild('iconSpan') iconSpan!: ElementRef;
 
   ngAfterViewInit(): void {
-    this.#renderer.addClass(this.badge.nativeElement, `${this.theme()}`);
+    this.#renderer.addClass(this.badge.nativeElement, `badge-${this.theme()}`);
     (this.size() && !this.shape()) && this.#renderer.addClass(this.badge.nativeElement, `${this.size()}`);
     (this.shape()) && this.#renderer.addClass(this.badge.nativeElement, this.shape()!);
     (this.icon()) && this.#renderer.addClass(this.iconSpan.nativeElement, `icon-[tabler--${this.icon()}]`);

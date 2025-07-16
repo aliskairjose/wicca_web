@@ -40,7 +40,7 @@ export class ChatComponent {
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
-    // this.getData()
+    this._getData()
   }
 
   async openModal(id: string) {
