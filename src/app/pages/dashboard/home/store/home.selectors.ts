@@ -5,4 +5,5 @@ export class HomeSelectors {
   private static getSlice = createPropertySelectors<HomeStateModel>(HomeState);
 
   static dashboard = createSelector([HomeSelectors.getSlice.dashboard], (dashboard) => dashboard);
+  static requestPieChart = createSelector([HomeSelectors.getSlice.requestPieChart], (chart) => chart);
 }
