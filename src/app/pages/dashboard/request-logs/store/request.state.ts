@@ -3,17 +3,17 @@ import { Action, State, StateContext } from "@ngxs/store";
 import { RequestLogsActions } from "./request.action";
 import { RequestLogsService } from "../request-logs.service";
 import { tap } from "rxjs";
-import { RequestLogInterface } from "../interfaces/request-logs.interface";
+import { RequestByAsesorInterface } from "../interfaces/request-logs.interface";
 import { ResponseInterface } from "@shared/interfaces";
 
 export interface RequestLogsStateModel {
-  requests: ResponseInterface<RequestLogInterface> | undefined;
+  requests: RequestByAsesorInterface[] | [];
 }
 
 @State<RequestLogsStateModel>({
   name: 'requestLogs',
   defaults: {
-    requests: undefined,
+    requests: [],
   }
 })
 

@@ -4,7 +4,7 @@ import { Api } from '@shared/apis';
 import { AppConfig } from '@shared/classes/app.config';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { Observable } from 'rxjs';
-import { RequestLogInterface } from './interfaces/request-logs.interface';
+import { RequestByAsesorInterface } from './interfaces/request-logs.interface';
 import { RequestPieChart } from '../home/interfaces/request-pie-chart.interface';
 
 @Injectable({
@@ -17,12 +17,12 @@ export class RequestLogsService {
   list(
     httpParams: ParamsInterface,
     pagination: PaginationInterface,
-  ): Observable<ResponseInterface<RequestLogInterface>> {
+  ): Observable<ResponseInterface<RequestByAsesorInterface>> {
     let params = new HttpParams();
     Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
     Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
 
-    return this.http.get<ResponseInterface<RequestLogInterface>>(AppConfig.baseUrl(Api.RequestLogs), { params });
+    return this.http.get<ResponseInterface<RequestByAsesorInterface>>(AppConfig.baseUrl(Api.RequestLogs), { params });
   }
 
   getGroupBy(): Observable<RequestPieChart[]> {

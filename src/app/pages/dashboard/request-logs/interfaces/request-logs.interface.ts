@@ -1,12 +1,12 @@
-export interface RequestLogInterface {
-  id: string;
+export interface RequestByAsesorInterface {
+  _id: string;
+  totalRequests: number;
+  accepted: number;
+  rejected: number;
   asesor: RequestUser;
-  status: string;
-  createdAt: Date;
 }
 
 interface RequestUser {
-  _id: string;
   avatar: string;
   name: string;
   lastName: string;

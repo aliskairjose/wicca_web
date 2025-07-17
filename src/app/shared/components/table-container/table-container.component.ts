@@ -18,7 +18,7 @@ import { MetadataInterface } from '@shared/interfaces/response.interface';
 })
 export class TableContainerComponent implements OnInit {
   #term = '';
-  metadata = input.required<MetadataInterface>();
+  metadata = input<MetadataInterface>();
   form!: FormGroup;
   #fb = inject(FormBuilder);
 
