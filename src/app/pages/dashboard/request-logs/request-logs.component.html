@@ -3,23 +3,38 @@
     <thead>
       <tr>
         <th>Asesor</th>
-        <th>Rechazadas</th>
-        <th>Aceptadas</th>
-        <th>Total solicitudes</th>
+        <th class="text-center">Rechazadas</th>
+        <th class="text-center">Aceptadas</th>
+        <th class="text-center">Total</th>
       </tr>
     </thead>
     <tbody>
       @for (log of logs; track $index){
       <tr class="hover">
         <td>
-          <span class="flex flex-row items-center gap-2">
+          <div class="flex gap-x-2">
             <app-avatar [src]="log.asesor.avatar" size="md" />
-            {{ log.asesor.name }} {{ log.asesor.lastName }}
+            <div class="flex flex-col">
+              <span class="text-base-content font-medium"
+                >{{ log.asesor.name }} {{ log.asesor.lastName }}</span
+              >
+              <small>{{ log.asesor.email }}</small>
+            </div>
+          </div>
+          <!-- <span class="flex flex-row items-center gap-2">
+
           </span>
+          {{ log.asesor.email }} -->
         </td>
-        <td>{{ log.rejected }}</td>
-        <td>{{ log.accepted }}</td>
-        <td>{{ log.totalRequests }}</td>
+        <td class="text-center">
+          <span class="text-error font-medium">{{ log.rejected }}</span>
+        </td>
+        <td class="text-center">
+          <span class="text-success font-medium">{{ log.accepted }}</span>
+        </td>
+        <td class="text-center">
+          <span class="font-semibold">{{ log.totalRequests }}</span>
+        </td>
       </tr>
       }
     </tbody>

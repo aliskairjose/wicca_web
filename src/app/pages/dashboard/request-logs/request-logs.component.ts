@@ -5,9 +5,8 @@ import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { firstValueFrom } from 'rxjs';
 import { RequestLogsActions } from './store/request.action';
 import { RequestLogsSelectors } from './store/request.selctors';
-import { AvatarComponent, BadgeComponent, TableContainerComponent } from '@shared/components';
+import { AvatarComponent, TableContainerComponent } from '@shared/components';
 import { RequestByAsesorInterface } from './interfaces/request-logs.interface';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-request-logs',

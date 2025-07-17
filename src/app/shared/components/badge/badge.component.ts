@@ -9,7 +9,7 @@ import { SHAPE, SIZE, STYLE } from './type';
   styleUrl: './badge.component.scss'
 })
 export class BadgeComponent implements AfterViewInit {
-  text = input<string>();
+  text = input<string | number>();
   theme = input<STYLE>('neutral');
   size = input<SIZE>(undefined);
   shape = input<SHAPE>(undefined)
