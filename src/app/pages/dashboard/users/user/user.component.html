@@ -9,29 +9,44 @@
     <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
     <ng-container [ngTemplateOutlet]="bio"></ng-container>
     }
-    <!-- <ng-container [ngTemplateOutlet]="rateList"></ng-container> -->
     <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
       <ng-container [ngTemplateOutlet]="chats"></ng-container>
-      <ng-container [ngTemplateOutlet]="rateList"></ng-container>
+      @if (user()?.role === role.Advisor) {
+      <ng-container [ngTemplateOutlet]="advisorReviews"></ng-container>
+      } @if (user()?.role === role.User) {
+      <ng-container [ngTemplateOutlet]="userReviews"></ng-container>
+      }
     </div>
   </div>
 </main>
 
 <ng-template #requestLogs>
   <div class="grid md:grid-cols-2 grid-cols-1 md:gap-3 gap-1">
-    <div class="card">
-      <div class="card-body">
-        <div class="flex justify-between items-center">
-          <h5>Solicitudes Rechazadas</h5>
-          <h1 class="text-error">{{ requestsStatus.rejects }}</h1>
-        </div>
+    <div>
+      <div id="chart">
+        <apx-chart
+          [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
+          [chart]="chartOptions.chart!"
+          [labels]="chartOptions.labels"
+          [responsive]="chartOptions.responsive!"
+        ></apx-chart>
       </div>
     </div>
-    <div class="card">
-      <div class="card-body">
-        <div class="flex justify-between items-center">
-          <h5>Solicitudes Aceptadas</h5>
-          <h1 class="text-primary">{{ requestsStatus.accepts }}</h1>
+    <div class="flex flex-col justify-evenly">
+      <div class="card">
+        <div class="card-body">
+          <div class="flex justify-between items-center">
+            <h5>Solicitudes Rechazadas</h5>
+            <h1 class="text-error">{{ requestsStatus.rejects }}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="flex justify-between items-center">
+            <h5>Solicitudes Aceptadas</h5>
+            <h1 class="text-primary">{{ requestsStatus.accepts }}</h1>
+          </div>
         </div>
       </div>
     </div>
@@ -97,13 +112,16 @@
         <ul
           class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md border *:p-3 first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse"
         >
-          <li class="w-full">
-            Calificación:
-            <app-icon icon="star-filled" class="text-warning" />
-            {{ user()?.rate?.average }}/5
+          <li class="w-full text-center">
+            <span>Promedio: {{ user()?.rate?.average }} / 5</span>
+            <!-- <app-icon icon="star-filled" class="text-warning" size="6" /> -->
           </li>
-          <li class="w-full">Votos: {{ user()?.rates?.length || 0 }}</li>
-          <li class="w-full">Consultas: {{ requestsStatus.accepts }}</li>
+          <li class="w-full text-center">
+            Votos: {{ user()?.rate?.reviews?.length || 0 }}
+          </li>
+          <li class="w-full text-center">
+            Consultas: {{ requestsStatus.accepts }}
+          </li>
         </ul>
       </div>
     </div>
@@ -126,41 +144,67 @@
   </div>
 </ng-template>
 
-<ng-template #rateList>
+<ng-template #advisorReviews>
   <div class="card">
     <div class="card-body space-y-3">
-      <h5 class="title">
-        {{
-          user()?.role === role.Advisor
-            ? "Comentarios de clientes"
-            : "Mis comentarios"
-        }}
-      </h5>
+      <h5 class="title">Reviews</h5>
       <ul
         class="border-base-content/25 divide-base-content/25 divide-y-[1px] space-y-2"
       >
         @for (review of user()?.rate?.reviews; track $index;let first=$first) {
         <li [class.pt-2]="!first">
-          <span class="text-sm font-medium">
-            {{ review.title }}
-            <app-icon icon="star-filled" class="text-warning" />
-            {{ review.rate }}/5
-          </span>
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">
+              {{ review.title }}
+              <app-icon icon="star-filled" class="text-warning" />
+              {{ review.rate }}/5
+            </span>
+            <div class="">
+              <small>{{ review.createdAt | date }}</small>
+            </div>
+          </div>
           <p>{{ review.comment }}</p>
           <div class="flex justify-end gap-1.5">
-            @if (user()?.role===role.Advisor) {
-            <app-avatar [src]="review.user[0].avatar" size="sm" />
-            <small
-              >{{ review.user[0].name }} {{ review.user[0].lastName }},</small
-            >
-            }@else {
-            <app-avatar [src]="review.asesor[0].avatar" size="sm" />
-            <small
-              >{{ review.asesor[0].name }}
-              {{ review.asesor[0].lastName }},</small
-            >
-            }
-            <small>{{ review.createdAt | date }}</small>
+            <app-avatar [src]="review.reviewedBy.avatar" size="sm" />
+            <small>
+              {{ review.reviewedBy.name }}
+              {{ review.reviewedBy.lastName }}
+            </small>
+          </div>
+        </li>
+        }@empty {
+        <h6 class="text-center">¡No hay comentarios!</h6>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+<ng-template #userReviews>
+  <div class="card">
+    <div class="card-body space-y-3">
+      <h5 class="title">Reviews</h5>
+      <ul
+        class="border-base-content/25 divide-base-content/25 divide-y-[1px] space-y-2"
+      >
+        @for (review of user()?.reviews; track $index;let first=$first) {
+        <li [class.pt-2]="!first">
+          <div class="flex justify-between">
+            <span class="text-sm font-medium">
+              {{ review.title }}
+              <app-icon icon="star-filled" class="text-warning" />
+              {{ review.rate }}/5
+            </span>
+            <div class="">
+              <small>{{ review.createdAt | date }}</small>
+            </div>
+          </div>
+          <p>{{ review.comment }}</p>
+          <div class="flex justify-end gap-1.5">
+            <app-avatar [src]="review.reviewedTo.avatar" size="sm" />
+            <small>
+              {{ review.reviewedTo.name }}
+              {{ review.reviewedTo.lastName }}
+            </small>
           </div>
         </li>
         }@empty {

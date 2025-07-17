@@ -7,7 +7,7 @@
       <tr>
         <th>Usuario</th>
         <th>Email</th>
-        <th>Usuario</th>
+        <th>Status</th>
         <th>Usuario desde</th>
         <th>Última conexión</th>
         <th></th>
@@ -33,12 +33,14 @@
         <td>
           <span [appStatus]="user.isActive" class="w-full"></span>
         </td>
-        <td class="text-nowrap">{{ user.createdAt | date }}</td>
-        <td class="text-nowrap">{{ user.lastConnect | date : "medium" }}</td>
+        <td class="text-nowrap text-center">{{ user.createdAt | date }}</td>
+        <td class="text-nowrap text-center">
+          {{ user.lastConnect | date : "medium" }}
+        </td>
         <td>
           <app-button
             [clear]="true"
-            icon="pencil"
+            icon="eye"
             shape="circle"
             theme="secondary"
             [routerLink]="[routeEnum.User, user._id]"

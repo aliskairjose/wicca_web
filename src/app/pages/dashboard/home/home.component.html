@@ -1,3 +1,5 @@
+<!-- <span class="icon-[tabler--logs] size-10"></span> -->
+
 <main class="md:space-y-4 space-y-3">
   <div class="grid md:grid-cols-4 grid-cols-2 lg:gap-4 gap-2">
     <div class="stats">
@@ -67,7 +69,19 @@
   </div>
 
   <div class="md:flex lg:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
-    <div class="float-start w-5/12 card"></div>
+    <div class="float-start w-5/12">
+      <div class="card-body">
+        <h5 class="title">Solicitudes de servicios</h5>
+        <div id="chart">
+          <apx-chart
+            [series]="chartOptions.series!"
+            [chart]="chartOptions.chart!"
+            [labels]="chartOptions.labels"
+            [responsive]="chartOptions.responsive!"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
     <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
     <ng-container [ngTemplateOutlet]="newUsers"></ng-container>
   </div>
@@ -107,29 +121,34 @@
       <h5 class="title">Top asesores</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
         @for (user of dashboard?.topAsesors; track $index) {
-        <li class="flex items-start sm:items-center">
-          <app-avatar [src]="user.avatar" class="me-3" />
-          <div
-            class="flex grow flex-col items-start justify-between sm:flex-row"
+        <li>
+          <a
+            class="flex items-start sm:items-center"
+            [routerLink]="['users/user', user._id]"
           >
-            <div class="user-info flex flex-col">
-              <span class="text-sm text-base-content font-medium">
-                {{ user.name }} {{ user.lastName }}
-              </span>
-              <small class="text-base-content/50">
-                {{ user.category }}
-              </small>
-            </div>
-            <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
-              <span class="flex gap-1">
-                <app-icon icon="star-filled" theme="warning" size="3" />
-                <small>{{ user?.rate?.average ?? 0 }}/5</small>
-              </span>
-              <!-- <span class="badge badge-primary badge-outline badge-xs">
+            <app-avatar [src]="user.avatar" class="me-3" />
+            <div
+              class="flex grow flex-col items-start justify-between sm:flex-row"
+            >
+              <div class="user-info flex flex-col">
+                <span class="text-sm text-base-content font-medium">
+                  {{ user.name }} {{ user.lastName }}
+                </span>
+                <small class="text-base-content/50">
+                  {{ user.category }}
+                </small>
+              </div>
+              <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
+                <span class="flex gap-1">
+                  <app-icon icon="star-filled" theme="warning" size="3" />
+                  <small>{{ user?.rate?.average ?? 0 }}/5</small>
+                </span>
+                <!-- <span class="badge badge-primary badge-outline badge-xs">
                 {{ user.price | currency }}
               </span> -->
+              </div>
             </div>
-          </div>
+          </a>
         </li>
         }
       </ul>
@@ -143,25 +162,33 @@
       <h5 class="title">Nuevos registros</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
         @for (user of dashboard?.newUsers; track $index) {
-        <li class="flex items-start sm:items-center">
-          <app-avatar [src]="user.avatar" class="me-3" />
-          <div
-            class="flex grow flex-col items-start justify-between sm:flex-row"
+        <li>
+          <a
+            class="flex items-start sm:items-center"
+            [routerLink]="['users/user', user._id]"
           >
-            <div class="user-info flex flex-col">
-              <span class="text-sm text-base-content font-medium">
-                {{ user.name }} {{ user.lastName }}
-              </span>
-              <small class="text-base-content/50">
-                {{ user.createdAt | date }}
-              </small>
+            <app-avatar [src]="user.avatar" class="me-3" />
+            <div
+              class="flex grow flex-col items-start justify-between sm:flex-row"
+            >
+              <div class="user-info flex flex-col">
+                <span class="text-sm text-base-content font-medium">
+                  {{ user.name }} {{ user.lastName }}
+                </span>
+                <small class="text-base-content/50">
+                  {{ user.createdAt | date }}
+                </small>
+              </div>
+              <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
+                <app-badge
+                  [text]="user.role"
+                  [theme]="user.role === 'Advisor' ? 'success' : 'primary'"
+                  [outline]="true"
+                  size="sm"
+                />
+              </div>
             </div>
-            <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
-              <span class="badge badge-primary badge-outline badge-xs">
-                {{ user.role }}
-              </span>
-            </div>
-          </div>
+          </a>
         </li>
         }
       </ul>

@@ -26,6 +26,7 @@ export interface UserInterface {
   rates: RateInterface[];
   rooms: RoomInterface[];
   payments?: any;
+  reviews?: ReviewInterface[];
   rate?: RateInterface;
   advisor?: Advisor;
   requestLogs: RequestLogs[]
