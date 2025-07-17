@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     ]);
 
     this.dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
-    const res = this.#store.selectSnapshot(HomeSelectors.requestPieChart);
+    const res = this.#store.selectSnapshot(HomeSelectors.summaryStatus);
     res.forEach((d: SummaryStatusInterface) => {
       this.series.push(d.count);
       this.labels.push(d._id);
