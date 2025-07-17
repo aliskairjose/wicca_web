@@ -23,17 +23,20 @@ export class HomeComponent implements OnInit {
   dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
   series: number[] = [];
   labels: string[] = [];
+  currentYear = new Date().getFullYear();
   ngOnInit() {
-    this.loadData();
+    this.loadData(this.currentYear);
   }
 
-  private async loadData() {
+  private async loadData(year: number) {
     await Promise.all([
       firstValueFrom(this.#store.dispatch(new HomeAction.Get)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryStatus)),
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryMonthlyStatus(year))),
     ]);
 
     this.dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
+    const summaryMonthly = this.#store.selectSnapshot(HomeSelectors.summaryMonthlyStatus);
     const res = this.#store.selectSnapshot(HomeSelectors.summaryStatus);
     res.forEach((d: SummaryStatusInterface) => {
       this.series.push(d.count);

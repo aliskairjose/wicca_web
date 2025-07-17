@@ -6,4 +6,5 @@ export class HomeSelectors {
 
   static dashboard = createSelector([HomeSelectors.getSlice.dashboard], (dashboard) => dashboard);
   static summaryStatus = createSelector([HomeSelectors.getSlice.summaryStatus], (chart) => chart);
+  static summaryMonthlyStatus = createSelector([HomeSelectors.getSlice.summaryMonthlyStatus], (chart) => chart);
 }

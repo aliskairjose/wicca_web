@@ -5,6 +5,10 @@ export namespace HomeAction {
     static readonly type = `${ACTION_SCOPE} Get Dashboard`;
   }
   export class GetSummaryStatus {
-    static readonly type = `${ACTION_SCOPE} Get Request Service Dashboard`;
+    static readonly type = `${ACTION_SCOPE} Get Summary Status`;
+  }
+  export class GetSummaryMonthlyStatus {
+    static readonly type = `${ACTION_SCOPE} Get Summary Monthly Status`;
+    constructor(readonly year: number) { }
   }
 }

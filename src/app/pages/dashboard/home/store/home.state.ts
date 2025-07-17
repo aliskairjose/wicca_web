@@ -4,12 +4,13 @@ import { HomeService } from "../home.service";
 import { HomeAction } from './home.actions';
 import { tap } from "rxjs";
 import { DashboardInterface } from "../interfaces/dashboard.interface";
-import { SummaryStatusInterface } from "../interfaces/request-pie-chart.interface";
+import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from "../interfaces/request-pie-chart.interface";
 import { RequestLogsService } from "../../request-logs/request-logs.service";
 
 export interface HomeStateModel {
   dashboard: DashboardInterface | undefined;
   summaryStatus: SummaryStatusInterface[] | [];
+  summaryMonthlyStatus: SummaryMonthlyStatusInterface[] | [];
 }
 
 @State<HomeStateModel>({
@@ -17,6 +18,7 @@ export interface HomeStateModel {
   defaults: {
     dashboard: undefined,
     summaryStatus: [],
+    summaryMonthlyStatus: []
 
   }
 })
@@ -31,7 +33,22 @@ export class HomeState {
   }
 
   @Action(HomeAction.GetSummaryStatus)
-  getRequestPieChart(ctx: StateContext<HomeStateModel>) {
-    return this.#requestService.getGroupBy().pipe(tap(summaryStatus => ctx.patchState({ summaryStatus })));
+  getSummaryStatus(ctx: StateContext<HomeStateModel>) {
+    return this.#requestService
+      .getGroupBy()
+      .pipe(
+        tap(summaryStatus => ctx.patchState({ summaryStatus })
+        )
+      );
+  }
+
+  @Action(HomeAction.GetSummaryMonthlyStatus)
+  getSummaryMonthlyStatus(ctx: StateContext<HomeStateModel>, { year }: HomeAction.GetSummaryMonthlyStatus) {
+    return this.#requestService
+      .getSummaryMonthlyStatusByYear(year)
+      .pipe(
+        tap(summaryMonthlyStatus => ctx.patchState({ summaryMonthlyStatus })
+        )
+      );
   }
 }

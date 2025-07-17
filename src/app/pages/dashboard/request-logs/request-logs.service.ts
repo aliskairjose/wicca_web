@@ -5,7 +5,7 @@ import { AppConfig } from '@shared/classes/app.config';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { RequestByAsesorInterface } from './interfaces/request-logs.interface';
-import { SummaryStatusInterface } from '../home/interfaces/request-pie-chart.interface';
+import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from '../home/interfaces/request-pie-chart.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class RequestLogsService {
   getGroupBy(): Observable<SummaryStatusInterface[]> {
     return this.http.get<SummaryStatusInterface[]>(AppConfig.baseUrl(Api.SummaryStatus));
   }
-  getSummaryMonthlyStatusByYear(year: number): Observable<SummaryStatusInterface[]> {
-    return this.http.get<SummaryStatusInterface[]>(`${AppConfig.baseUrl(Api.SummaryMonthlyByYear)}/${year}`);
+  getSummaryMonthlyStatusByYear(year: number): Observable<SummaryMonthlyStatusInterface[]> {
+    return this.http.get<SummaryMonthlyStatusInterface[]>(`${AppConfig.baseUrl(Api.SummaryMonthlyByYear)}/${year}`);
   }
 }

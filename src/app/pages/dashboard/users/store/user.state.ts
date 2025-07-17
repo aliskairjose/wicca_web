@@ -45,12 +45,7 @@ export class UsersState {
         tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })
         )
       );
-    return state.users ?? this.#userService
-      .list(payload, pagination)
-      .pipe(
-        tap((users: ResponseInterface<UserInterface>) => ctx.patchState({ users })
-        )
-      );
+
   }
 
   @Action(UserAction.Update)
