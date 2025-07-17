@@ -12,3 +12,4 @@ export { AvatarComponent } from "./avatar/avatar.component";
 export { ButtonComponent } from "./button/button.component";
 export { SelectComponent } from "./select/select.component";
 export { ChatBurbleComponent } from "./chat-burble/chat-burble.component";
+export * from "./charts/index";

@@ -12,5 +12,6 @@ export enum Api {
   Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards',
   RequestLogs = 'request-logs/group-by/asesor',
-  RequestLogsGroup = 'request-logs/chart',
+  SummaryStatus = 'request-logs/summary/status',
+  SummaryMonthlyByYear = 'request-logs/summary/monthly-status',
 }

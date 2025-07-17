@@ -4,19 +4,19 @@ import { HomeService } from "../home.service";
 import { HomeAction } from './home.actions';
 import { tap } from "rxjs";
 import { DashboardInterface } from "../interfaces/dashboard.interface";
-import { RequestPieChart } from "../interfaces/request-pie-chart.interface";
+import { SummaryStatusInterface } from "../interfaces/request-pie-chart.interface";
 import { RequestLogsService } from "../../request-logs/request-logs.service";
 
 export interface HomeStateModel {
   dashboard: DashboardInterface | undefined;
-  requestPieChart: RequestPieChart[] | [];
+  summaryStatus: SummaryStatusInterface[] | [];
 }
 
 @State<HomeStateModel>({
   name: 'home',
   defaults: {
     dashboard: undefined,
-    requestPieChart: [],
+    summaryStatus: [],
 
   }
 })
@@ -30,8 +30,8 @@ export class HomeState {
     return this.#homeService.get().pipe(tap(dashboard => ctx.patchState({ dashboard })));
   }
 
-  @Action(HomeAction.GetRequestPieChart)
+  @Action(HomeAction.GetSummaryStatus)
   getRequestPieChart(ctx: StateContext<HomeStateModel>) {
-    return this.#requestService.getGroupBy().pipe(tap(requestPieChart => ctx.patchState({ requestPieChart })));
+    return this.#requestService.getGroupBy().pipe(tap(summaryStatus => ctx.patchState({ summaryStatus })));
   }
 }

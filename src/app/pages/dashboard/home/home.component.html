@@ -72,14 +72,7 @@
     <div class="float-start w-5/12">
       <div class="card-body">
         <h5 class="title">Solicitudes de servicios</h5>
-        <div id="chart">
-          <apx-chart
-            [series]="chartOptions.series!"
-            [chart]="chartOptions.chart!"
-            [labels]="chartOptions.labels"
-            [responsive]="chartOptions.responsive!"
-          ></apx-chart>
-        </div>
+        <app-circular-chart [series]="series" [labels]="labels" />
       </div>
     </div>
     <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
@@ -143,9 +136,6 @@
                   <app-icon icon="star-filled" theme="warning" size="3" />
                   <small>{{ user?.rate?.average ?? 0 }}/5</small>
                 </span>
-                <!-- <span class="badge badge-primary badge-outline badge-xs">
-                {{ user.price | currency }}
-              </span> -->
               </div>
             </div>
           </a>

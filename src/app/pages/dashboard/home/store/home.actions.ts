@@ -4,7 +4,7 @@ export namespace HomeAction {
   export class Get {
     static readonly type = `${ACTION_SCOPE} Get Dashboard`;
   }
-  export class GetRequestPieChart {
+  export class GetSummaryStatus {
     static readonly type = `${ACTION_SCOPE} Get Request Service Dashboard`;
   }
 }
