@@ -1,18 +1,17 @@
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AvatarComponent, IconComponent, BadgeComponent, CircularChartComponent } from '@shared/components';
+import { AvatarComponent, IconComponent, BadgeComponent, CircularChartComponent, ColumnChartComponent } from '@shared/components';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
-import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from 'ng-apexcharts';
 import { RouterLink } from '@angular/router';
-import { SummaryStatusInterface } from './interfaces/request-pie-chart.interface';
+import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from './interfaces/request-pie-chart.interface';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, RouterLink, BadgeComponent, CircularChartComponent],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, RouterLink, BadgeComponent, CircularChartComponent, ColumnChartComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -24,6 +23,9 @@ export class HomeComponent implements OnInit {
   series: number[] = [];
   labels: string[] = [];
   currentYear = new Date().getFullYear();
+  summaryMonthly: SummaryMonthlyStatusInterface[] = [];
+
+
   ngOnInit() {
     this.loadData(this.currentYear);
   }
@@ -36,13 +38,13 @@ export class HomeComponent implements OnInit {
     ]);
 
     this.dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
-    const summaryMonthly = this.#store.selectSnapshot(HomeSelectors.summaryMonthlyStatus);
     const res = this.#store.selectSnapshot(HomeSelectors.summaryStatus);
     res.forEach((d: SummaryStatusInterface) => {
       this.series.push(d.count);
       this.labels.push(d._id);
     });
-
+    this.summaryMonthly = this.#store.selectSnapshot(HomeSelectors.summaryMonthlyStatus);
+    console.log(this.summaryMonthly)
   }
 
 

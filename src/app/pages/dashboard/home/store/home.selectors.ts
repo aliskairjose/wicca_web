@@ -5,6 +5,6 @@ export class HomeSelectors {
   private static getSlice = createPropertySelectors<HomeStateModel>(HomeState);
 
   static dashboard = createSelector([HomeSelectors.getSlice.dashboard], (dashboard) => dashboard);
-  static summaryStatus = createSelector([HomeSelectors.getSlice.summaryStatus], (chart) => chart);
-  static summaryMonthlyStatus = createSelector([HomeSelectors.getSlice.summaryMonthlyStatus], (chart) => chart);
+  static summaryStatus = createSelector([HomeSelectors.getSlice.summaryStatus], (summaryStatus) => summaryStatus);
+  static summaryMonthlyStatus = createSelector([HomeSelectors.getSlice.summaryMonthlyStatus], (summaryMonthlyStatus) => summaryMonthlyStatus);
 }

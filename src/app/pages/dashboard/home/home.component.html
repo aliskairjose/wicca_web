@@ -71,13 +71,22 @@
   <div class="md:flex lg:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
     <div class="float-start w-5/12">
       <div class="card-body">
-        <h5 class="title">Solicitudes de servicios</h5>
+        <h5 class="title">Solicitudes de servicios {{ currentYear }}</h5>
         <app-circular-chart [series]="series" [labels]="labels" />
       </div>
     </div>
     <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
     <ng-container [ngTemplateOutlet]="newUsers"></ng-container>
   </div>
+
+  @if (summaryMonthly.length > 0) {
+  <div class="card">
+    <div class="card-body">
+      <h5 class="title">Resumen mensual {{ currentYear }}</h5>
+      <app-column-chart [series]="summaryMonthly" />
+    </div>
+  </div>
+  }
 
   <div>
     <h5>Top 10</h5>
