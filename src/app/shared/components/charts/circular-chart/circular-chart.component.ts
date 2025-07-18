@@ -27,7 +27,7 @@ export class CircularChartComponent implements AfterViewInit {
     labels: [],
     responsive: [
       {
-        breakpoint: 480,
+        breakpoint: 1025,
         options: {
           chart: {
             width: '100%',
