@@ -91,7 +91,6 @@ export class ColumnChartComponent implements AfterViewInit {
   };
 
   ngAfterViewInit(): void {
-    console.log(this.series());
     this.chartOptions.series = this.series();
   }
 }

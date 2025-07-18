@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { Store } from '@ngxs/store';
 import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
+import { CommonService } from '@shared/services/common.service';
 
 @Component({
   selector: 'app-dashbar',
@@ -12,8 +13,15 @@ import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
   styleUrl: './dashbar.component.scss'
 })
 export class DashbarComponent {
-  title = inject( Title );
-  #store = inject( Store );
+  title = inject(Title);
+  #store = inject(Store);
+  #commonService = inject(CommonService);
+  isOpen = true;
 
-  user = this.#store.selectSnapshot( AuthSelectors.userLogged );
+  user = this.#store.selectSnapshot(AuthSelectors.userLogged);
+
+  toggleSidebar(): void {
+    this.isOpen = !this.isOpen;
+    this.#commonService.toggleSidebar(this.isOpen);
+  }
 }
