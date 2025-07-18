@@ -1,15 +1,15 @@
 <main class="grid md:grid-cols-12 grid-cols-1 md:gap-4 gap-2">
-  <div class="md:col-span-4 col-span-12 space-y-4">
+  <div class="xl:col-span-4 md:col-span-6 col-span-12 space-y-4">
     <ng-container [ngTemplateOutlet]="profile"></ng-container>
     <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
   </div>
-  <div class="md:col-span-8 col-span-12 space-y-6">
+  <div class="xl:col-span-8 md:col-span-6 col-span-12 space-y-6">
     @if (user()?.role===role.Advisor) {
     <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
     <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
     <ng-container [ngTemplateOutlet]="bio"></ng-container>
     }
-    <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
+    <div class="grid xl:grid-cols-2 grid-cols-1 gap-4">
       <ng-container [ngTemplateOutlet]="chats"></ng-container>
       @if (user()?.role === role.Advisor) {
       <ng-container [ngTemplateOutlet]="advisorReviews"></ng-container>
@@ -21,18 +21,14 @@
 </main>
 
 <ng-template #requestLogs>
-  <div class="grid md:grid-cols-2 grid-cols-1 md:gap-3 gap-1">
+  <div class="grid xl:grid-cols-2 grid-cols-1 md:gap-3 gap-1">
     <div>
-      <div id="chart">
-        <apx-chart
-          [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
-          [chart]="chartOptions.chart!"
-          [labels]="chartOptions.labels"
-          [responsive]="chartOptions.responsive!"
-        ></apx-chart>
-      </div>
+      <app-circular-chart
+        [labels]="labels"
+        [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
+      />
     </div>
-    <div class="flex flex-col justify-evenly">
+    <div class="flex flex-col xl:justify-evenly xl:space-y-0 space-y-2">
       <div class="card">
         <div class="card-body">
           <div class="flex justify-between items-center">
@@ -110,7 +106,7 @@
     <div class="card-body">
       <div class="w-full">
         <ul
-          class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md border *:p-3 first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse"
+          class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md border *:p-3 first:*:rounded-t-md last:*:rounded-b-md xl:flex-row sm:divide-x xl:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse"
         >
           <li class="w-full text-center">
             <span>Promedio: {{ user()?.rate?.average }} / 5</span>

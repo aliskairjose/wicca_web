@@ -5,6 +5,7 @@ import { Api } from '@shared/apis';
 import { UserInterface } from '../user.interface';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { AppConfig } from '@shared/classes/app.config';
+import { UserSummaryInterface } from '../../request-logs/interfaces/summary.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,9 @@ export class UserService {
 
   update(id: string, data: Partial<UserInterface>): Observable<UserInterface> {
     return this.http.patch<UserInterface>(`${AppConfig.baseUrl(Api.Users)}/${id}`, data);
+  }
+
+  getSummaryUser(): Observable<UserSummaryInterface> {
+    return this.http.get<UserSummaryInterface>(AppConfig.baseUrl(Api.UserSummary));
   }
 }

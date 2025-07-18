@@ -5,14 +5,13 @@ import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { firstValueFrom } from 'rxjs';
 import { RequestLogsActions } from './store/request.action';
 import { RequestLogsSelectors } from './store/request.selctors';
-import { AvatarComponent, BadgeComponent, TableContainerComponent } from '@shared/components';
-import { RequestLogInterface } from './interfaces/request-logs.interface';
-import { DatePipe } from '@angular/common';
+import { AvatarComponent, TableContainerComponent } from '@shared/components';
+import { RequestByAsesorInterface } from './interfaces/request-logs.interface';
 
 @Component({
   selector: 'app-request-logs',
   standalone: true,
-  imports: [TableContainerComponent, DatePipe, BadgeComponent, AvatarComponent],
+  imports: [AvatarComponent, TableContainerComponent],
   templateUrl: './request-logs.component.html',
   styleUrl: './request-logs.component.scss'
 })
@@ -26,22 +25,14 @@ export class RequestLogsComponent {
 
   #store = inject(Store);
 
-  logs: RequestLogInterface[] = [];
+  logs: RequestByAsesorInterface[] = [];
 
   constructor() {
     this._getData();
   }
 
-  onChangeTable(e: any): void {
-    this.queryParams['search'] = e.term;
-    this.pagination = e.pagination();
-    this._getData()
-  }
-
   private async _getData() {
     await firstValueFrom(this.#store.dispatch(new RequestLogsActions.List(this.queryParams, this.pagination)));
-    const { results, metadata } = this.#store.selectSnapshot(RequestLogsSelectors.list)!;
-    this.logs = results;
-    this.metadata.set(metadata);
+    this.logs = this.#store.selectSnapshot(RequestLogsSelectors.list)!;
   }
 }

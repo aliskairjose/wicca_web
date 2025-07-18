@@ -8,9 +8,11 @@ export enum Api {
   ResetPassword = 'auth/reset-password',
   Menu = 'web-menu',
   Users = 'users',
+  UserSummary = 'dashboard/users/summary',
   Rooms = 'chat/rooms',
   Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards',
-  RequestLogs = 'request-logs',
-  RequestLogsGroup = 'request-logs/chart',
+  RequestLogs = 'request-logs/group-by/asesor',
+  SummaryStatus = 'request-logs/summary/status',
+  SummaryMonthlyByYear = 'request-logs/summary/monthly-status',
 }

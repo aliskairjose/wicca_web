@@ -1,24 +1,19 @@
-import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AvatarComponent, IconComponent, BadgeComponent } from '@shared/components';
+import { AvatarComponent, IconComponent, BadgeComponent, CircularChartComponent, ColumnChartComponent } from '@shared/components';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
-import { RequestPieChart } from './interfaces/request-pie-chart.interface';
-import { ApexChart, ApexNonAxisChartSeries, ApexResponsive, NgApexchartsModule } from 'ng-apexcharts';
 import { RouterLink } from '@angular/router';
+import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from './interfaces/request-pie-chart.interface';
+import { UserSummaryInterface } from '../request-logs/interfaces/summary.interface';
+import { DashboardInterface } from './interfaces/dashboard.interface';
 
-type ChartOptions = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  responsive: ApexResponsive[];
-  labels: any;
-};
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, NgApexchartsModule, RouterLink, BadgeComponent],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, RouterLink, BadgeComponent, CircularChartComponent, ColumnChartComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -26,48 +21,38 @@ type ChartOptions = {
 export class HomeComponent implements OnInit {
 
   #store = inject(Store);
-  dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
-  requestPiechart: RequestPieChart[] = [];
-  chartOptions: Partial<ChartOptions> = {
-    series: [],
-    chart: {
-      width: '100%',
-      type: 'pie',
-    },
-    labels: [],
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200,
-          },
-          legend: {
-            position: 'bottom',
-          },
-        },
-      },
-    ],
-  };
+  dashboad: DashboardInterface | undefined;
+  summaryUser: UserSummaryInterface | undefined;
+  series: number[] = [];
+  labels: string[] = [];
+  currentYear = new Date().getFullYear();
+  summaryMonthly: SummaryMonthlyStatusInterface[] = [];
 
 
   ngOnInit() {
-    this.loadData();
+    this.loadData(this.currentYear);
   }
 
-  private async loadData() {
+  private async loadData(year: number) {
     await Promise.all([
       firstValueFrom(this.#store.dispatch(new HomeAction.Get)),
-      firstValueFrom(this.#store.dispatch(new HomeAction.GetRequestPieChart)),
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetUserSummary)),
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryStatus)),
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryMonthlyStatus(year))),
     ]);
 
-    this.dashboard = this.#store.selectSnapshot(HomeSelectors.dashboard);
-    this.requestPiechart = this.#store.selectSnapshot(HomeSelectors.requestPieChart);
-    this.requestPiechart.forEach(d => {
-      this.chartOptions.series?.push(d.count);
-      this.chartOptions.labels?.push(d._id);
+    this.dashboad = this.#store.selectSnapshot(HomeSelectors.dashboard);
+
+    this.summaryUser = this.#store.selectSnapshot(HomeSelectors.summaryUser);
+
+    const res = this.#store.selectSnapshot(HomeSelectors.summaryStatus);
+
+    res.forEach((d: SummaryStatusInterface) => {
+      this.series.push(d.count);
+      this.labels.push(d._id);
     });
 
+    this.summaryMonthly = this.#store.selectSnapshot(HomeSelectors.summaryMonthlyStatus);
   }
 
 

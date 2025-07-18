@@ -1,32 +1,36 @@
-<app-table-container
-  [metadata]="metadata()!"
-  (onChange)="onChangeTable($event)"
->
+<app-table-container>
   <table class="table">
     <thead>
       <tr>
-        <th>Asesor</th>
-        <th>Solicitud</th>
-        <th>Fecha</th>
+        <th></th>
+        <th class="text-center">Rechazadas</th>
+        <th class="text-center">Aceptadas</th>
+        <th class="text-center">Total</th>
       </tr>
     </thead>
     <tbody>
       @for (log of logs; track $index){
       <tr class="hover">
         <td>
-          <span class="flex flex-row items-center gap-2">
+          <div class="flex gap-x-2">
             <app-avatar [src]="log.asesor.avatar" size="md" />
-            {{ log.asesor.name }} {{ log.asesor.lastName }}
-          </span>
+            <div class="flex flex-col">
+              <span class="text-base-content font-medium"
+                >{{ log.asesor.name }} {{ log.asesor.lastName }}</span
+              >
+              <small>{{ log.asesor.email }}</small>
+            </div>
+          </div>
         </td>
-        <td>
-          @if (log.status==='Aceptado') {
-          <app-badge [text]="log.status" [outline]="true" [theme]="'success'" />
-          }@else {
-          <app-badge [text]="log.status" [outline]="true" [theme]="'error'" />
-          }
+        <td class="text-center">
+          <span class="text-error font-medium">{{ log.rejected }}</span>
         </td>
-        <td>{{ log.createdAt | date : "medium" }}</td>
+        <td class="text-center">
+          <span class="text-success font-medium">{{ log.accepted }}</span>
+        </td>
+        <td class="text-center">
+          <span class="font-semibold">{{ log.totalRequests }}</span>
+        </td>
       </tr>
       }
     </tbody>
