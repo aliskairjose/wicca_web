@@ -8,6 +8,7 @@ export enum Api {
   ResetPassword = 'auth/reset-password',
   Menu = 'web-menu',
   Users = 'users',
+  UserSummary = 'users/summary',
   Rooms = 'chat/rooms',
   Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards',

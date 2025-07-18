@@ -38,16 +38,7 @@ export class ColumnChartComponent implements AfterViewInit {
   series = input<SummaryMonthlyStatusInterface[]>([]);
 
   chartOptions: Partial<ChartOptions> = {
-    series: [
-      // {
-      //   name: "Acapetadas",
-      //   data: [1, 3, 2, 5, 2, 6, 8, 10, 9, 5, 1]
-      // },
-      // {
-      //   name: "Rechazadas",
-      //   data: [2, 4, 5, 2, 2, 2, 3, 1, 0, 8, 8]
-      // },
-    ],
+    series: [],
     chart: {
       type: "bar",
       height: 350
@@ -68,13 +59,14 @@ export class ColumnChartComponent implements AfterViewInit {
     },
     xaxis: {
       categories: [
+        "Ene",
         "Feb",
         "Mar",
         "Apr",
         "May",
         "Jun",
         "Jul",
-        "Aug",
+        "Ago",
         "Sep",
         "Oct",
         "Nov",
