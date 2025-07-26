@@ -49,4 +49,7 @@ export class UserComponent implements OnInit {
       accepts: accepts?.length,
     }
   }
+  get totalEarnings() {
+    return (this.user()?.wallet?.balance ?? 0) * 0.4;
+  }
 }

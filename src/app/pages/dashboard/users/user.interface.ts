@@ -10,20 +10,14 @@ export interface UserInterface {
   lastName: string;
   email: string;
   role: RoleEnum;
-  title?: string;
-  price?: number;
-  description?: string;
-  category?: string;
   language?: string[];
   isActive: boolean;
   connectStatus: ConnectStatusType;
   socketId?: string;
   lastConnect: Date;
-  phone: string;
   createdAt: Date;
   updatedAt: Date;
   wallet?: WalletInterface;
-  rates: RateInterface[];
   rooms: RoomInterface[];
   payments?: any;
   reviews?: ReviewInterface[];
@@ -45,7 +39,7 @@ interface Advisor {
 }
 
 interface WalletInterface {
-  amount: number;
+  balance: number;
   createdAt: Date;
   updatedAt: Date;
 }
