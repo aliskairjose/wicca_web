@@ -100,22 +100,17 @@
       @for (item of dashboad?.topAsesors; track $index) {
       <div class="card sm:card-side w-72 min-h-16 ps-2">
         <app-avatar [src]="item.avatar" size="lg" class="m-auto" />
-        <div class="card-body justify-between">
-          <p class="font-semibold mb-1.5">
-            {{ item.name }} {{ item.lastName }}
-          </p>
-          <small>{{ item.category }}</small>
-          <div class="flex justify-between mt-1.5">
-            <span>
-              <app-icon icon="star-filled" theme="warning" />
-              <small class=""> {{ item?.rate?.average ?? 0 }}/5 </small>
-            </span>
-            <span
-              class="badge badge-primary badge-outline place-self-end badge-sm"
+        <div class="card-body justify-between flex flex-row">
+          <div class="flex flex-col">
+            <span class="font-semibold"
+              >{{ item.name }} {{ item.lastName }}</span
             >
-              {{ item?.advisor?.chatPrice | currency }}/min
-            </span>
+            <small>{{ item.advisor?.category }}</small>
           </div>
+          <span>
+            <app-icon icon="star-filled" theme="warning" />
+            <small class=""> {{ item?.rate?.average ?? 0 }}/5 </small>
+          </span>
         </div>
       </div>
       }

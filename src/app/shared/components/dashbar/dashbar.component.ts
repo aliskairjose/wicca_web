@@ -15,13 +15,8 @@ import { CommonService } from '@shared/services/common.service';
 export class DashbarComponent {
   title = inject(Title);
   #store = inject(Store);
-  #commonService = inject(CommonService);
   isOpen = true;
 
   user = this.#store.selectSnapshot(AuthSelectors.userLogged);
 
-  toggleSidebar(): void {
-    this.isOpen = !this.isOpen;
-    this.#commonService.toggleSidebar(this.isOpen);
-  }
 }

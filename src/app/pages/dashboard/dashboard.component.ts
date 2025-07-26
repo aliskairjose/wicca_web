@@ -24,18 +24,6 @@ export class DashboardComponent {
   #router = inject(Router);
   #notify = inject(ToastService)
   #socketService = inject(SocketService);
-  #commonService = inject(CommonService);
-
-  #renderer = inject(Renderer2);
-  @ViewChild('sidebar') sidebar!: ElementRef;
-
-  constructor() {
-    this.#commonService
-      .toggleSidebarObservable()
-      .subscribe((isOpen: boolean) => {
-        this.#renderer.setStyle(this.sidebar.nativeElement, 'display', isOpen ? 'block' : 'none');
-      });
-  }
 
   signout(): void {
     this.#store.dispatch(new AuthActions.Logout()).subscribe(() => {

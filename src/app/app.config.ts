@@ -48,10 +48,8 @@ export const appConfig: ApplicationConfig = {
       // withNgxsFormPlugin(),
       // withNgxsLoggerPlugin(),
       // withNgxsRouterPlugin(),
-      withNgxsStoragePlugin({
-        keys: [AuthState],
-      })
-      // withNgxsWebSocketPlugin()
+      withNgxsStoragePlugin({ keys: [AuthState] }),
+      withNgxsWebSocketPlugin({ url: 'http://192.168.1.15:3000' }),
     ),
   ],
 };
