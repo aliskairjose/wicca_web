@@ -9,5 +9,6 @@ export enum RoutesEnum {
   Details = 'details',
   Settings = 'settings',
   Chats = 'chats',
-  RequestLogs = 'request-logs'
+  RequestLogs = 'request-logs',
+  Payments = 'payments',
 }

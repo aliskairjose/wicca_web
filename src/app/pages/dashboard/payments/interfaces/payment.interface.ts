@@ -1,3 +1,4 @@
+import { UserInterface } from "../../users/user.interface";
 import { PaymentTypeEnum } from "../enums/payment-type.enum";
 
 export interface PaymentInterface {
@@ -8,4 +9,5 @@ export interface PaymentInterface {
   currency: string;
   description: PaymentTypeEnum;
   createdAt: Date;
+  user: Partial<UserInterface>;
 }

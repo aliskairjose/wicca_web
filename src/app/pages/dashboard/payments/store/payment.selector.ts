@@ -9,5 +9,4 @@ export class PaymentSelectors {
     (payments) => payments
   );
 
-  // Additional selectors can be added here as needed
 }
