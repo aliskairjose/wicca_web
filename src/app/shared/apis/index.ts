@@ -16,4 +16,6 @@ export enum Api {
   RequestLogs = 'request-logs/group-by/asesor',
   SummaryStatus = 'request-logs/summary/status',
   SummaryMonthlyByYear = 'request-logs/summary/monthly-status',
+  Categories = 'categories',
 }
+
