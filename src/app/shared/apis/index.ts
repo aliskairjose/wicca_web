@@ -9,6 +9,7 @@ export enum Api {
   Menu = 'web-menu',
   Users = 'users',
   UserSummary = 'dashboard/users/summary',
+  Payments = 'payments',
   Rooms = 'chat/rooms',
   Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards',

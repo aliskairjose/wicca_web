@@ -4,7 +4,6 @@ import { RequestLogsActions } from "./request.action";
 import { RequestLogsService } from "../request-logs.service";
 import { tap } from "rxjs";
 import { RequestByAsesorInterface } from "../interfaces/request-logs.interface";
-import { ResponseInterface } from "@shared/interfaces";
 
 export interface RequestLogsStateModel {
   requests: RequestByAsesorInterface[] | [];

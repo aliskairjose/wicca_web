@@ -80,7 +80,6 @@ export class UsersComponent {
   }
 
   private async getData() {
-    console.log('getData')
     await firstValueFrom(this.#store.dispatch(new UserAction.List(this.queryParams, this.pagination)));
     const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
     this.users.set(results);

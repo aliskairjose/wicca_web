@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs';
-import { TotalUsersInterface, UserInterface } from '../user.interface';
+import { UserInterface } from '../user.interface';
 import { UserService } from '../services/user.service';
 import { UserAction } from './user.actions';
 import { ResponseInterface } from '@shared/interfaces';

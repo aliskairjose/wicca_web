@@ -47,6 +47,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: RoutesEnum.Payments,
+        title: 'Listado de pagos',
+        loadComponent: () =>
+          import('./pages/dashboard/payments/payments.component').then(
+            (m) => m.PaymentsComponent
+          ),
+      },
+      {
         path: RoutesEnum.Chats,
         title: 'Listado de chats',
         loadComponent: () =>
