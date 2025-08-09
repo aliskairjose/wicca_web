@@ -21,6 +21,9 @@ export class CategoriesService {
     return this.http.get<ResponseInterface<CategoryInterface>>(AppConfig.baseUrl(Api.Categories), { params });
   }
 
+  create(data: any): Observable<CategoryInterface> {
+    return this.http.post<CategoryInterface>(AppConfig.baseUrl(Api.Categories), data);
+  }
 
   byId(id: string): Observable<CategoryInterface> {
     return this.http.get<CategoryInterface>(`${AppConfig.baseUrl(Api.Categories)}/${id}`);

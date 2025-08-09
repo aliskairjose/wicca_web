@@ -1,3 +1,6 @@
+<div class="w-full flex justify-end mb-6">
+  <app-button text="Crear categoría" icon="plus" (clickHandler)="add()" />
+</div>
 <app-table-container
   [metadata]="metadata()!"
   (onChange)="onChangeTable($event)"
@@ -8,6 +11,7 @@
         <th>Nombre</th>
         <th>Fecha de creación</th>
         <th>Última actualización</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -24,8 +28,81 @@
         <td>
           {{ cat.updatedAt | date : "medium" }}
         </td>
+        <td>
+          <app-button
+            [clear]="true"
+            icon="eye"
+            shape="circle"
+            theme="secondary"
+          />
+          <app-button
+            [clear]="true"
+            icon="trash"
+            shape="circle"
+            theme="secondary"
+          />
+          <app-button
+            [clear]="true"
+            icon="dots-vertical"
+            shape="circle"
+            theme="secondary"
+          />
+        </td>
       </tr>
       }
     </tbody>
   </table>
 </app-table-container>
+
+<div
+  id="scroll-inside-modal"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Crear nueva categoría</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div
+            class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
+          >
+            <app-input
+              [control]="f['name']"
+              formControlName="name"
+              label="Nombre"
+              type="text"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer pt-2">
+        <button
+          type="button"
+          class="btn btn-soft btn-error"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-soft btn-primary"
+          (click)="onSubmit()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

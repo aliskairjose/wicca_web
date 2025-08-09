@@ -25,6 +25,11 @@ export class CategoryState {
 
   }
 
+  @Action(CategoryAction.Add)
+  add(ctx: StateContext<CategoryStateModel>, { payload }: CategoryAction.Add) {
+    return this.#service.create(payload).pipe();
+  }
+
   @Action(CategoryAction.List)
   list(ctx: StateContext<CategoryStateModel>, { payload, pagination }: CategoryAction.List) {
     payload ??= {};

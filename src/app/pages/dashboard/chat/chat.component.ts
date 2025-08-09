@@ -8,8 +8,7 @@ import { ChatSelectors } from './store/chat.selectors';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { AvatarComponent, ButtonComponent, ChatBurbleComponent, TableContainerComponent } from '@shared/components';
+import { ButtonComponent, ChatBurbleComponent, TableContainerComponent } from '@shared/components';
 import { HSOverlay } from 'flyonui/flyonui';
 
 @Component({
