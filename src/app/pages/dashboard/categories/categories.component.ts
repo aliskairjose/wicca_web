@@ -123,8 +123,8 @@ export class CategoriesComponent implements OnInit {
     modal.close();
     setTimeout(() => {
       this._loadForm()
-      this.isEdit = false, 100
-    });
+      this.isEdit = false
+    }, 100);
   }
 
   closeDeleteModal() {
