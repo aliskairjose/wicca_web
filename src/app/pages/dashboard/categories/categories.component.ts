@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, OnChanges } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { ButtonComponent, InputComponent, TableContainerComponent } from '@shared/components';
+import { ButtonComponent, InputComponent, SwitchComponent, TableContainerComponent } from '@shared/components';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { CategoryInterface } from './interfaces/category.interface';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [TableContainerComponent, DatePipe, ButtonComponent, ReactiveFormsModule, InputComponent],
+  imports: [TableContainerComponent, DatePipe, ButtonComponent, ReactiveFormsModule, InputComponent, SwitchComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
@@ -31,6 +31,7 @@ export class CategoriesComponent implements OnInit {
   categories = signal<CategoryInterface[] | undefined>(undefined);
   metadata = signal<MetadataInterface | undefined>(undefined);
   isEdit = false;
+  isActive = true;
   id = '';
 
   constructor() {
@@ -60,14 +61,23 @@ export class CategoriesComponent implements OnInit {
     };
   }
 
+  onChange(checked: boolean) {
+    this.form.patchValue({ isActive: checked });
+  }
+
   add(): void {
+    this.isActive = true;
     this.openModal();
   }
 
   edit(cat: CategoryInterface) {
     this.isEdit = true;
     this.id = cat._id;
-    this.form.patchValue({ name: cat.name });
+    this.isActive = cat.isActive;
+    this.form.patchValue({
+      name: cat.name,
+      isActive: cat.isActive
+    });
     this.openModal();
   }
 
@@ -85,6 +95,7 @@ export class CategoriesComponent implements OnInit {
   private _loadForm(): void {
     this.form = this.#fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
+      isActive: [true]
     });
   }
 

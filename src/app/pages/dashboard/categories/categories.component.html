@@ -9,6 +9,7 @@
     <thead>
       <tr>
         <th>Nombre</th>
+        <th>Activo</th>
         <th>Fecha de creación</th>
         <th>Última actualización</th>
         <th></th>
@@ -20,7 +21,7 @@
         <td>
           {{ cat.name }}
         </td>
-
+        <td>{{ cat.isActive ? "Activo" : "Inactivo" }}</td>
         <td>
           {{ cat.createdAt | date }}
         </td>
@@ -56,6 +57,7 @@
   </table>
 </app-table-container>
 
+<!-- Add modal -->
 <div
   id="scroll-inside-modal"
   class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"
@@ -88,6 +90,11 @@
               label="Nombre"
               type="text"
             />
+            <app-switch
+              text="Activo"
+              (onChange)="onChange($event)"
+              [isChecked]="isActive"
+            />
           </div>
         </form>
       </div>
@@ -111,6 +118,7 @@
   </div>
 </div>
 
+<!-- Delete modal -->
 <div
   id="delete-modal"
   class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"

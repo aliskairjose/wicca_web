@@ -2,8 +2,8 @@
   <input
     type="checkbox"
     class="switch switch-primary"
-    id="defaultSwitch2"
-    checked
+    [checked]="isChecked()"
+    (change)="change($event)"
   />
   <label class="label label-text text-base" for="defaultSwitch2">
     {{ text() }}

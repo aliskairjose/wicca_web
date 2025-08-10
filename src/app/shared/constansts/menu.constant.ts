@@ -21,7 +21,7 @@ export const MENU: SideMenuInterface[] = [
     role: [RoleEnum.Admin],
   },
   {
-    icon: 'brand-wechat',
+    icon: 'category',
     path: 'categories',
     title: 'Categorías',
     role: [RoleEnum.Admin],
