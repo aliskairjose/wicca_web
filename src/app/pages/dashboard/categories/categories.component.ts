@@ -21,7 +21,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class CategoriesComponent implements OnInit {
   form!: FormGroup;
   #fb = inject(FormBuilder);
-
   pagination: PaginationInterface = {
     page: 1,
     limit: 20
@@ -31,6 +30,8 @@ export class CategoriesComponent implements OnInit {
 
   categories = signal<CategoryInterface[] | undefined>(undefined);
   metadata = signal<MetadataInterface | undefined>(undefined);
+  isEdit = false;
+  id = '';
 
   constructor() {
     this.getData();
@@ -44,22 +45,35 @@ export class CategoriesComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.closeModal();
-      this.create(this.form.value);
-    };
-  }
-
-
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
   }
 
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.closeModal();
+      this.isEdit
+        ? this.update()
+        : this.create();
+    };
+  }
+
   add(): void {
     this.openModal();
+  }
+
+  edit(cat: CategoryInterface) {
+    this.isEdit = true;
+    this.id = cat._id;
+    this.form.patchValue({ name: cat.name });
+    this.openModal();
+  }
+
+  async delete(id: string) {
+    await firstValueFrom(this.#store.dispatch(new CategoryAction.Delete(id)));
+    this.getData();
   }
 
   private _loadForm(): void {
@@ -68,16 +82,29 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  private create(data: any): void {
-    this.#store.dispatch(new CategoryAction.Add(data));
+
+  private async create() {
+    await firstValueFrom(this.#store.dispatch(new CategoryAction.Add(this.form.value)));
+    this.getData();
   }
+
+  private async update() {
+    await firstValueFrom(this.#store.dispatch(new CategoryAction.Update(this.id, this.form.value)));
+    this.getData();
+  }
+
   private openModal() {
     const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
     modal.open();
   }
+
   closeModal() {
     const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
     modal.close();
+    setTimeout(() => {
+      this._loadForm()
+      this.isEdit = false, 100
+    });
   }
 
   private async getData() {

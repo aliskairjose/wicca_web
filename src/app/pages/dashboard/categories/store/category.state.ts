@@ -27,7 +27,7 @@ export class CategoryState {
 
   @Action(CategoryAction.Add)
   add(ctx: StateContext<CategoryStateModel>, { payload }: CategoryAction.Add) {
-    return this.#service.create(payload).pipe();
+    return this.#service.create(payload);
   }
 
   @Action(CategoryAction.List)
@@ -47,14 +47,21 @@ export class CategoryState {
     let state = ctx.getState();
     return this.#service
       .update(id, payload)
-      .pipe(tap((user: CategoryInterface) => {
-        const data: ResponseInterface<CategoryInterface> = {
-          metadata: state.categories!.metadata,
-          results: []
-        }
-        data.results = state.categories!.results.map(u => (u._id === id) ? user : u);
-        ctx.patchState({ categories: data });
-      })
+      .pipe(
+        tap((category: CategoryInterface) => {
+          const data: ResponseInterface<CategoryInterface> = {
+            metadata: state.categories!.metadata,
+            results: []
+          }
+          data.results = state.categories!.results.map(c => (c._id === id) ? category : c);
+          ctx.patchState({ categories: data });
+        })
       );
+  }
+
+  @Action(CategoryAction.Delete)
+  delete(ctx: StateContext<CategoryStateModel>, { id }: CategoryAction.Delete) {
+    let state = ctx.getState();
+    return this.#service.delete(id);
   }
 }

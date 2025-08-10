@@ -32,4 +32,7 @@ export class CategoriesService {
   update(id: string, data: Partial<CategoryInterface>): Observable<CategoryInterface> {
     return this.http.put<CategoryInterface>(`${AppConfig.baseUrl(Api.Categories)}/${id}`, data);
   }
+  delete(id: string,): Observable<CategoryInterface> {
+    return this.http.delete<CategoryInterface>(`${AppConfig.baseUrl(Api.Categories)}/${id}`);
+  }
 }

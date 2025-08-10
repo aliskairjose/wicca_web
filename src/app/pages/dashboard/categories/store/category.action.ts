@@ -25,4 +25,8 @@ export namespace CategoryAction {
     static readonly type = `${ACTION_SCOPE} Update category`;
     constructor(readonly id: string, readonly payload: Partial<CategoryInterface>) { }
   }
+  export class Delete {
+    static readonly type = `${ACTION_SCOPE} Delete category`;
+    constructor(readonly id: string) { }
+  }
 }
