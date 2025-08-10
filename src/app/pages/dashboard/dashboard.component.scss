@@ -1,8 +1,11 @@
 .wrapper {
+  aside{
+    background-color: #043333;
+  }
   .menu {
-    @apply  bg-white min-w-64 p-4 relative lg:flex flex-col;
+    @apply  bg-transparent min-w-64 p-4 relative lg:flex flex-col;
     .router-link-active {
-      @apply bg-transparent text-primary;
+      @apply bg-transparent text-[#7c9474];
     }
   }
   @apply relative flex h-screen max-h-screen top-0;

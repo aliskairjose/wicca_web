@@ -21,7 +21,9 @@
         <td>
           {{ cat.name }}
         </td>
-        <td>{{ cat.isActive ? "Activo" : "Inactivo" }}</td>
+        <td>
+          <span [appStatus]="cat.isActive" class="w-full"></span>
+        </td>
         <td>
           {{ cat.createdAt | date }}
         </td>

@@ -10,11 +10,12 @@ import { CategorySelectors } from './store/category.selectors';
 import { DatePipe } from '@angular/common';
 import { HSOverlay } from 'flyonui/flyonui';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { StatusDirective } from '@shared/directives';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [TableContainerComponent, DatePipe, ButtonComponent, ReactiveFormsModule, InputComponent, SwitchComponent],
+  imports: [TableContainerComponent, DatePipe, ButtonComponent, StatusDirective, ReactiveFormsModule, InputComponent, SwitchComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
