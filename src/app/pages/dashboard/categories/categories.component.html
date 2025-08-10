@@ -110,3 +110,43 @@
     </div>
   </div>
 </div>
+
+<div
+  id="delete-modal"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Desea eliminar esta categoría?</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeDeleteModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">Esta acción es irreversible</div>
+      <div class="modal-footer pt-2">
+        <button
+          type="button"
+          class="btn btn-soft btn-error"
+          (click)="closeDeleteModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-soft btn-primary"
+          (click)="deleteItem()"
+        >
+          Si, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

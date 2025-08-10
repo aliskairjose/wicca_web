@@ -71,8 +71,14 @@ export class CategoriesComponent implements OnInit {
     this.openModal();
   }
 
-  async delete(id: string) {
-    await firstValueFrom(this.#store.dispatch(new CategoryAction.Delete(id)));
+  delete(id: string) {
+    this.id = id;
+    this.openDeleteModal();
+  }
+
+  async deleteItem() {
+    this.closeDeleteModal();
+    await firstValueFrom(this.#store.dispatch(new CategoryAction.Delete(this.id)));
     this.getData();
   }
 
@@ -81,7 +87,6 @@ export class CategoriesComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
-
 
   private async create() {
     await firstValueFrom(this.#store.dispatch(new CategoryAction.Add(this.form.value)));
@@ -97,6 +102,10 @@ export class CategoriesComponent implements OnInit {
     const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
     modal.open();
   }
+  private openDeleteModal() {
+    const modal = new HSOverlay(document.querySelector('#delete-modal')!);
+    modal.open();
+  }
 
   closeModal() {
     const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
@@ -105,6 +114,11 @@ export class CategoriesComponent implements OnInit {
       this._loadForm()
       this.isEdit = false, 100
     });
+  }
+
+  closeDeleteModal() {
+    const modal = new HSOverlay(document.querySelector('#delete-modal')!);
+    modal.close();
   }
 
   private async getData() {
