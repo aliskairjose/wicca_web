@@ -4,6 +4,7 @@ import { Api } from '@shared/apis';
 import { AppConfig } from '@shared/classes/app.config';
 import { Observable } from 'rxjs';
 import { TopRatedInterface } from './interfaces/top-rated.interface';
+import { UserInterface } from '../users/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,9 @@ export class HomeService {
 
   getTopAdvisors(): Observable<TopRatedInterface[]> {
     return this.http.get<TopRatedInterface[]>(AppConfig.baseUrl(Api.TopRatedAdvisor));
+  }
+
+  getNewRegistrations(): Observable<UserInterface[]> {
+    return this.http.get<UserInterface[]>(AppConfig.baseUrl(Api.NewRegistrations));
   }
 }

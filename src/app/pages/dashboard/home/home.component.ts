@@ -9,6 +9,7 @@ import { RouterLink } from '@angular/router';
 import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from './interfaces/request-pie-chart.interface';
 import { UserSummaryInterface } from '../request-logs/interfaces/summary.interface';
 import { TopRatedInterface } from './interfaces/top-rated.interface';
+import { UserInterface } from '../users/user.interface';
 
 @Component({
   selector: 'app-home',
@@ -26,8 +27,8 @@ export class HomeComponent implements OnInit {
   labels: string[] = [];
   currentYear = new Date().getFullYear();
   summaryMonthly: SummaryMonthlyStatusInterface[] = [];
-  topRatedAdvisors: TopRatedInterface[] | undefined;
-
+  topRatedAdvisors: TopRatedInterface[] = [];
+  newUsers: UserInterface[] = [];
 
   ngOnInit() {
     this.loadData(this.currentYear);
@@ -35,11 +36,14 @@ export class HomeComponent implements OnInit {
 
   private async loadData(year: number) {
     await Promise.all([
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetNewRegistrations)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetTopAdvisors)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetUserSummary)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryStatus)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryMonthlyStatus(year))),
     ]);
+
+    this.newUsers = this.#store.selectSnapshot(HomeSelectors.newRegistrations);
 
     this.topRatedAdvisors = this.#store.selectSnapshot(HomeSelectors.topRatedAdvisors);
 

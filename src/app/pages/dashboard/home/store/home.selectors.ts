@@ -8,6 +8,8 @@ export class HomeSelectors {
 
   static summaryUser = createSelector([HomeSelectors.getSlice.summaryUser], (summaryUser) => summaryUser);
 
+  static newRegistrations = createSelector([HomeSelectors.getSlice.newRegistrations], (newRegistrations) => newRegistrations);
+
   static summaryStatus = createSelector([HomeSelectors.getSlice.summaryStatus], (summaryStatus) => summaryStatus);
 
   static summaryMonthlyStatus = createSelector([HomeSelectors.getSlice.summaryMonthlyStatus], (summaryMonthlyStatus) => summaryMonthlyStatus);

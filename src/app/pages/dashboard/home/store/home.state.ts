@@ -8,9 +8,11 @@ import { RequestLogsService } from "../../request-logs/request-logs.service";
 import { UserService } from "../../users/services/user.service";
 import { UserSummaryInterface } from "../../request-logs/interfaces/summary.interface";
 import { TopRatedInterface } from "../interfaces/top-rated.interface";
+import { UserInterface } from "../../users/user.interface";
 
 export interface HomeStateModel {
-  topRatedAdvisors: TopRatedInterface[] | undefined;
+  topRatedAdvisors: TopRatedInterface[] | [];
+  newRegistrations: UserInterface[] | [];
   summaryUser: UserSummaryInterface | undefined;
   summaryStatus: SummaryStatusInterface[] | [];
   summaryMonthlyStatus: SummaryMonthlyStatusInterface[] | [];
@@ -19,7 +21,8 @@ export interface HomeStateModel {
 @State<HomeStateModel>({
   name: 'home',
   defaults: {
-    topRatedAdvisors: undefined,
+    topRatedAdvisors: [],
+    newRegistrations: [],
     summaryUser: undefined,
     summaryStatus: [],
     summaryMonthlyStatus: []
@@ -48,6 +51,16 @@ export class HomeState {
       .getSummaryUser()
       .pipe(
         tap(summaryUser => ctx.patchState({ summaryUser })
+        )
+      );
+  }
+
+  @Action(HomeAction.GetNewRegistrations)
+  getNewRegistrations(ctx: StateContext<HomeStateModel>) {
+    return this.#homeService
+      .getNewRegistrations()
+      .pipe(
+        tap(newRegistrations => ctx.patchState({ newRegistrations })
         )
       );
   }

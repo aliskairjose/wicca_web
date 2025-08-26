@@ -1,6 +1,11 @@
-<!-- <span class="icon-[tabler--logs] size-10"></span> -->
+<main class="md:space-y-8 space-y-4">
+  <ng-container [ngTemplateOutlet]="section1"></ng-container>
+  <ng-container [ngTemplateOutlet]="section2"></ng-container>
+  <ng-container [ngTemplateOutlet]="section3"></ng-container>
+  <ng-container [ngTemplateOutlet]="section4"></ng-container>
+</main>
 
-<main class="md:space-y-4 space-y-3">
+<ng-template #section1>
   <div class="grid xl:grid-cols-4 grid-cols-2 lg:gap-4 gap-2">
     <div class="stats">
       <div class="stat">
@@ -55,39 +60,39 @@
         <div class="stat-figure">
           <div class="avatar">
             <div class="size-12 rounded-full">
-              <app-icon icon="users-plus" size="10" class="text-success/80" />
+              <app-icon icon="users-group" size="10" class="text-info/80" />
             </div>
           </div>
         </div>
         <div class="stat-title">Nuevos usuario</div>
-        <div class="stat-value text-success/80">
+        <div class="stat-value text-info/80">
           {{ summaryUser?.currentMonthRegisteredUsers }}
         </div>
         <div class="stat-desc">Este mes</div>
-        <!-- <div class="stat-desc">21% ↗︎ than last month</div> -->
       </div>
     </div>
   </div>
+</ng-template>
 
-  <div class="xl:flex xl:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
-    <div class="md:float-start xl:w-5/12 w-full">
-      <div class="card-body">
-        <h5 class="title">Solicitudes de servicios {{ currentYear }}</h5>
-        @if(series.length > 0) {
-        <app-circular-chart [series]="series" [labels]="labels" />
-        }
-      </div>
+<ng-template #section2>
+  <div class="grid md:grid-cols-2 grid-cols-1 gap-2">
+    <div class="card-body">
+      <h5 class="title">Solicitudes de servicios {{ currentYear }}</h5>
+      @if(series.length > 0) {
+      <app-circular-chart [series]="series" [labels]="labels" />
+      }
     </div>
-    <div class="flex md:flex-row flex-col gap-2 md:float-end xl:w-7/12 w-full">
+    <div class="grid xl:grid-cols-2 grid-cols-1 gap-2">
       <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
-      <!-- <ng-container [ngTemplateOutlet]="newUsers"></ng-container> -->
+      <ng-container [ngTemplateOutlet]="newRegistrations"></ng-container>
     </div>
   </div>
+</ng-template>
 
+<ng-template #section3>
   <div class="xl:flex xl:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
-    <div class="flex-1"></div>
     @if (summaryMonthly.length > 0) {
-    <div class="card xl:float-end xl:w-7/12">
+    <div class="card xl:w-full">
       <div class="card-body">
         <h5 class="title">Resumen de solicitudes {{ currentYear }}</h5>
         <app-column-chart [series]="summaryMonthly" />
@@ -95,7 +100,9 @@
     </div>
     }
   </div>
+</ng-template>
 
+<ng-template #section4>
   <div>
     <h5>Top 10</h5>
     <div class="flex overflow-x-auto gap-2 relative p-2">
@@ -118,7 +125,7 @@
       }
     </div>
   </div>
-</main>
+</ng-template>
 
 <ng-template #topAsesors>
   <div class="card grow">
@@ -158,12 +165,12 @@
   </div>
 </ng-template>
 
-<!-- <ng-template #newUsers>
+<ng-template #newRegistrations>
   <div class="card grow">
     <div class="card-body">
       <h5 class="title">Nuevos registros</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-        @for (user of dashboad?.newUsers; track $index) {
+        @for (user of newUsers; track $index) {
         <li>
           <a
             class="flex items-start sm:items-center"
@@ -196,6 +203,8 @@
       </ul>
     </div>
   </div>
-</ng-template> -->
+</ng-template>
+
+<!-- <span class="icon-[tabler--logs] size-10"></span> -->
 
 <!-- <span class="icon-[tabler--users-plus]"></span><span class="icon-[tabler--users-group]"></span> -->

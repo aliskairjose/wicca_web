@@ -1,5 +1,6 @@
 export enum Api {
   TopRatedAdvisor = 'dashboard/top-rated-advisors',
+  NewRegistrations = 'dashboard/new-registrations',
   Settings = 'settings',
   Login = 'auth/sign-in',
   Logout = 'auth/sign-out',

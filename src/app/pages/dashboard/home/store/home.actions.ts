@@ -10,6 +10,9 @@ export namespace HomeAction {
   export class GetTopAdvisors {
     static readonly type = `${ACTION_SCOPE} Get Top Advisors`;
   }
+  export class GetNewRegistrations {
+    static readonly type = `${ACTION_SCOPE} Get New Registrations`;
+  }
   export class GetSummaryMonthlyStatus {
     static readonly type = `${ACTION_SCOPE} Get Summary Monthly Status`;
     constructor(readonly year: number) { }

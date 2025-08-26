@@ -33,3 +33,10 @@ html, body{
 .title{
   @apply border-b pb-1;
 }
+
+.stats{
+  @apply md:inline-grid inline;
+  .stat{
+    @apply px-3 py-2 gap-0 md:px-6 md:py-4 md:gap-2;
+  }
+}
