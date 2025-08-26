@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Api } from '@shared/apis';
 import { AppConfig } from '@shared/classes/app.config';
 import { Observable } from 'rxjs';
+import { TopRatedInterface } from './interfaces/top-rated.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class HomeService {
 
   constructor(private readonly http: HttpClient) { }
 
-  get(): Observable<any> {
-    return this.http.get(AppConfig.baseUrl(Api.Dashboard));
+  getTopAdvisors(): Observable<TopRatedInterface[]> {
+    return this.http.get<TopRatedInterface[]>(AppConfig.baseUrl(Api.TopRatedAdvisor));
   }
 }

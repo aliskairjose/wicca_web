@@ -3,14 +3,14 @@ import { Action, State, StateContext } from "@ngxs/store";
 import { HomeService } from "../home.service";
 import { HomeAction } from './home.actions';
 import { tap } from "rxjs";
-import { DashboardInterface } from "../interfaces/dashboard.interface";
 import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from "../interfaces/request-pie-chart.interface";
 import { RequestLogsService } from "../../request-logs/request-logs.service";
 import { UserService } from "../../users/services/user.service";
 import { UserSummaryInterface } from "../../request-logs/interfaces/summary.interface";
+import { TopRatedInterface } from "../interfaces/top-rated.interface";
 
 export interface HomeStateModel {
-  dashboard: DashboardInterface | undefined;
+  topRatedAdvisors: TopRatedInterface[] | undefined;
   summaryUser: UserSummaryInterface | undefined;
   summaryStatus: SummaryStatusInterface[] | [];
   summaryMonthlyStatus: SummaryMonthlyStatusInterface[] | [];
@@ -19,7 +19,7 @@ export interface HomeStateModel {
 @State<HomeStateModel>({
   name: 'home',
   defaults: {
-    dashboard: undefined,
+    topRatedAdvisors: undefined,
     summaryUser: undefined,
     summaryStatus: [],
     summaryMonthlyStatus: []
@@ -29,18 +29,8 @@ export interface HomeStateModel {
 @Injectable()
 export class HomeState {
   #homeService = inject(HomeService);
-  #userService = inject(UserService);
   #requestService = inject(RequestLogsService);
-
-  @Action(HomeAction.Get)
-  get(ctx: StateContext<HomeStateModel>) {
-    return this.#homeService.get().pipe(tap(dashboard => ctx.patchState({ dashboard })));
-  }
-
-  @Action(HomeAction.Get)
-  getSummaryUser(ctx: StateContext<HomeStateModel>) {
-    return this.#userService.getSummaryUser().pipe(tap(summaryUser => ctx.patchState({ summaryUser })));
-  }
+  #userService = inject(UserService);
 
   @Action(HomeAction.GetSummaryStatus)
   getSummaryStatus(ctx: StateContext<HomeStateModel>) {
@@ -48,6 +38,27 @@ export class HomeState {
       .getGroupBy()
       .pipe(
         tap(summaryStatus => ctx.patchState({ summaryStatus })
+        )
+      );
+  }
+
+  @Action(HomeAction.GetUserSummary)
+  getUserSummary(ctx: StateContext<HomeStateModel>) {
+    return this.#userService
+      .getSummaryUser()
+      .pipe(
+        tap(summaryUser => ctx.patchState({ summaryUser })
+        )
+      );
+  }
+
+
+  @Action(HomeAction.GetTopAdvisors)
+  GetTopAdvisors(ctx: StateContext<HomeStateModel>) {
+    return this.#homeService
+      .getTopAdvisors()
+      .pipe(
+        tap(topRatedAdvisors => ctx.patchState({ topRatedAdvisors })
         )
       );
   }

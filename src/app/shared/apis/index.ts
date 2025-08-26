@@ -1,5 +1,5 @@
 export enum Api {
-  Dashboard = 'dashboard',
+  TopRatedAdvisor = 'dashboard/top-rated-advisors',
   Settings = 'settings',
   Login = 'auth/sign-in',
   Logout = 'auth/sign-out',

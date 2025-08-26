@@ -73,12 +73,14 @@
     <div class="md:float-start xl:w-5/12 w-full">
       <div class="card-body">
         <h5 class="title">Solicitudes de servicios {{ currentYear }}</h5>
+        @if(series.length > 0) {
         <app-circular-chart [series]="series" [labels]="labels" />
+        }
       </div>
     </div>
     <div class="flex md:flex-row flex-col gap-2 md:float-end xl:w-7/12 w-full">
       <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
-      <ng-container [ngTemplateOutlet]="newUsers"></ng-container>
+      <!-- <ng-container [ngTemplateOutlet]="newUsers"></ng-container> -->
     </div>
   </div>
 
@@ -97,7 +99,7 @@
   <div>
     <h5>Top 10</h5>
     <div class="flex overflow-x-auto gap-2 relative p-2">
-      @for (item of dashboad?.topAsesors; track $index) {
+      @for (item of topRatedAdvisors; track $index) {
       <div class="card sm:card-side w-72 min-h-16 ps-2">
         <app-avatar [src]="item.avatar" size="lg" class="m-auto" />
         <div class="card-body justify-between flex flex-row">
@@ -105,11 +107,11 @@
             <span class="font-semibold"
               >{{ item.name }} {{ item.lastName }}</span
             >
-            <small>{{ item.advisor?.category }}</small>
+            <small>{{ item.advisorDetail.category }}</small>
           </div>
           <span>
             <app-icon icon="star-filled" theme="warning" />
-            <small class=""> {{ item?.rate?.average ?? 0 }}/5 </small>
+            <small class=""> {{ item.averageRating }}/5 </small>
           </span>
         </div>
       </div>
@@ -123,7 +125,7 @@
     <div class="card-body">
       <h5 class="title">Top asesores</h5>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-        @for (user of dashboad?.topAsesors; track $index) {
+        @for (user of topRatedAdvisors; track $index) {
         <li>
           <a
             class="flex items-start sm:items-center"
@@ -138,13 +140,13 @@
                   {{ user.name }} {{ user.lastName }}
                 </span>
                 <small class="text-base-content/50">
-                  {{ user.advisor?.category }}
+                  {{ user.advisorDetail.category }}
                 </small>
               </div>
               <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
                 <span class="flex gap-1">
                   <app-icon icon="star-filled" theme="warning" size="3" />
-                  <small>{{ user?.rate?.average ?? 0 }}/5</small>
+                  <small>{{ user.averageRating }}/5</small>
                 </span>
               </div>
             </div>
@@ -156,7 +158,7 @@
   </div>
 </ng-template>
 
-<ng-template #newUsers>
+<!-- <ng-template #newUsers>
   <div class="card grow">
     <div class="card-body">
       <h5 class="title">Nuevos registros</h5>
@@ -194,6 +196,6 @@
       </ul>
     </div>
   </div>
-</ng-template>
+</ng-template> -->
 
 <!-- <span class="icon-[tabler--users-plus]"></span><span class="icon-[tabler--users-group]"></span> -->

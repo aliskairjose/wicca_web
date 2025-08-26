@@ -22,7 +22,7 @@ export interface UserInterface {
   payments?: any;
   reviews?: ReviewInterface[];
   rate?: RateInterface;
-  advisor?: Advisor;
+  advisor?: AdvisorInterface;
   requestLogs: RequestLogs[]
 }
 
@@ -30,7 +30,7 @@ interface RequestLogs {
   status: string;
   createdAt: Date;
 }
-interface Advisor {
+export interface AdvisorInterface {
   callPrice: number;
   category: string;
   chatPrice: number;
@@ -38,7 +38,7 @@ interface Advisor {
   enabledCall: boolean;
 }
 
-interface WalletInterface {
+export interface WalletInterface {
   balance: number;
   createdAt: Date;
   updatedAt: Date;
