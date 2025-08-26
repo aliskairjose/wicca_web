@@ -22,7 +22,7 @@ export namespace UserAction {
     constructor(readonly id: string) { }
   }
   export class Update {
-    static readonly type = `${ACTION_SCOPE} Update users`;
+    static readonly type = `${ACTION_SCOPE} Update user`;
     constructor(readonly id: string, readonly payload: Partial<UserInterface>) { }
   }
 }

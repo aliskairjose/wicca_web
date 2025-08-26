@@ -55,6 +55,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: RoutesEnum.Categories,
+        title: 'Listado de categorías',
+        loadComponent: () =>
+          import('./pages/dashboard/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+      },
+      {
         path: RoutesEnum.Chats,
         title: 'Listado de chats',
         loadComponent: () =>

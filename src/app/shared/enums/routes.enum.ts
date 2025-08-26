@@ -11,4 +11,5 @@ export enum RoutesEnum {
   Chats = 'chats',
   RequestLogs = 'request-logs',
   Payments = 'payments',
+  Categories = 'categories',
 }

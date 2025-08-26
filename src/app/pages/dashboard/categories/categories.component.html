@@ -1,0 +1,162 @@
+<div class="w-full flex justify-end mb-6">
+  <app-button text="Crear categoría" icon="plus" (clickHandler)="add()" />
+</div>
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Activo</th>
+        <th>Fecha de creación</th>
+        <th>Última actualización</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cat of categories(); track $index){
+      <tr class="hover">
+        <td>
+          {{ cat.name }}
+        </td>
+        <td>
+          <span [appStatus]="cat.isActive" class="w-full"></span>
+        </td>
+        <td>
+          {{ cat.createdAt | date }}
+        </td>
+
+        <td>
+          {{ cat.updatedAt | date : "medium" }}
+        </td>
+        <td>
+          <app-button
+            [clear]="true"
+            icon="pencil"
+            shape="circle"
+            theme="secondary"
+            (clickHandler)="edit(cat)"
+          />
+          <app-button
+            [clear]="true"
+            icon="trash"
+            shape="circle"
+            theme="secondary"
+            (clickHandler)="delete(cat._id)"
+          />
+          <!-- <app-button
+            [clear]="true"
+            icon="dots-vertical"
+            shape="circle"
+            theme="secondary"
+          /> -->
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</app-table-container>
+
+<!-- Add modal -->
+<div
+  id="scroll-inside-modal"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          {{ isEdit ? "Editar" : "Crear nueva" }} categoría
+        </h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div
+            class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
+          >
+            <app-input
+              [control]="f['name']"
+              formControlName="name"
+              label="Nombre"
+              type="text"
+            />
+            <app-switch
+              text="Activo"
+              (onChange)="onChange($event)"
+              [isChecked]="isActive"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer pt-2">
+        <button
+          type="button"
+          class="btn btn-outline btn-error"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-soft btn-primary"
+          (click)="onSubmit()"
+        >
+          {{ isEdit ? "Actualizar" : "Crear" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal -->
+<div
+  id="delete-modal"
+  class="overlay modal overlay-open:opacity-100 --prevent-on-load-init [--overlay-backdrop:static]"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Desea eliminar esta categoría?</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeDeleteModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">Esta acción es irreversible</div>
+      <div class="modal-footer pt-2">
+        <button
+          type="button"
+          class="btn btn-outline btn-error"
+          (click)="closeDeleteModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-soft btn-primary"
+          (click)="deleteItem()"
+        >
+          Si, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

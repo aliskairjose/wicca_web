@@ -29,6 +29,7 @@ import { HomeState } from './pages/dashboard/home/store/home.state';
 import { ChatState } from './pages/dashboard/chat/store/chat.state';
 import { RequestLogsState } from './pages/dashboard/request-logs/store/request.state';
 import { PaymentState } from './pages/dashboard/payments/store/payment.state';
+import { CategoryState } from './pages/dashboard/categories/store/category.state';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -41,7 +42,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(),
     provideStore(
-      [AuthState, UsersState, HomeState, ChatState, RequestLogsState, PaymentState],
+      [AuthState, UsersState, HomeState, ChatState, RequestLogsState, PaymentState, CategoryState],
       {
         developmentMode: !environmentDev.production,
       },

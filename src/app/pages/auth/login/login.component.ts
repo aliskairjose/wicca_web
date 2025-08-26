@@ -17,8 +17,8 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent {
 
   form!: FormGroup;
-
   #fb = inject(FormBuilder);
+
   #store = inject(Store);
   #router = inject(Router);
   #toastService = inject(ToastService);
