@@ -114,6 +114,7 @@ export class CategoriesComponent implements OnInit {
     const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
     modal.open();
   }
+
   private openDeleteModal() {
     const modal = new HSOverlay(document.querySelector('#delete-modal')!);
     modal.open();

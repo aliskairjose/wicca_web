@@ -42,6 +42,11 @@ export class UsersComponent {
     this.getData();
   }
 
+  add(): void {
+    console.log('Add user');
+    this.openNewUserModal();
+  }
+
   onChangeTable(e: any): void {
     console.log('onChange', e.pagination())
     this.queryParams['search'] = e.term;
@@ -57,6 +62,18 @@ export class UsersComponent {
 
   async closeModal(res: boolean) {
     const modal = new HSOverlay(document.querySelector('#basic-modal')!);
+    modal.close();
+    (res) && this.changeUserStatus(this.modalUser!);
+    this.modalUser = undefined;
+  }
+
+  private openNewUserModal() {
+    const modal = new HSOverlay(document.querySelector('#new-user-modal')!);
+    modal.open();
+  }
+
+  async closeNewUserModal(res: boolean) {
+    const modal = new HSOverlay(document.querySelector('#new-user-modal')!);
     modal.close();
     (res) && this.changeUserStatus(this.modalUser!);
     this.modalUser = undefined;
