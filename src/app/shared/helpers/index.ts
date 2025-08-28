@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { environmentDev } from '@envs/env.devs';
 
 type ErrorMapCallBackFn = (result: string) => void;
 
@@ -26,6 +25,27 @@ export class Helper {
       .normalize('NFD')
       .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, '$1')
       .normalize();
+  }
+
+  static generatePassword(length: number = 12): string {
+    const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+    const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numberChars = "0123456789";
+    const symbolChars = "!@#$%^&*()-_=+[]{}|;:,.<>?";
+
+    let availableChars = lowercaseChars; // Start with lowercase by default
+
+    availableChars += uppercaseChars;
+    availableChars += numberChars;
+    availableChars += symbolChars;
+
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * availableChars.length);
+      password += availableChars[randomIndex];
+    }
+
+    return password;
   }
 
 }

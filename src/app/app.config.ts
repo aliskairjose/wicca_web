@@ -30,11 +30,12 @@ import { ChatState } from './pages/dashboard/chat/store/chat.state';
 import { RequestLogsState } from './pages/dashboard/request-logs/store/request.state';
 import { PaymentState } from './pages/dashboard/payments/store/payment.state';
 import { CategoryState } from './pages/dashboard/categories/store/category.state';
-
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 registerLocaleData(localeEsAr, 'es-Ar');
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideEnvironmentNgxMask(),
     { provide: LOCALE_ID, useValue: 'es-Ar' },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),

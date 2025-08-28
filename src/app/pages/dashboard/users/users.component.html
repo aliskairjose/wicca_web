@@ -3,7 +3,7 @@
     text="Crear usuario"
     [outline]="true"
     icon="plus"
-    (clickHandler)="add()"
+    (clickHandler)="openNewUserModal()"
   />
 </div>
 <app-table-container
@@ -129,7 +129,7 @@
           type="button"
           class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
           aria-label="Close"
-          (click)="closeNewUserModal(false)"
+          (click)="closeNewUserModal()"
         >
           <span class="icon-[tabler--x] size-4"></span>
         </button>
@@ -173,7 +173,7 @@
                 <div>
                   <app-input
                     [control]="f['name']"
-                    formControlName="email"
+                    formControlName="name"
                     label="Nombre"
                     type="text"
                   />
@@ -193,7 +193,7 @@
                 <div>
                   <app-input
                     [control]="f['lastName']"
-                    formControlName="email"
+                    formControlName="lastName"
                     label="Apellido"
                     type="text"
                   />
@@ -221,19 +221,19 @@
             aria-labelledby="tabs-sm-item-2"
           >
             <form [formGroup]="advisorForm">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                 <app-input
                   [control]="advisorF['chatPrice']"
                   formControlName="chatPrice"
                   label="Precio de chat"
-                  type="number"
+                  type="money"
                 />
                 <app-input
                   [control]="advisorF['callPrice']"
                   formControlName="callPrice"
                   label="Precio de llamada"
-                  type="number"
-                  [disabled]="enabledCall()"
+                  type="money"
+                  [disabled]="!enabledCall()"
                 />
                 <app-input
                   [control]="advisorF['enabledCall']"
@@ -259,7 +259,19 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer"></div>
+      <div class="modal-footer">
+        <app-button
+          text="Cancelar"
+          theme="error"
+          (clickHandler)="closeNewUserModal()"
+        />
+        <app-button
+          text="Crear usuario"
+          theme="primary"
+          [outline]="true"
+          (clickHandler)="createUser()"
+        />
+      </div>
     </div>
   </div>
 </div>

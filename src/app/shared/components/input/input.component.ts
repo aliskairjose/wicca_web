@@ -20,14 +20,16 @@ import {
 } from '@angular/forms';
 import { Helper } from '@shared/helpers';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxMaskDirective],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   providers: [
+    provideNgxMask(),
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputComponent),
@@ -40,6 +42,7 @@ export class InputComponent implements ControlValueAccessor, Validators, OnChang
   type = input<Type>('text');
   label = input<string>('');
   disabled = input<boolean>(false);
+  readonly = input<boolean>(false);
   helperText = input<string>('');
 
   value = '';
@@ -60,7 +63,6 @@ export class InputComponent implements ControlValueAccessor, Validators, OnChang
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    console.log('Input validate');
     const controlErrors: ValidationErrors | null = control.errors;
     if (controlErrors !== null) {
       let keyError = '';
@@ -97,4 +99,15 @@ export class InputComponent implements ControlValueAccessor, Validators, OnChang
     this.#onTouched();
     this.validate(this.control());
   }
+
+  toFixed = (value: string | number | undefined | null): number => {
+    const formattedValue = String(value).split(' ').join('');
+    if (String(value).includes('.') && String(value).split('.').length === 2) {
+      const decimal = String(value).split('.')[1]?.length;
+      if (decimal && decimal > 2) {
+        return Number(parseFloat(formattedValue).toFixed(2));
+      }
+    }
+    return Number(formattedValue);
+  };
 }

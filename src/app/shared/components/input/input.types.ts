@@ -11,4 +11,5 @@ export type Type =
   | 'password'
   | 'checkbox'
   | 'textarea'
+  | 'money'
   | 'hidden';

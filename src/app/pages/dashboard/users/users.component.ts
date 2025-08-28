@@ -17,6 +17,7 @@ import { OPTION_DATA } from '@shared/components/select/select.component';
 import { CategoryAction } from '../categories/store/category.action';
 import { CategorySelectors } from '../categories/store/category.selectors';
 import { CategoryInterface } from '../categories/interfaces/category.interface';
+import { Helper } from '@shared/helpers';
 
 @Component({
   selector: 'app-users',
@@ -79,22 +80,17 @@ export class UsersComponent implements OnInit {
     return this.advisorForm.controls;
   }
 
-  onSubmit(): void {
-    // this.form.valid && this._newUser(this.form.value);
-  }
-
 
   private _loadForm(): void {
     this.form = this.#fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: [Helper.generatePassword()],
       role: ['Asesor', [Validators.required]],
       phone: ['', [Validators.required]],
       country: ['', [Validators.required]],
       isActive: [true],
-      connectStatus: [ConnectStatusEnum.Offline]
     });
   }
 
@@ -108,12 +104,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  add(): void {
-    this.openNewUserModal();
-  }
-
   onChangeTable(e: any): void {
-    console.log('onChange', e.pagination())
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
@@ -130,6 +121,15 @@ export class UsersComponent implements OnInit {
     this.advisorF['callPrice'].updateValueAndValidity();
   }
 
+  createUser(): void {
+    console.log(this.form.value);
+    console.log(this.form.valid);
+    if (this.form.valid) {
+      console.log(this.form.value);
+      this.closeNewUserModal();
+    }
+  }
+
   async openModal(user: UserInterface) {
     this.modalUser = user;
     const modal = new HSOverlay(document.querySelector('#basic-modal')!);
@@ -143,16 +143,23 @@ export class UsersComponent implements OnInit {
     this.modalUser = undefined;
   }
 
-  private openNewUserModal() {
+  openNewUserModal() {
     const modal = new HSOverlay(document.querySelector('#new-user-modal')!);
     modal.open();
   }
 
-  async closeNewUserModal(res: boolean) {
+  async closeNewUserModal() {
     const modal = new HSOverlay(document.querySelector('#new-user-modal')!);
+    this.resetForm();
     modal.close();
-    (res) && this.changeUserStatus(this.modalUser!);
-    this.modalUser = undefined;
+  }
+
+  private resetForm(): void {
+    this.advisorForm.reset();
+    this.form.reset();
+    this.isEdit.set(false);
+    this.selectedRole.set(RoleEnum.Advisor);
+    this.enabledCall.set(false);
   }
 
   private changeUserStatus(user: UserInterface): void {
