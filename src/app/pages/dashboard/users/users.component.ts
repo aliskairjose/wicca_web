@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { ConnectStatusEnum, RoleEnum, RoutesEnum } from '@shared/enums';
-import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent } from '@shared/components';
+import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
@@ -21,7 +21,7 @@ import { CategoryInterface } from '../categories/interfaces/category.interface';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -54,6 +54,9 @@ export class UsersComponent implements OnInit {
 
   selectedRole = signal<RoleEnum>(RoleEnum.Advisor);
   isAdvisor = computed(() => this.selectedRole() === RoleEnum.Advisor);
+
+  enabledCall = signal<boolean>(false);
+
 
   constructor() {
     this.getData();
@@ -99,14 +102,13 @@ export class UsersComponent implements OnInit {
     this.advisorForm = this.#advisorFb.group({
       chatPrice: ['', [Validators.required]],
       callPrice: ['', [Validators.required]],
-      enabledCall: ['', [Validators.required]],
+      enabledCall: [false],
       category: ['', [Validators.required]],
       description: ['', [Validators.required]],
     });
   }
 
   add(): void {
-    console.log('Add user');
     this.openNewUserModal();
   }
 
@@ -115,6 +117,17 @@ export class UsersComponent implements OnInit {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
     this.getData()
+  }
+
+  onCheckChange(value: any): void {
+    this.enabledCall.set(value);
+    if (value) {
+      this.advisorF['callPrice'].setValidators([Validators.required]);
+    } else {
+      this.advisorF['callPrice'].clearValidators();
+      this.advisorF['callPrice'].setValue('');
+    }
+    this.advisorF['callPrice'].updateValueAndValidity();
   }
 
   async openModal(user: UserInterface) {

@@ -18,6 +18,7 @@
         (control().invalid && isSubmitted())
       "
       [class.is-valid]="control().valid && control().dirty"
+      (ngModelChange)="onValueChange($event)"
     />
     <label class="label label-text text-base" for="{{ inputLabel }}">{{
       placeholder()
@@ -69,6 +70,7 @@
       {{ label() }}
     </label>
     <input
+      disabled="{{ disabled() }}"
       id="{{ inputLabel }}"
       type="text"
       [placeholder]="placeholder()"

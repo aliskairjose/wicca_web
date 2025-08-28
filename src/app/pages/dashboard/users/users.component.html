@@ -160,7 +160,7 @@
             aria-controls="tabs-sm-2"
             role="tab"
             aria-selected="false"
-            [disabled]="isAdvisor()"
+            [disabled]="!isAdvisor()"
           >
             Datos de asesor
           </button>
@@ -233,6 +233,7 @@
                   formControlName="callPrice"
                   label="Precio de llamada"
                   type="number"
+                  [disabled]="enabledCall()"
                 />
                 <app-input
                   [control]="advisorF['enabledCall']"
@@ -240,6 +241,7 @@
                   label="Habilitar llamada"
                   placeholder="Habilitar llamada"
                   type="checkbox"
+                  (onInputChange)="onCheckChange($event)"
                 />
               </div>
               <app-select
@@ -247,6 +249,11 @@
                 [data]="categories"
                 label="Categoría"
                 formControlName="category"
+              />
+              <app-textarea
+                [control]="advisorF['description']"
+                formControlName="description"
+                label="Descripción"
               />
             </form>
           </div>

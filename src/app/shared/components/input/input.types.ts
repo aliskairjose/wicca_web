@@ -10,4 +10,5 @@ export type Type =
   | 'image'
   | 'password'
   | 'checkbox'
+  | 'textarea'
   | 'hidden';

@@ -1,66 +1,34 @@
-import {
-  Component,
-  forwardRef,
-  input,
-  OnChanges,
-  output,
-  signal,
-  SimpleChanges,
-} from '@angular/core';
-import { Type } from './input.types';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
-import { Helper } from '@shared/helpers';
 import { CommonModule } from '@angular/common';
+import { Component, forwardRef, input, OnChanges, signal, SimpleChanges } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Helper } from '@shared/helpers';
 
 @Component({
-  selector: 'app-input',
+  selector: 'app-textarea',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './input.component.html',
-  styleUrl: './input.component.scss',
+  templateUrl: './textarea.component.html',
+  styleUrl: './textarea.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
+      useExisting: forwardRef(() => TextareaComponent),
       multi: true,
     },
   ],
 })
-export class InputComponent implements ControlValueAccessor, Validators, OnChanges {
-  placeholder = input<string>('');
-  type = input<Type>('text');
-  label = input<string>('');
-  disabled = input<boolean>(false);
-  helperText = input<string>('');
-
+export class TextareaComponent implements ControlValueAccessor, Validators, OnChanges {
   value = '';
+  label = input<string>('');
+  placeholder = input<string>('');
   errorMessage = signal('');
   control = input<AbstractControl>(new FormControl());
   isSubmitted = input<boolean>(false);
-  inputLabel = new Date().getTime();
-
-  onInputChange = output<any>();
 
   #onChange: any = () => { };
   #onTouched: any = () => { };
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isSubmitted']?.currentValue) {
-      this.validate(this.control());
-    }
-  }
-
   validate(control: AbstractControl): ValidationErrors | null {
-    console.log('Input validate');
     const controlErrors: ValidationErrors | null = control.errors;
     if (controlErrors !== null) {
       let keyError = '';
@@ -77,8 +45,10 @@ export class InputComponent implements ControlValueAccessor, Validators, OnChang
     return null;
   }
 
-  registerOnValidatorChange?(): void {
-    throw new Error('Method not implemented.');
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isSubmitted']?.currentValue) {
+      this.validate(this.control());
+    }
   }
 
   writeValue(value: string): void {
@@ -92,9 +62,10 @@ export class InputComponent implements ControlValueAccessor, Validators, OnChang
   }
 
   onValueChange(event: any) {
-    this.onInputChange.emit(event);
+    console.log('Textarea onValueChange', event);
     this.#onChange(event);
     this.#onTouched();
     this.validate(this.control());
   }
+
 }
