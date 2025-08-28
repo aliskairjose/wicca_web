@@ -18,5 +18,6 @@ export enum Api {
   SummaryStatus = 'request-logs/summary/status',
   SummaryMonthlyByYear = 'request-logs/summary/monthly-status',
   Categories = 'categories',
+  CategoriesNoParams = 'categories/no-params',
 }
 

@@ -1,4 +1,4 @@
-<div class="max-w-sm">
+<div class="w-full">
   <label class="label label-text">{{ label() }}</label>
   <select
     class="select"
@@ -21,10 +21,12 @@
     </option>
     }
   </select>
-  @if ( (control().invalid && control().dirty) || control().invalid &&
-  isSubmitted() ) {
-  <div class="label">
-    <span class="label-text-alt">{{ errorMessage() }}</span>
-  </div>
-  }
+  <span class="label">
+    @if ( (control().invalid && control().dirty) || control().invalid &&
+    isSubmitted() ) {
+    <div class="label">
+      <span class="label-text-alt">{{ errorMessage() }}</span>
+    </div>
+    }
+  </span>
 </div>

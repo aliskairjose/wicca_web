@@ -5,7 +5,7 @@
   .menu {
     @apply  bg-transparent min-w-64 p-4 relative lg:flex flex-col;
     .router-link-active {
-      @apply bg-transparent text-[#7c9474];
+      @apply bg-transparent text-[#CFAA61];
     }
   }
   @apply relative flex h-screen max-h-screen top-0;

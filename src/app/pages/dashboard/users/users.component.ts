@@ -1,27 +1,36 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { UserInterface } from './user.interface';
 import { UserAction } from './store/user.actions';
 import { CommonModule } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { firstValueFrom } from 'rxjs';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
-import { ConnectStatusEnum, RoutesEnum } from '@shared/enums';
-import { AvatarComponent, ButtonComponent, TableContainerComponent } from '@shared/components';
+import { ConnectStatusEnum, RoleEnum, RoutesEnum } from '@shared/enums';
+import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { HSOverlay } from 'flyonui/flyonui';
+import { OPTION_DATA } from '@shared/components/select/select.component';
+import { CategoryAction } from '../categories/store/category.action';
+import { CategorySelectors } from '../categories/store/category.selectors';
+import { CategoryInterface } from '../categories/interfaces/category.interface';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
+  form!: FormGroup;
+  advisorForm!: FormGroup;
+  #fb = inject(FormBuilder);
+  #advisorFb = inject(FormBuilder);
+
   pagination: PaginationInterface = {
     page: 1,
     limit: 20
@@ -30,16 +39,70 @@ export class UsersComponent {
     search: ''
   };
   #store = inject(Store);
+  isEdit = signal(false);
 
   // users: UserInterface[] = [];
   users = signal<UserInterface[] | undefined>(undefined);
   modalUser: UserInterface | undefined;
   metadata = signal<MetadataInterface | undefined>(undefined);
   routeEnum = RoutesEnum;
+  roles: OPTION_DATA[] = [
+    { val: RoleEnum.Advisor, title: 'Asesor' },
+    { val: RoleEnum.User, title: 'Usuario' }
+  ];
+  categories: OPTION_DATA[] = [];
 
+  selectedRole = signal<RoleEnum>(RoleEnum.Advisor);
+  isAdvisor = computed(() => this.selectedRole() === RoleEnum.Advisor);
 
   constructor() {
     this.getData();
+  }
+
+  async ngOnInit() {
+    this._loadForm();
+    this._loadAdvisorForm();
+    await firstValueFrom(this.#store.dispatch(new CategoryAction.ListNoPagination()));
+    const cats = this.#store.selectSnapshot(CategorySelectors.listNoPagination);
+    cats.forEach((cat: CategoryInterface) => {
+      this.categories.push({ val: cat._id, title: cat.name });
+    });
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+  get advisorF() {
+    return this.advisorForm.controls;
+  }
+
+  onSubmit(): void {
+    // this.form.valid && this._newUser(this.form.value);
+  }
+
+
+  private _loadForm(): void {
+    this.form = this.#fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      role: ['Asesor', [Validators.required]],
+      phone: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      isActive: [true],
+      connectStatus: [ConnectStatusEnum.Offline]
+    });
+  }
+
+  private _loadAdvisorForm(): void {
+    this.advisorForm = this.#advisorFb.group({
+      chatPrice: ['', [Validators.required]],
+      callPrice: ['', [Validators.required]],
+      enabledCall: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+    });
   }
 
   add(): void {

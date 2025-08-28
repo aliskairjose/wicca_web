@@ -8,12 +8,14 @@ import { tap } from "rxjs";
 
 export interface CategoryStateModel {
   categories: ResponseInterface<CategoryInterface> | undefined;
+  categoriesFullList: CategoryInterface[] | [];
 }
 
 @State<CategoryStateModel>({
   name: 'categories',
   defaults: {
     categories: undefined,
+    categoriesFullList: []
   }
 })
 @Injectable()
@@ -38,6 +40,19 @@ export class CategoryState {
       .list(payload, pagination)
       .pipe(
         tap((categories: ResponseInterface<CategoryInterface>) => ctx.patchState({ categories })
+        )
+      );
+  }
+  @Action(CategoryAction.ListNoPagination)
+  listNoPagination(ctx: StateContext<CategoryStateModel>) {
+    let state = ctx.getState();
+    if (state.categoriesFullList.length) {
+      return;
+    }
+    return this.#service
+      .ListNoPagination()
+      .pipe(
+        tap((categoriesFullList: CategoryInterface[]) => ctx.patchState({ categoriesFullList })
         )
       );
   }

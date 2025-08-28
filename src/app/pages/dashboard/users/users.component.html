@@ -1,5 +1,10 @@
 <div class="w-full flex justify-end mb-6">
-  <app-button text="Crear usuario" icon="plus" (clickHandler)="add()" />
+  <app-button
+    text="Crear usuario"
+    [outline]="true"
+    icon="plus"
+    (clickHandler)="add()"
+  />
 </div>
 <app-table-container
   [metadata]="metadata()!"
@@ -116,7 +121,7 @@
   class="overlay modal overlay-open:opacity-100"
   tabindex="-1"
 >
-  <div class="modal-dialog overlay-open:opacity-100">
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Agregar nuevo usuario</h3>
@@ -129,7 +134,124 @@
           <span class="icon-[tabler--x] size-4"></span>
         </button>
       </div>
-      <div class="modal-body"></div>
+      <div class="modal-body">
+        <nav
+          class="tabs tabs-bordered tabs-sm"
+          aria-label="Tabs"
+          role="tablist"
+          aria-orientation="horizontal"
+        >
+          <button
+            type="button"
+            class="tab active-tab:tab-active active"
+            id="tabs-sm-item-1"
+            data-tab="#tabs-sm-1"
+            aria-controls="tabs-sm-1"
+            role="tab"
+            aria-selected="true"
+          >
+            Datos personales
+          </button>
+          <button
+            type="button"
+            class="tab active-tab:tab-active"
+            id="tabs-sm-item-2"
+            data-tab="#tabs-sm-2"
+            aria-controls="tabs-sm-2"
+            role="tab"
+            aria-selected="false"
+            [disabled]="isAdvisor()"
+          >
+            Datos de asesor
+          </button>
+        </nav>
+
+        <div class="mt-2">
+          <div id="tabs-sm-1" role="tabpanel" aria-labelledby="tabs-sm-item-1">
+            <form [formGroup]="form">
+              <div class="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-2">
+                <div>
+                  <app-input
+                    [control]="f['name']"
+                    formControlName="email"
+                    label="Nombre"
+                    type="text"
+                  />
+                  <app-input
+                    [control]="f['email']"
+                    formControlName="email"
+                    label="Correo electrónico"
+                    type="email"
+                  />
+                  <app-input
+                    [control]="f['phone']"
+                    formControlName="phone"
+                    label="Teléfono"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <app-input
+                    [control]="f['lastName']"
+                    formControlName="email"
+                    label="Apellido"
+                    type="text"
+                  />
+                  <app-select
+                    [control]="f['role']"
+                    [data]="roles"
+                    label="Rol"
+                    formControlName="role"
+                    (changeHandler)="selectedRole.set($event)"
+                  />
+                  <app-input
+                    [control]="f['country']"
+                    formControlName="country"
+                    label="País"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div
+            id="tabs-sm-2"
+            class="hidden"
+            role="tabpanel"
+            aria-labelledby="tabs-sm-item-2"
+          >
+            <form [formGroup]="advisorForm">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <app-input
+                  [control]="advisorF['chatPrice']"
+                  formControlName="chatPrice"
+                  label="Precio de chat"
+                  type="number"
+                />
+                <app-input
+                  [control]="advisorF['callPrice']"
+                  formControlName="callPrice"
+                  label="Precio de llamada"
+                  type="number"
+                />
+                <app-input
+                  [control]="advisorF['enabledCall']"
+                  formControlName="enabledCall"
+                  label="Habilitar llamada"
+                  placeholder="Habilitar llamada"
+                  type="checkbox"
+                />
+              </div>
+              <app-select
+                [control]="advisorF['category']"
+                [data]="categories"
+                label="Categoría"
+                formControlName="category"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
       <div class="modal-footer"></div>
     </div>
   </div>

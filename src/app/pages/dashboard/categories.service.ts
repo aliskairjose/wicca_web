@@ -21,6 +21,10 @@ export class CategoriesService {
     return this.http.get<ResponseInterface<CategoryInterface>>(AppConfig.baseUrl(Api.Categories), { params });
   }
 
+  ListNoPagination(): Observable<CategoryInterface[]> {
+    return this.http.get<CategoryInterface[]>(AppConfig.baseUrl(Api.CategoriesNoParams));
+  }
+
   create(data: any): Observable<CategoryInterface> {
     return this.http.post<CategoryInterface>(AppConfig.baseUrl(Api.Categories), data);
   }

@@ -21,6 +21,9 @@ export namespace CategoryAction {
     static readonly type = `${ACTION_SCOPE} Get category`;
     constructor(readonly id: string) { }
   }
+  export class ListNoPagination {
+    static readonly type = `${ACTION_SCOPE} List category no pagination`;
+  }
   export class Update {
     static readonly type = `${ACTION_SCOPE} Update category`;
     constructor(readonly id: string, readonly payload: Partial<CategoryInterface>) { }

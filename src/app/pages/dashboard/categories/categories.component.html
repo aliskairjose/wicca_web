@@ -1,5 +1,10 @@
 <div class="w-full flex justify-end mb-6">
-  <app-button text="Crear categoría" icon="plus" (clickHandler)="add()" />
+  <app-button
+    text="Crear categoría"
+    icon="plus"
+    [outline]="true"
+    (clickHandler)="add()"
+  />
 </div>
 <app-table-container
   [metadata]="metadata()!"

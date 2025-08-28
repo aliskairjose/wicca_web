@@ -12,6 +12,7 @@
       type="checkbox"
       class="checkbox"
       [id]="inputLabel"
+      [(ngModel)]="value"
       [class.is-invalid]="
         (control().invalid && control().dirty) ||
         (control().invalid && isSubmitted())
@@ -81,9 +82,9 @@
       [class.is-valid]="control().valid && control().dirty"
     />
     <span class="label">
+      @if (helperText()) {
       <span class="label-text-alt">{{ helperText() }}</span>
-
-      @if ( (control().invalid && control().dirty) || (control().invalid &&
+      } @if ( (control().invalid && control().dirty) || (control().invalid &&
       isSubmitted()) ) {
       <span class="label-text-alt">{{ errorMessage() }}</span>
       }
