@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Api } from '@shared/apis';
-import { UserInterface } from '../user.interface';
+import { AdvisorInterface, UserInterface } from '../user.interface';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { AppConfig } from '@shared/classes/app.config';
 import { UserSummaryInterface } from '../../request-logs/interfaces/summary.interface';
@@ -35,5 +35,13 @@ export class UserService {
 
   getSummaryUser(): Observable<UserSummaryInterface> {
     return this.http.get<UserSummaryInterface>(AppConfig.baseUrl(Api.UserSummary));
+  }
+
+  create(data: Partial<UserInterface>): Observable<UserInterface> {
+    return this.http.post<UserInterface>(AppConfig.baseUrl(Api.Register), data);
+  }
+
+  createdvisorInfo(data: AdvisorInterface): Observable<AdvisorInterface> {
+    return this.http.post<AdvisorInterface>(AppConfig.baseUrl(Api.Advisor), data);
   }
 }

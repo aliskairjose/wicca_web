@@ -8,6 +8,7 @@ export enum Api {
   ForgotPassword = 'auth/forgot-password',
   ResetPassword = 'auth/reset-password',
   Menu = 'web-menu',
+  Advisor = 'advisor',
   Users = 'users',
   UserSummary = 'dashboard/users/summary',
   Payments = 'payments',

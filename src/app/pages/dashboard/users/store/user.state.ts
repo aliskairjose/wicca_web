@@ -9,6 +9,7 @@ import { ResponseInterface } from '@shared/interfaces';
 export interface UsersStateModel {
   users: ResponseInterface<UserInterface> | undefined;
   selectedUser: UserInterface | undefined;
+  newUser: UserInterface | undefined;
 }
 
 @State<UsersStateModel>({
@@ -16,11 +17,20 @@ export interface UsersStateModel {
   defaults: {
     users: undefined,
     selectedUser: undefined,
+    newUser: undefined
   },
 })
 @Injectable()
 export class UsersState {
   #userService = inject(UserService);
+
+  @Action(UserAction.Create)
+  create(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Create) {
+    console.log('Action create user', payload);
+    return this.#userService
+      .create(payload)
+      .pipe(tap((newUser: UserInterface) => ctx.patchState({ newUser })));
+  }
 
   @Action(UserAction.Get)
   get(ctx: StateContext<UsersStateModel>, { id }: UserAction.Get) {
@@ -33,6 +43,11 @@ export class UsersState {
           tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })
           )
         );
+  }
+
+  @Action(UserAction.CreateAdvisorInfo)
+  createAdvisor(ctx: StateContext<UsersStateModel>, { payload }: UserAction.CreateAdvisorInfo) {
+    return this.#userService.createdvisorInfo(payload);
   }
 
   @Action(UserAction.List)

@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
-import { CategoryInterface } from './categories/interfaces/category.interface';
 import { Observable } from 'rxjs';
 import { AppConfig } from '@shared/classes/app.config';
 import { Api } from '@shared/apis';
+import { CategoryInterface } from './interfaces/category.interface';
 
 @Injectable({
   providedIn: 'root'

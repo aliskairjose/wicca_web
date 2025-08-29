@@ -2,9 +2,9 @@ import { ResponseInterface } from "@shared/interfaces";
 import { CategoryInterface } from "../interfaces/category.interface";
 import { Action, State, StateContext } from "@ngxs/store";
 import { inject, Injectable } from "@angular/core";
-import { CategoriesService } from "../../categories.service";
 import { CategoryAction } from "./category.action";
 import { tap } from "rxjs";
+import { CategoriesService } from "../categories.service";
 
 export interface CategoryStateModel {
   categories: ResponseInterface<CategoryInterface> | undefined;

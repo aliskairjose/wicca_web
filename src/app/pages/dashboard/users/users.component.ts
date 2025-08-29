@@ -121,12 +121,22 @@ export class UsersComponent implements OnInit {
     this.advisorF['callPrice'].updateValueAndValidity();
   }
 
-  createUser(): void {
+  async createUser(): Promise<void> {
     console.log(this.form.value);
-    console.log(this.form.valid);
     if (this.form.valid) {
-      console.log(this.form.value);
+      // this.closeNewUserModal();
+      firstValueFrom(this.#store.dispatch(new UserAction.Create(this.form.value)));
+      if (this.isAdvisor()) {
+        const newUser = this.#store.selectSnapshot(UserSelectors.newUser)!;
+        const advisorData = {
+          ...this.advisorForm.value,
+          user: newUser._id
+        };
+        await firstValueFrom(this.#store.dispatch(new UserAction.CreateAdvisorInfo(advisorData)));
+      }
+      this.resetForm();
       this.closeNewUserModal();
+      this.ngOnInit();
     }
   }
 

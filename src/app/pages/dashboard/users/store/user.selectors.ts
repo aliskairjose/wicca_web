@@ -10,16 +10,10 @@ export class UserSelectors {
     [UserSelectors.getSlices.users],
     (users) => users
   );
-
-  // static totalUsers = createSelector(
-  //   [UserSelectors.getSlices.totalUsers],
-  //   (totalUsers) => totalUsers
-  // );
-
-  // static latestRegistered = createSelector(
-  //   [UserSelectors.getSlices.users],
-  //   (users: UserInterface[]) => users.slice(0, 11)
-  // );
+  static newUser = createSelector(
+    [UserSelectors.getSlices.newUser],
+    (newUser) => newUser
+  );
 
   static selectedUser = createSelector([UserSelectors.getSlices.selectedUser], (selectedUser) => selectedUser);
 }
