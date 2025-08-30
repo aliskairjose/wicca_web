@@ -1,5 +1,5 @@
 export const environmentProd = {
   production: true,
-  baseUrl: '',
-  socket: 'http://192.168.1.15:3000',
+  baseUrl: 'http://38.190.187.174:3000/api/v1',
+  socket: 'http://38.190.187.174:3000',
 };

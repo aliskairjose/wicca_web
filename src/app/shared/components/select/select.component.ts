@@ -13,7 +13,7 @@ import { Helper } from '@shared/helpers';
 import { CommonModule } from '@angular/common';
 
 export interface OPTION_DATA {
-  val: string | number;
+  val: string | number | null;
   title: string;
 }
 @Component({
@@ -40,8 +40,8 @@ export class SelectComponent implements Validator, ControlValueAccessor, OnChang
   label = input<string>('');
   defaultValue = input<string | number>();
 
-  #onChange: any = () => {};
-  #onTouched: any = () => {};
+  #onChange: any = () => { };
+  #onTouched: any = () => { };
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isSubmitted']) {

@@ -1,4 +1,51 @@
-<div class="flex justify-between font-light text-sm px-6 w-full py-4 border-t">
-  <p class="font-medium">{{ appName }}</p>
-  <p>&copy; {{ year }}, Desarrollado por Kervin González</p>
+<div
+  class="flex flex-col justify-between text-sm md:px-6 px-2 w-full py-6 border-t bg-primary min-h-42"
+>
+  <div class="grid grid-cols-1 md:grid-cols-5">
+    <div>
+      <img src="logotipo-transparent.png" alt="" class="w-32" />
+    </div>
+    <div>
+      <h5>Sobre Orbe</h5>
+      <ul>
+        <li>Servicios</li>
+        <li>Quienes somos</li>
+        <li>Preguntas frecuentes</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Forma parte de Orbe</h5>
+      <ul>
+        <li>Trabaja en Orbe</li>
+        <li>Darte de alta como asesor</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contactanos</h5>
+      <ul>
+        <li>Llámanos</li>
+        <li>Escríbenos</li>
+      </ul>
+    </div>
+    <div>
+      <div>
+        <h5>Descarga nuesta app</h5>
+        <div class="flex gap-2">
+          <img
+            src="google/google-play-badge-black.png"
+            alt="Google Play"
+            class="w-32"
+          />
+          <img
+            src="apple/app-store-badge-black.png"
+            alt="App Store"
+            class="w-32"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="w-full flex justify-center mt-8 text-xs text-white">
+    <p>&copy; {{ year }}, Desarrollado por Kervin González</p>
+  </div>
 </div>

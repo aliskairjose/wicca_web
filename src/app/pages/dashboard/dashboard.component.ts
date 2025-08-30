@@ -8,11 +8,12 @@ import { AuthActions } from '../auth/store/auth.actions';
 import { SocketService, ToastService } from '@shared/services';
 import { AppConfig } from '@shared/classes/app.config';
 import { CommonService } from '@shared/services/common.service';
+import { DashboardFooterComponent } from "@shared/components/dashboard-footer/dashboard-footer.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterOutlet, RouterLinkActive, RouterLink, DashbarComponent, ButtonComponent, FooterComponent],
+  imports: [RouterOutlet, RouterLinkActive, RouterLink, DashbarComponent, ButtonComponent, DashboardFooterComponent, DashboardFooterComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

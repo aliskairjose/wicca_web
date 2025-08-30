@@ -7,7 +7,7 @@ import { UserSelectors } from './store/user.selectors';
 import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
-import { ConnectStatusEnum, RoleEnum, RoutesEnum } from '@shared/enums';
+import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum } from '@shared/enums';
 import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
@@ -32,6 +32,7 @@ export class UsersComponent implements OnInit {
   #fb = inject(FormBuilder);
   #advisorFb = inject(FormBuilder);
 
+  isSubmited = signal(false);
   pagination: PaginationInterface = {
     page: 1,
     limit: 20
@@ -42,21 +43,27 @@ export class UsersComponent implements OnInit {
   #store = inject(Store);
   isEdit = signal(false);
 
-  // users: UserInterface[] = [];
   users = signal<UserInterface[] | undefined>(undefined);
   modalUser: UserInterface | undefined;
   metadata = signal<MetadataInterface | undefined>(undefined);
   routeEnum = RoutesEnum;
-  roles: OPTION_DATA[] = [
-    { val: RoleEnum.Advisor, title: 'Asesor' },
-    { val: RoleEnum.User, title: 'Usuario' }
-  ];
   categories: OPTION_DATA[] = [];
 
-  selectedRole = signal<RoleEnum>(RoleEnum.Advisor);
+  selectedRole = signal<RoleEnum | ''>('');
   isAdvisor = computed(() => this.selectedRole() === RoleEnum.Advisor);
 
   enabledCall = signal<boolean>(false);
+
+  roles: OPTION_DATA[] = [
+    { val: '', title: 'Seleccione un rol' },
+    { val: RoleEnum.Advisor, title: 'Asesor' },
+    { val: RoleEnum.User, title: 'Usuario' }
+  ];
+  languages: OPTION_DATA[] = [
+    { val: '', title: 'Seleccione un idioma' },
+    { val: LanguageEnum.SPANISH, title: 'Español' },
+    { val: LanguageEnum.ENGLISH, title: 'Inglés' },
+  ];
 
 
   constructor() {
@@ -87,9 +94,10 @@ export class UsersComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: [Helper.generatePassword()],
-      role: ['Asesor', [Validators.required]],
+      role: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       country: ['', [Validators.required]],
+      language: ['', [Validators.required]],
       isActive: [true],
     });
   }
@@ -122,9 +130,8 @@ export class UsersComponent implements OnInit {
   }
 
   async createUser(): Promise<void> {
-    console.log(this.form.value);
+    this.isSubmited.set(true);
     if (this.form.valid) {
-      // this.closeNewUserModal();
       firstValueFrom(this.#store.dispatch(new UserAction.Create(this.form.value)));
       if (this.isAdvisor()) {
         const newUser = this.#store.selectSnapshot(UserSelectors.newUser)!;
@@ -168,7 +175,7 @@ export class UsersComponent implements OnInit {
     this.advisorForm.reset();
     this.form.reset();
     this.isEdit.set(false);
-    this.selectedRole.set(RoleEnum.Advisor);
+    this.selectedRole.set('');
     this.enabledCall.set(false);
   }
 

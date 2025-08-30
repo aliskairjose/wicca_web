@@ -14,4 +14,6 @@ export { ButtonComponent } from "./button/button.component";
 export { SelectComponent } from "./select/select.component";
 export { ChatBurbleComponent } from "./chat-burble/chat-burble.component";
 export { TextareaComponent } from "./textarea/textarea.component";
+export { FooterComponent } from "./footer/footer.component";
+import { DashboardFooterComponent } from './dashboard-footer/dashboard-footer.component';
 export * from "./charts/index";

@@ -18,7 +18,22 @@ module.exports = {
     addDynamicIconSelectors(),
   ],
   flyonui: {
-    themes: ["corporate"],
+    themes: [
+      {
+        orbeTheme: {
+          // primary: "#043333",
+          primary: "#1d4747",
+          secondary: "#CFAA61",
+          accent: "#716C47",
+          neutral: "#374151",
+          white: "#f8fafc",
+          info: "#3B82F6",
+          success: "#22C55E",
+          warning: "#F59E0B",
+          error: "#EF4444",
+        },
+      },
+    ],
     styled: true,
     vendors: true, // Enable vendor-specific CSS generation
   },

@@ -1,6 +1,6 @@
 .wrapper {
   aside{
-    background-color: #043333;
+    @apply bg-primary;
   }
   .menu {
     @apply  bg-transparent min-w-64 p-4 relative lg:flex flex-col;

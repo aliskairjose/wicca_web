@@ -60,12 +60,12 @@
             theme="secondary"
             (clickHandler)="openModal(user)"
           />
-          <app-button
+          <!-- <app-button
             [clear]="true"
             icon="dots-vertical"
             shape="circle"
             theme="secondary"
-          />
+          /> -->
         </td>
       </tr>
       }
@@ -169,48 +169,71 @@
         <div class="mt-2">
           <div id="tabs-sm-1" role="tabpanel" aria-labelledby="tabs-sm-item-1">
             <form [formGroup]="form">
-              <div class="grid md:grid-cols-2 grid-cols-1 md:gap-4 gap-2">
-                <div>
-                  <app-input
-                    [control]="f['name']"
-                    formControlName="name"
-                    label="Nombre"
-                    type="text"
-                  />
-                  <app-input
-                    [control]="f['email']"
-                    formControlName="email"
-                    label="Correo electrónico"
-                    type="email"
-                  />
-                  <app-input
-                    [control]="f['phone']"
-                    formControlName="phone"
-                    label="Teléfono"
-                    type="text"
-                  />
+              <div
+                class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
+              >
+                <app-input
+                  [isSubmitted]="isSubmited()"
+                  [control]="f['name']"
+                  formControlName="name"
+                  label="Nombre"
+                  type="text"
+                />
+                <app-input
+                  [isSubmitted]="isSubmited()"
+                  [control]="f['lastName']"
+                  formControlName="lastName"
+                  label="Apellido"
+                  type="text"
+                />
+              </div>
+              <div>
+                <app-input
+                  [isSubmitted]="isSubmited()"
+                  [control]="f['email']"
+                  formControlName="email"
+                  label="Correo electrónico"
+                  type="email"
+                />
+              </div>
+              <div
+                class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
+              >
+                <!-- <app-select
+                  [control]="f['language']"
+                  [data]="languages"
+                  label="Idiomas"
+                  formControlName="language"
+                /> -->
+                <div class="flex flex-col justify-between">
+                  <label class="label label-text">Seleccione el idioma</label>
+                  <div class="flex gap-6">
+                    <app-input type="checkbox" placeholder="Ingles" />
+                    <app-input type="checkbox" placeholder="Español" />
+                  </div>
                 </div>
-                <div>
-                  <app-input
-                    [control]="f['lastName']"
-                    formControlName="lastName"
-                    label="Apellido"
-                    type="text"
-                  />
-                  <app-select
-                    [control]="f['role']"
-                    [data]="roles"
-                    label="Rol"
-                    formControlName="role"
-                    (changeHandler)="selectedRole.set($event)"
-                  />
-                  <app-input
-                    [control]="f['country']"
-                    formControlName="country"
-                    label="País"
-                    type="text"
-                  />
-                </div>
+                <app-select
+                  [isSubmitted]="isSubmited()"
+                  [control]="f['role']"
+                  [data]="roles"
+                  label="Rol"
+                  formControlName="role"
+                  (changeHandler)="selectedRole.set($event)"
+                />
+                <app-input
+                  [isSubmitted]="isSubmited()"
+                  [control]="f['phone']"
+                  formControlName="phone"
+                  label="Teléfono"
+                  type="text"
+                />
+                <app-input
+                  [isSubmitted]="isSubmited()"
+                  [control]="f['country']"
+                  formControlName="country"
+                  label="País"
+                  type="text"
+                />
               </div>
             </form>
           </div>
