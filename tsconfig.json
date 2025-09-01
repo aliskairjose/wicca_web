@@ -32,7 +32,7 @@
         "src/assets/*"
       ],
       "@envs/*": [
-        "src/envs/*"
+        "src/environments/*"
       ]
     }
   },

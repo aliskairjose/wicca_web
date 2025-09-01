@@ -34,6 +34,7 @@ export class ButtonComponent implements AfterViewInit {
   #renderer = inject(Renderer2);
 
   @ViewChild('button') button!: ElementRef;
+  @ViewChild('iconButton') iconButton!: ElementRef;
 
 
   onClickHandler(): void {
