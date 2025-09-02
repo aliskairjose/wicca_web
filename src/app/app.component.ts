@@ -2,12 +2,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { ApplicationRef, Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Router, Event, NavigationEnd } from '@angular/router';
-import { environmentDev } from '@envs/env.devs';
-import { SocketEventEnum } from '@shared/enums/socket.events.enum';
 import { SocketService } from '@shared/services';
 import { IStaticMethods } from 'flyonui/flyonui';
 import { first } from 'rxjs';
-import { io, Socket } from 'socket.io-client';
 import { Notyf } from 'notyf';
 
 declare global {

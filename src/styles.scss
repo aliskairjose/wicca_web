@@ -40,3 +40,7 @@ html, body{
     @apply px-3 py-2 gap-0 md:px-6 md:py-4 md:gap-2;
   }
 }
+
+.bg-base-shadow\/70{
+  @apply bg-black/70;
+}

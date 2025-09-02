@@ -5,10 +5,13 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
-    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:wicca_web": "node dist/wicca_web/server/server.mjs"
+    "serve:ssr:wicca_web": "node dist/wicca_web/server/server.mjs",
+    "start:dev": "ng serve --configuration=development",
+    "start:prod": "ng serve --configuration=production",
+    "build:dev": "ng build --configuration=development",
+    "build:prod": "ng build --configuration=production"
   },
   "private": true,
   "dependencies": {

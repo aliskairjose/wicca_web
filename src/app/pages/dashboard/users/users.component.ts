@@ -8,11 +8,10 @@ import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum } from '@shared/enums';
-import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
+import { AvatarComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
-import { HSOverlay } from 'flyonui/flyonui';
 import { OPTION_DATA } from '@shared/components/select/select.component';
 import { CategoryAction } from '../categories/store/category.action';
 import { CategorySelectors } from '../categories/store/category.selectors';
@@ -22,7 +21,7 @@ import { Helper } from '@shared/helpers';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonComponent, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent],
+  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -142,36 +141,20 @@ export class UsersComponent implements OnInit {
         await firstValueFrom(this.#store.dispatch(new UserAction.CreateAdvisorInfo(advisorData)));
       }
       this.resetForm();
-      this.closeNewUserModal();
       this.ngOnInit();
     }
   }
 
-  async openModal(user: UserInterface) {
+  openModal(user: UserInterface) {
     this.modalUser = user;
-    const modal = new HSOverlay(document.querySelector('#basic-modal')!);
-    modal.open();
   }
 
-  async closeModal(res: boolean) {
-    const modal = new HSOverlay(document.querySelector('#basic-modal')!);
-    modal.close();
-    (res) && this.changeUserStatus(this.modalUser!);
+  delete() {
+    this.changeUserStatus(this.modalUser!);
     this.modalUser = undefined;
   }
 
-  openNewUserModal() {
-    const modal = new HSOverlay(document.querySelector('#new-user-modal')!);
-    modal.open();
-  }
-
-  async closeNewUserModal() {
-    const modal = new HSOverlay(document.querySelector('#new-user-modal')!);
-    this.resetForm();
-    modal.close();
-  }
-
-  private resetForm(): void {
+  resetForm(): void {
     this.advisorForm.reset();
     this.form.reset();
     this.isEdit.set(false);

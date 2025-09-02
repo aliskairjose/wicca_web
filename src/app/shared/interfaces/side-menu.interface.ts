@@ -9,4 +9,5 @@ export interface SideMenuInterface {
   title: string;
   path: string;
   role: [RoleEnum, RoleEnum?];
+  children?: SideMenuInterface[]
 }

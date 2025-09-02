@@ -35,9 +35,43 @@
       </div>
     </div>
     <div class="drawer-body px-2 flex flex-col justify-between">
-      <ul class="menu gap-y-3">
+      <ul
+        class="menu w-64 space-y-0.5 [&_.nested-collapse-wrapper]:space-y-0.5 [&_ul]:space-y-0.5"
+      >
         @for (m of menu; track $index) {
         <li>
+          @if(m.children){
+          <a
+            [id]="m.title"
+            [attr.data-collapse]="'#' + m.title + '-collapse'"
+            class="font-light hover:bg-transparent px-0 text-slate-100 collapse-toggle collapse-open:text-slate-100 collapse-open:bg-base-content/10 open"
+          >
+            <span class="icon-[tabler--{{ m.icon }}] size-6"></span>
+            {{ m.title }}
+            <span
+              class="icon-[tabler--chevron-down] collapse-open:rotate-180 size-4 transition-all duration-300"
+            ></span>
+          </a>
+          <ul
+            [id]="m.title + '-collapse'"
+            class="open collapse w-auto overflow-hidden transition-[height] duration-300"
+            [attr.aria-labelledby]="m.title"
+          >
+            @for (child of m.children; track $index) {
+            <li>
+              <a
+                class="font-light hover:bg-transparent px-0 text-slate-100"
+                [routerLink]="[child.path]"
+                routerLinkActive="router-link-active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <span class="icon-[tabler--message] size-5"></span>
+                {{ child.title }}
+              </a>
+            </li>
+            }
+          </ul>
+          }@else {
           <a
             class="font-light hover:bg-transparent px-0 text-slate-100"
             [routerLink]="[m.path]"
@@ -47,6 +81,7 @@
             <span class="icon-[tabler--{{ m.icon }}] size-6"></span>
             {{ m.title }}
           </a>
+          }
         </li>
         }
       </ul>

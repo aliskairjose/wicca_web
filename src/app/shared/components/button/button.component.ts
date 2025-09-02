@@ -27,13 +27,13 @@ export class ButtonComponent implements AfterViewInit {
   clear = input<boolean>(false);
   outline = input<boolean>(false);
   disabled = input<boolean>(false);
-  icon = input<string>();
 
   clickHandler = output();
 
   #renderer = inject(Renderer2);
 
   @ViewChild('button') button!: ElementRef;
+  @ViewChild('iconButton') iconButton!: ElementRef;
 
 
   onClickHandler(): void {

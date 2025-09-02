@@ -33,13 +33,10 @@
       id="navbar-collapse"
       class="md:navbar-end collapse hidden grow basis-full overflow-hidden transition-[height] duration-300 max-md:w-full"
     >
-      <app-button
-        text="Mi Cuenta"
-        (clickHandler)="goTo()"
-        icon="user-circle"
-        theme="primary"
-        [outline]="false"
-      />
+      <button class="btn btn-primary btn-sm" (click)="goTo()">
+        Mi cuenta
+        <span class="icon-[tabler--user-circle] size-5"></span>
+      </button>
     </div>
   </div>
 </nav>

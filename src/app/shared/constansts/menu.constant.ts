@@ -6,13 +6,27 @@ export const MENU: SideMenuInterface[] = [
     icon: 'layout-dashboard',
     path: '.',
     title: 'Dashboard',
-    role: [RoleEnum.Admin, RoleEnum.Advisor],
+    role: [RoleEnum.Admin],
   },
   {
     icon: 'users',
-    path: 'users',
+    path: '#',
     title: 'Usuarios',
     role: [RoleEnum.Admin],
+    children: [
+      {
+        icon: 'users',
+        path: 'users',
+        title: 'Usuarios',
+        role: [RoleEnum.Admin],
+      },
+      {
+        icon: 'users',
+        path: 'asesors',
+        title: 'Asesores',
+        role: [RoleEnum.Admin],
+      },
+    ]
   },
   {
     icon: 'brand-wechat',

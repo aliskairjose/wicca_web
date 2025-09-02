@@ -36,27 +36,22 @@
         <td>
           {{ cat.updatedAt | date : "medium" }}
         </td>
-        <td>
-          <app-button
-            [clear]="true"
-            icon="pencil"
-            shape="circle"
-            theme="secondary"
-            (clickHandler)="edit(cat)"
-          />
-          <app-button
-            [clear]="true"
-            icon="trash"
-            shape="circle"
-            theme="secondary"
-            (clickHandler)="delete(cat._id)"
-          />
-          <!-- <app-button
-            [clear]="true"
-            icon="dots-vertical"
-            shape="circle"
-            theme="secondary"
-          /> -->
+        <td class="space-x-3">
+          <button
+            class="btn btn-square btn-primary btn-outline btn-sm"
+            aria-label="Icon Button Edit"
+            (click)="edit(cat)"
+          >
+            <span class="icon-[tabler--pencil]"></span>
+          </button>
+
+          <button
+            class="btn btn-square btn-error btn-outline btn-sm"
+            aria-label="Icon Button Trash"
+            (click)="delete(cat._id)"
+          >
+            <span class="icon-[tabler--trash]"></span>
+          </button>
         </td>
       </tr>
       }

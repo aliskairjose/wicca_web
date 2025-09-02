@@ -23,7 +23,6 @@ import localeEsAr from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
 import { httpInterceptor } from './shared/interceptors';
 import { AuthState } from './pages/auth/store/auth.state';
-import { environmentDev } from '@envs/env.devs';
 import { UsersState } from './pages/dashboard/users/store/user.state';
 import { HomeState } from './pages/dashboard/home/store/home.state';
 import { ChatState } from './pages/dashboard/chat/store/chat.state';
@@ -31,6 +30,7 @@ import { RequestLogsState } from './pages/dashboard/request-logs/store/request.s
 import { PaymentState } from './pages/dashboard/payments/store/payment.state';
 import { CategoryState } from './pages/dashboard/categories/store/category.state';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { environment } from '@envs/environment';
 registerLocaleData(localeEsAr, 'es-Ar');
 
 export const appConfig: ApplicationConfig = {
@@ -45,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(
       [AuthState, UsersState, HomeState, ChatState, RequestLogsState, PaymentState, CategoryState],
       {
-        developmentMode: !environmentDev.production,
+        developmentMode: !environment.production,
       },
       withNgxsReduxDevtoolsPlugin(),
       // withNgxsFormPlugin(),

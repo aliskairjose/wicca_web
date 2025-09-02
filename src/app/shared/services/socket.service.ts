@@ -1,5 +1,5 @@
 import { inject, Injectable, Signal } from '@angular/core';
-import { environmentDev } from '@envs/env.devs';
+import { environment } from '@envs/environment';
 import { Store } from '@ngxs/store';
 import { io, Socket } from 'socket.io-client';
 import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
@@ -12,7 +12,7 @@ export class SocketService {
   #token = inject(Store).selectSignal(AuthSelectors.token);
 
   constructor() {
-    this.#socket = io(environmentDev.socket, {
+    this.#socket = io(environment.socket, {
       autoConnect: false,
       auth: { token: this.#token() },
     });
