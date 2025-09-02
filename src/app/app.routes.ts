@@ -47,6 +47,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: RoutesEnum.Advisors,
+        title: 'Listado de asesores',
+        loadComponent: () =>
+          import('./pages/dashboard/advisors/advisors.component').then(
+            (m) => m.AdvisorsComponent
+          ),
+      },
+      {
         path: RoutesEnum.Payments,
         title: 'Listado de pagos',
         loadComponent: () =>

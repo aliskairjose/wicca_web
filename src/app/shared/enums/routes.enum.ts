@@ -5,6 +5,7 @@ export enum RoutesEnum {
   Dashboard = 'dashboard',
   Landing = '',
   Users = 'users',
+  Advisors = 'advisors',
   User = 'user',
   Details = 'details',
   Settings = 'settings',

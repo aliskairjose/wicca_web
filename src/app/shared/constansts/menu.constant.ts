@@ -22,7 +22,7 @@ export const MENU: SideMenuInterface[] = [
       },
       {
         icon: 'users',
-        path: 'asesors',
+        path: 'advisors',
         title: 'Asesores',
         role: [RoleEnum.Admin],
       },
