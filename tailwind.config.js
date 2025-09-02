@@ -21,7 +21,6 @@ module.exports = {
     themes: [
       {
         orbeTheme: {
-          // primary: "#043333",
           primary: "#1d4747",
           secondary: "#CFAA61",
           accent: "#716C47",
@@ -33,8 +32,11 @@ module.exports = {
           error: "#EF4444",
         },
       },
+      "corporate",
     ],
+    base: true,
     styled: true,
+    utils: true,
     vendors: true, // Enable vendor-specific CSS generation
   },
 };

@@ -27,7 +27,6 @@ export class ButtonComponent implements AfterViewInit {
   clear = input<boolean>(false);
   outline = input<boolean>(false);
   disabled = input<boolean>(false);
-  icon = input<string>();
 
   clickHandler = output();
 
