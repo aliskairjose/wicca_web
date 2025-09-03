@@ -1,4 +1,68 @@
-<main class="container mx-auto h-screen flex flex-col justify-between">
+<div class="container mx-auto h-screen flex flex-col justify-between">
   <app-navbar />
+  <main class="max-w-7xl mx-auto container">
+    <ng-container [ngTemplateOutlet]="newRegisters"></ng-container>
+    <ng-container [ngTemplateOutlet]="topAdvisors"></ng-container>
+  </main>
   <app-footer />
-</main>
+</div>
+
+<ng-template #topAdvisors>
+  <section
+    class="section"
+    [ngClass]="{
+      hidden: topRatedAdvisors.length === 0
+    }"
+  >
+    <p class="section_title">Nuestros Asesores Top</p>
+    <div class="flex md:gap-6 gap-2">
+      @for (advisor of topRatedAdvisors; track $index) {
+      <div class="relative">
+        <img
+          class="rounded-2xl object-cover w-52"
+          [src]="advisor.avatar"
+          alt="{{ advisor._id }}"
+          srcset=""
+        />
+        <span class="absolute top-3 left-3 text-white">
+          {{ advisor.name }} {{ advisor.lastName }}
+          <small class="block">{{ advisor.advisorDetail.category }}</small>
+        </span>
+        <span
+          class="absolute bottom-0 right-3 text-white flex items-center gap-1"
+        >
+          {{ advisor.averageRating }}
+          <span class="icon-[tabler--star-filled] text-yellow-300"></span>
+        </span>
+      </div>
+      }
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #newRegisters>
+  <section
+    class="section"
+    [ngClass]="{
+      hidden: newUsers.length === 0
+    }"
+  >
+    <p class="section_title">Nuevos registrados</p>
+    <div class="flex md:gap-6 gap-2">
+      @for (user of newUsers; track $index) {
+      <div class="relative">
+        <img
+          class="rounded-2xl object-cover w-52"
+          [src]="user.avatar"
+          alt="{{ user._id }}"
+          srcset=""
+        />
+        <span class="absolute top-3 left-3 text-white">
+          {{ user.name }} {{ user.lastName }}
+          <!-- <small class="block">{{ advisor.advisorDetail.category }}</small> -->
+        </span>
+      </div>
+      }
+    </div>
+  </section>
+</ng-template>
