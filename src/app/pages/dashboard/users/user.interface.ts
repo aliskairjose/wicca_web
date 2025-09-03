@@ -10,6 +10,7 @@ export interface UserInterface {
   lastName: string;
   email: string;
   role: RoleEnum;
+  phone: string,
   language?: string[];
   isActive: boolean;
   connectStatus: ConnectStatusType;

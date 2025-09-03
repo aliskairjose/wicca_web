@@ -37,7 +37,8 @@ export class UsersComponent implements OnInit {
     limit: 20
   };
   queryParams: ParamsInterface = {
-    search: ''
+    search: '',
+    role: RoleEnum.User
   };
   #store = inject(Store);
   isEdit = signal(false);
@@ -46,18 +47,7 @@ export class UsersComponent implements OnInit {
   modalUser: UserInterface | undefined;
   metadata = signal<MetadataInterface | undefined>(undefined);
   routeEnum = RoutesEnum;
-  categories: OPTION_DATA[] = [];
 
-  selectedRole = signal<RoleEnum | ''>('');
-  isAdvisor = computed(() => this.selectedRole() === RoleEnum.Advisor);
-
-  enabledCall = signal<boolean>(false);
-
-  roles: OPTION_DATA[] = [
-    { val: '', title: 'Seleccione un rol' },
-    { val: RoleEnum.Advisor, title: 'Asesor' },
-    { val: RoleEnum.User, title: 'Usuario' }
-  ];
   languages: OPTION_DATA[] = [
     { val: '', title: 'Seleccione un idioma' },
     { val: LanguageEnum.SPANISH, title: 'Español' },
@@ -71,21 +61,12 @@ export class UsersComponent implements OnInit {
 
   async ngOnInit() {
     this._loadForm();
-    this._loadAdvisorForm();
     await firstValueFrom(this.#store.dispatch(new CategoryAction.ListNoPagination()));
-    const cats = this.#store.selectSnapshot(CategorySelectors.listNoPagination);
-    cats.forEach((cat: CategoryInterface) => {
-      this.categories.push({ val: cat._id, title: cat.name });
-    });
   }
 
   get f() {
     return this.form.controls;
   }
-  get advisorF() {
-    return this.advisorForm.controls;
-  }
-
 
   private _loadForm(): void {
     this.form = this.#fb.group({
@@ -93,7 +74,7 @@ export class UsersComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: [Helper.generatePassword()],
-      role: ['', [Validators.required]],
+      role: [RoleEnum.User],
       phone: ['', [Validators.required]],
       country: ['', [Validators.required]],
       language: ['', [Validators.required]],
@@ -101,15 +82,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  private _loadAdvisorForm(): void {
-    this.advisorForm = this.#advisorFb.group({
-      chatPrice: ['', [Validators.required]],
-      callPrice: ['', [Validators.required]],
-      enabledCall: [false],
-      category: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-    });
-  }
 
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
@@ -117,29 +89,10 @@ export class UsersComponent implements OnInit {
     this.getData()
   }
 
-  onCheckChange(value: any): void {
-    this.enabledCall.set(value);
-    if (value) {
-      this.advisorF['callPrice'].setValidators([Validators.required]);
-    } else {
-      this.advisorF['callPrice'].clearValidators();
-      this.advisorF['callPrice'].setValue('');
-    }
-    this.advisorF['callPrice'].updateValueAndValidity();
-  }
-
   async createUser(): Promise<void> {
     this.isSubmited.set(true);
     if (this.form.valid) {
       firstValueFrom(this.#store.dispatch(new UserAction.Create(this.form.value)));
-      if (this.isAdvisor()) {
-        const newUser = this.#store.selectSnapshot(UserSelectors.newUser)!;
-        const advisorData = {
-          ...this.advisorForm.value,
-          user: newUser._id
-        };
-        await firstValueFrom(this.#store.dispatch(new UserAction.CreateAdvisorInfo(advisorData)));
-      }
       this.resetForm();
       this.ngOnInit();
     }
@@ -158,8 +111,6 @@ export class UsersComponent implements OnInit {
     this.advisorForm.reset();
     this.form.reset();
     this.isEdit.set(false);
-    this.selectedRole.set('');
-    this.enabledCall.set(false);
   }
 
   private changeUserStatus(user: UserInterface): void {
@@ -185,6 +136,5 @@ export class UsersComponent implements OnInit {
     this.users.set(results);
     this.metadata.set(metadata);
   }
-
 
 }

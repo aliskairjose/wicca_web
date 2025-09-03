@@ -37,7 +37,7 @@
                 >{{ user.name }} {{ user.lastName }}</span
               >
               <span class="text-xs text-secondary tracking-wider">{{
-                user.role
+                user.phone
               }}</span>
             </div>
           </div>
@@ -46,9 +46,11 @@
         <td>
           <span [appStatus]="user.isActive" class="w-full"></span>
         </td>
-        <td class="text-nowrap text-center">{{ user.createdAt | date }}</td>
         <td class="text-nowrap text-center">
-          {{ user.lastConnect | date : "medium" }}
+          {{ user.createdAt | date : "MMM d, y" }}
+        </td>
+        <td class="text-nowrap text-center">
+          {{ user.lastConnect | date : "MMM d, y, h:mm a" }}
         </td>
         <td class="space-x-3">
           <button
@@ -99,146 +101,61 @@
         </button>
       </div>
       <div class="modal-body">
-        <nav
-          class="tabs tabs-bordered tabs-sm"
-          aria-label="Tabs"
-          role="tablist"
-          aria-orientation="horizontal"
-        >
-          <button
-            type="button"
-            class="tab active-tab:tab-active active"
-            id="tabs-sm-item-1"
-            data-tab="#tabs-sm-1"
-            aria-controls="tabs-sm-1"
-            role="tab"
-            aria-selected="true"
+        <form [formGroup]="form">
+          <div
+            class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
           >
-            Datos personales
-          </button>
-          <button
-            type="button"
-            class="tab active-tab:tab-active"
-            id="tabs-sm-item-2"
-            data-tab="#tabs-sm-2"
-            aria-controls="tabs-sm-2"
-            role="tab"
-            aria-selected="false"
-            [disabled]="!isAdvisor()"
-          >
-            Datos de asesor
-          </button>
-        </nav>
-
-        <div class="mt-2">
-          <div id="tabs-sm-1" role="tabpanel" aria-labelledby="tabs-sm-item-1">
-            <form [formGroup]="form">
-              <div
-                class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
-              >
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['name']"
-                  formControlName="name"
-                  label="Nombre"
-                  type="text"
-                />
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['lastName']"
-                  formControlName="lastName"
-                  label="Apellido"
-                  type="text"
-                />
-              </div>
-              <div>
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['email']"
-                  formControlName="email"
-                  label="Correo electrónico"
-                  type="email"
-                />
-              </div>
-              <div
-                class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
-              >
-                <div class="flex flex-col justify-between">
-                  <label class="label label-text">Seleccione el idioma</label>
-                  <div class="flex gap-6">
-                    <app-input type="checkbox" placeholder="Ingles" />
-                    <app-input type="checkbox" placeholder="Español" />
-                  </div>
-                </div>
-                <app-select
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['role']"
-                  [data]="roles"
-                  label="Rol"
-                  formControlName="role"
-                  (changeHandler)="selectedRole.set($event)"
-                />
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['phone']"
-                  formControlName="phone"
-                  label="Teléfono"
-                  type="text"
-                />
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['country']"
-                  formControlName="country"
-                  label="País"
-                  type="text"
-                />
-              </div>
-            </form>
+            <app-input
+              [isSubmitted]="isSubmited()"
+              [control]="f['name']"
+              formControlName="name"
+              label="Nombre"
+              type="text"
+            />
+            <app-input
+              [isSubmitted]="isSubmited()"
+              [control]="f['lastName']"
+              formControlName="lastName"
+              label="Apellido"
+              type="text"
+            />
+          </div>
+          <div>
+            <app-input
+              [isSubmitted]="isSubmited()"
+              [control]="f['email']"
+              formControlName="email"
+              label="Correo electrónico"
+              type="email"
+            />
           </div>
           <div
-            id="tabs-sm-2"
-            class="hidden"
-            role="tabpanel"
-            aria-labelledby="tabs-sm-item-2"
+            class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
           >
-            <form [formGroup]="advisorForm">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                <app-input
-                  [control]="advisorF['chatPrice']"
-                  formControlName="chatPrice"
-                  label="Precio de chat"
-                  type="money"
-                />
-                <app-input
-                  [control]="advisorF['callPrice']"
-                  formControlName="callPrice"
-                  label="Precio de llamada"
-                  type="money"
-                  [disabled]="!enabledCall()"
-                />
-                <app-input
-                  [control]="advisorF['enabledCall']"
-                  formControlName="enabledCall"
-                  label="Habilitar llamada"
-                  placeholder="Habilitar llamada"
-                  type="checkbox"
-                  (onInputChange)="onCheckChange($event)"
-                />
+            <div class="flex flex-col justify-between">
+              <label class="label label-text">Seleccione el idioma</label>
+              <div class="flex gap-6">
+                <app-input type="checkbox" placeholder="Ingles" />
+                <app-input type="checkbox" placeholder="Español" />
               </div>
-              <app-select
-                [control]="advisorF['category']"
-                [data]="categories"
-                label="Categoría"
-                formControlName="category"
-              />
-              <app-textarea
-                [control]="advisorF['description']"
-                formControlName="description"
-                label="Descripción"
-              />
-            </form>
+            </div>
+
+            <app-input
+              [isSubmitted]="isSubmited()"
+              [control]="f['phone']"
+              formControlName="phone"
+              label="Teléfono"
+              type="text"
+            />
+            <app-input
+              [isSubmitted]="isSubmited()"
+              [control]="f['country']"
+              formControlName="country"
+              label="País"
+              type="text"
+            />
           </div>
-        </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button
