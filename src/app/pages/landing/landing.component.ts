@@ -14,13 +14,32 @@ import { UserInterface } from '../dashboard/users/user.interface';
   standalone: true,
   imports: [NavbarComponent, FooterComponent, CommonModule, AvatarComponent],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss'
+  styleUrl: './landing.component.scss',
+
 })
 export class LandingComponent implements OnInit {
 
   topRatedAdvisors: TopRatedInterface[] = [];
   newUsers: UserInterface[] = [];
   #store = inject(Store);
+
+  steps: any[] = [
+    {
+      title: 'Registrate',
+      icon: 'edit',
+      description: 'Descarga la app y registrate con nosotros de forma fácil y rápido.'
+    },
+    {
+      title: 'Busca',
+      icon: 'world-search',
+      description: 'Busca entre nuestros asesores quien más se acerque a tus necesidades.'
+    },
+    {
+      title: 'Consulta',
+      icon: 'message-user',
+      description: 'Solicita tu consulta, con chat o con llamada, lo que más prefieras.'
+    },
+  ];
 
   ngOnInit(): void {
     this._loadData();

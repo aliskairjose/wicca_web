@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { AvatarComponent, IconComponent, BadgeComponent, CircularChartComponent, ColumnChartComponent } from '@shared/components';
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
@@ -14,7 +14,7 @@ import { UserInterface } from '../users/user.interface';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CurrencyPipe, CommonModule, RouterLink, BadgeComponent, CircularChartComponent, ColumnChartComponent],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CommonModule, RouterLink, BadgeComponent, CircularChartComponent, ColumnChartComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
