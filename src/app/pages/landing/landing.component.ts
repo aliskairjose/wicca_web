@@ -37,7 +37,7 @@ export class LandingComponent implements OnInit {
     {
       title: 'Consulta',
       icon: 'message-user',
-      description: 'Solicita tu consulta, con chat o con llamada, lo que más prefieras.'
+      description: 'Solicita tus consultas por chat o por llamada, lo que más prefieras.'
     },
   ];
 

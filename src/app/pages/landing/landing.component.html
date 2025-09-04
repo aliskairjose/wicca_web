@@ -1,24 +1,22 @@
-<div class="container mx-auto flex flex-col justify-between">
-  <app-navbar />
-  <main>
-    <ng-container [ngTemplateOutlet]="globalTeam"></ng-container>
-    <ng-container
-      [ngTemplateOutlet]="pasos"
-      [ngTemplateOutletContext]="{ steps: steps }"
-    ></ng-container>
-    <ng-container [ngTemplateOutlet]="app"></ng-container>
-    <ng-container [ngTemplateOutlet]="payment"></ng-container>
-    <ng-container [ngTemplateOutlet]="topAdvisors"></ng-container>
-    <ng-container [ngTemplateOutlet]="newRegisters"></ng-container>
-  </main>
-  <app-footer />
-</div>
+<app-navbar />
+<main>
+  <ng-container [ngTemplateOutlet]="globalTeam"></ng-container>
+  <ng-container
+    [ngTemplateOutlet]="pasos"
+    [ngTemplateOutletContext]="{ steps: steps }"
+  ></ng-container>
+  <ng-container [ngTemplateOutlet]="app"></ng-container>
+  <ng-container [ngTemplateOutlet]="payment"></ng-container>
+  <ng-container [ngTemplateOutlet]="topAdvisors"></ng-container>
+  <ng-container [ngTemplateOutlet]="newRegisters"></ng-container>
+</main>
+<app-footer />
 
 <ng-template #globalTeam>
-  <section class="section border-b">
+  <section class="section border-b md:mt-16 mt-1">
     <div class="orbe-container">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-        <img src="images/flats/global-team.svg" alt="map" />
+        <img src="images/flats/global-team.svg" alt="map" class="m-auto" />
         <div class="my-auto">
           <p
             class="text-5xl font-medium -tracking-wide text-primary leading-tight text-center md:text-left"
@@ -39,7 +37,7 @@
         @for (step of steps; track $index) {
         <div class="flex flex-col items-center">
           <div
-            class="relative inline-block before:block before:absolute before:bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-green-100 before:to-transparent hover:before:bg-green-100"
+            class="relative inline-block before:block before:absolute before:-bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-green-100 before:to-transparent hover:before:bg-green-100"
           >
             <span
               class="icon-[tabler--{{ step.icon }}] size-10 text-primary"
@@ -148,7 +146,7 @@
 </ng-template>
 
 <ng-template #payment>
-  <section class="section bg-white">
+  <section class="section">
     <div class="orbe-container">
       <div class="grid md:grid-cols-2 grid-cols-1">
         <div class="md:px-6 px-2 my-auto">
@@ -173,13 +171,13 @@
 
 <ng-template #topAdvisors>
   <section
-    class="section"
+    class="section bg-white"
     [ngClass]="{
       hidden: topRatedAdvisors.length === 0
     }"
   >
     <div class="orbe-container">
-      <p class="section_title center">Nuestros Asesores Top</p>
+      <p class="section_title center">Asesores destacados</p>
       <p class="section_description text-center mx-auto md:w-1/2">
         Comienza a interactuar con nuestros mejores aseores, te guiarán a través
         de sus consultas y conseguiras aquello que mas quieres
