@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { NavbarComponent } from '@shared/components';
+import { AvatarComponent, NavbarComponent } from '@shared/components';
 import { FooterComponent } from "@shared/components/footer/footer.component";
 import { TopRatedInterface } from '../dashboard/home/interfaces/top-rated.interface';
 import { HomeAction } from '../dashboard/home/store/home.actions';
@@ -12,7 +12,7 @@ import { UserInterface } from '../dashboard/users/user.interface';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, CommonModule],
+  imports: [NavbarComponent, FooterComponent, CommonModule, AvatarComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
