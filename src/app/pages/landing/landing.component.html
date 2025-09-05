@@ -192,6 +192,14 @@
             class="shadow"
           />
           <div class="advisor_card_body">
+            <div class="flex gap-1 mb-2">
+              @for (star of [1,1,1,1,1]; track $index) { @if ($index <=
+              advisor.averageRating) {
+              <span
+                class="icon-[tabler--star-filled] text-yellow-300 text-xs inline"
+              ></span>
+              } }
+            </div>
             <p class="text-gray-500 line-clamp-4">
               {{ advisor.advisorDetail.description }}
             </p>
