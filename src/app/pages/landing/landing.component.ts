@@ -27,17 +27,14 @@ export class LandingComponent implements OnInit {
   steps: any[] = [
     {
       title: 'Registrate',
-      icon: 'edit',
       description: 'Descarga la app y registrate con nosotros de forma fácil y rápido.'
     },
     {
       title: 'Busca',
-      icon: 'world-search',
       description: 'Busca entre nuestros asesores quien más se acerque a tus necesidades.'
     },
     {
       title: 'Consulta',
-      icon: 'message-user',
       description: 'Solicita tus consultas por chat o por llamada, lo que más prefieras.'
     },
   ];

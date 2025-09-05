@@ -21,7 +21,7 @@ export const MENU: SideMenuInterface[] = [
         role: [RoleEnum.Admin],
       },
       {
-        icon: 'users',
+        icon: 'users-plus',
         path: 'advisors',
         title: 'Asesores',
         role: [RoleEnum.Admin],

@@ -39,7 +39,8 @@ export class ChatComponent {
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
-    this._getData()
+    console.log(this.pagination)
+    this.dispatch();
   }
 
   async openModal(id: string) {
@@ -55,9 +56,15 @@ export class ChatComponent {
   }
 
   private async _getData() {
+    this.#store.selectOnce(ChatSelectors.roomList).subscribe((data) => {
+      (!data) && this.dispatch();
+      this.rooms = data!.results;
+      this.metadata.set(data!.metadata);
+    });
+  }
+
+  private async dispatch() {
     await firstValueFrom(this.#store.dispatch(new ChatActions.List(this.queryParams, this.pagination)));
-    const { results, metadata } = this.#store.selectSnapshot(ChatSelectors.roomList)!;
-    this.rooms = results;
-    this.metadata.set(metadata);
+    this._getData();
   }
 }

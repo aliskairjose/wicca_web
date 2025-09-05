@@ -29,14 +29,13 @@ export class ChatState {
   ) {
     const state = ctx.getState();
     payload ??= {};
-    return state.rooms ??
-      this.#chatService
-        .rooms(payload, pagination)
-        .pipe(
-          tap(
-            (rooms: ResponseInterface<RoomInterface>) => ctx.patchState({ rooms })
-          )
-        );
+    return this.#chatService
+      .rooms(payload, pagination)
+      .pipe(
+        tap(
+          (rooms: ResponseInterface<RoomInterface>) => ctx.patchState({ rooms })
+        )
+      );
   }
 
   @Action(ChatActions.Get)

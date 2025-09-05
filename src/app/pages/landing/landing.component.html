@@ -1,6 +1,6 @@
 <app-navbar />
 <main>
-  <ng-container [ngTemplateOutlet]="globalTeam" ></ng-container>
+  <ng-container [ngTemplateOutlet]="globalTeam"></ng-container>
   <ng-container
     [ngTemplateOutlet]="pasos"
     [ngTemplateOutletContext]="{ steps: steps }"
@@ -28,7 +28,6 @@
       </div>
     </div>
   </section>
-  
 </ng-template>
 
 <ng-template #pasos let-steps="steps">
@@ -41,7 +40,10 @@
             class="relative inline-block before:block before:absolute before:-bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-green-100 before:to-transparent hover:before:bg-green-100"
           >
             <span
-              class="icon-[tabler--{{ step.icon }}] size-10 text-primary"
+              class="size-10 text-primary"
+              [class.icon-[tabler--user]]="$index === 0"
+              [class.icon-[tabler--world-search]]="$index === 1"
+              [class.icon-[tabler--message-user]]="$index === 2"
             ></span>
           </div>
           <h6>{{ step.title }}</h6>
@@ -158,17 +160,17 @@
           <div class="advisor_card_body">
             <div class="flex justify-between">
               <div class="flex gap-1 mb-2">
-              @for (star of [1,1,1,1,1,1]; track $index) {
+                @for (star of [1,1,1,1,1,1]; track $index) {
                 <span
-                class="text-secondary text-xs"
-                [ngClass]="{
+                  class="text-secondary text-xs"
+                  [ngClass]="{
                   'icon-[tabler--star-filled]': $index < math.round(advisor.averageRating),
                   'icon-[tabler--star]': $index > math.round(advisor.averageRating),
                 }"
-              ></span>
-               }
+                ></span>
+                }
               </div>
-              <span class="text-xs">{{advisor.averageRating}}</span>
+              <span class="text-xs">{{ advisor.averageRating }}</span>
             </div>
             <p class="text-gray-500 line-clamp-4 flex-1 text-sm">
               {{ advisor.advisorDetail.description }}

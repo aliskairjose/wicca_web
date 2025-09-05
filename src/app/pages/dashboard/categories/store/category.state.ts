@@ -35,7 +35,6 @@ export class CategoryState {
   @Action(CategoryAction.List)
   list(ctx: StateContext<CategoryStateModel>, { payload, pagination }: CategoryAction.List) {
     payload ??= {};
-    let state = ctx.getState();
     return this.#service
       .list(payload, pagination)
       .pipe(

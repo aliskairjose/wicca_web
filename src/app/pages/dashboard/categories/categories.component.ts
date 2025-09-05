@@ -50,7 +50,7 @@ export class CategoriesComponent implements OnInit {
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
-    this.getData()
+    this.dispatch();
   }
 
   onSubmit(): void {
@@ -135,9 +135,15 @@ export class CategoriesComponent implements OnInit {
   }
 
   private async getData() {
+    this.#store.selectOnce(CategorySelectors.list).subscribe(data => {
+      (!data) && this.dispatch();
+      this.categories.set(data!.results);
+      this.metadata.set(data!.metadata);
+    });
+  }
+
+  private async dispatch() {
     await firstValueFrom(this.#store.dispatch(new CategoryAction.List(this.queryParams, this.pagination)));
-    const { results, metadata } = this.#store.selectSnapshot(CategorySelectors.list)!;
-    this.categories.set(results);
-    this.metadata.set(metadata);
+    this.getData();
   }
 }

@@ -35,7 +35,7 @@ html, body{
 }
 
 .stats{
-  @apply md:inline-grid inline;
+  @apply md:inline-grid inline shadow border border-gray-200;
   .stat{
     @apply px-3 py-2 gap-0 md:px-6 md:py-4 md:gap-2;
   }
@@ -47,4 +47,8 @@ html, body{
 
 .orbe-container {
   @apply max-w-6xl mx-auto;
+}
+
+.bordered{
+  @apply border border-gray-200;
 }
