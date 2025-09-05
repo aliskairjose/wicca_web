@@ -19,6 +19,7 @@ import { UserInterface } from '../dashboard/users/user.interface';
 })
 export class LandingComponent implements OnInit {
 
+  math = Math;
   topRatedAdvisors: TopRatedInterface[] = [];
   newUsers: UserInterface[] = [];
   #store = inject(Store);

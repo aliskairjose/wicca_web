@@ -1,6 +1,6 @@
 <app-navbar />
 <main>
-  <ng-container [ngTemplateOutlet]="globalTeam"></ng-container>
+  <ng-container [ngTemplateOutlet]="globalTeam" ></ng-container>
   <ng-container
     [ngTemplateOutlet]="pasos"
     [ngTemplateOutletContext]="{ steps: steps }"
@@ -12,8 +12,8 @@
 </main>
 <app-footer />
 
-<ng-template #globalTeam>
-  <section class="section border-b md:mt-16 mt-1">
+<ng-template #globalTeam let-steps="steps">
+  <section class="section border-b md:mt-16 mt-1 space-y-3">
     <div class="orbe-container">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
         <img src="images/flats/global-team.svg" alt="map" class="m-auto" />
@@ -28,6 +28,7 @@
       </div>
     </div>
   </section>
+  
 </ng-template>
 
 <ng-template #pasos let-steps="steps">
@@ -49,44 +50,6 @@
           </p>
         </div>
         }
-        <!-- <div class="flex flex-col items-center">
-          <div
-            class="relative inline-block before:block before:absolute before:bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-green-100 before:to-transparent hover:before:bg-green-100"
-          >
-            <span class="icon-[tabler--edit] size-10 text-primary"></span>
-          </div>
-          <h6>Registrate</h6>
-          <p class="text-center text-gray-500">
-            Descarga la app y registrate con nosotros de forma fácil y rápido.
-          </p>
-        </div>
-        <div class="flex flex-col items-center">
-          <div
-            class="relative inline-block before:block before:absolute before:bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-yellow-100 before:to-transparent hover:before:bg-yellow-100"
-          >
-            <span
-              class="icon-[tabler--world-search] size-10 text-secondary"
-            ></span>
-          </div>
-          <h6>Busca</h6>
-          <p class="text-center text-gray-500">
-            Busca entre nuestros asesores quien más se acerque a tus
-            necesidades.
-          </p>
-        </div>
-        <div class="flex flex-col items-center">
-          <div
-            class="relative inline-block before:block before:absolute before:bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-green-100 before:to-transparent hover:before:bg-green-100"
-          >
-            <span
-              class="icon-[tabler--message-user] size-10 text-primary"
-            ></span>
-          </div>
-          <h6>Consulta</h6>
-          <p class="text-center text-gray-500">
-            Solicita tu consulta, con chat o con llamada, lo que más prefieras.
-          </p>
-        </div> -->
       </div>
     </div>
   </section>
@@ -122,13 +85,14 @@
 </ng-template>
 
 <ng-template #app>
+  <!-- <section class="section bg-gradient-to-r from-primary to-transparent"> -->
   <section class="section bg-white">
     <div class="orbe-container">
       <div class="grid md:grid-cols-2 grid-cols-1">
         <img
           src="images/flats/mobil-app.svg"
           alt="app"
-          class="size-10/12 m-auto order-last md:order-first"
+          class="size-9/12 m-auto order-last md:order-first"
         />
         <div class="md:px-6 px-2 my-auto">
           <p class="section_title md:w-3/4 text-center md:text-left">
@@ -192,15 +156,21 @@
             class="shadow"
           />
           <div class="advisor_card_body">
-            <div class="flex gap-1 mb-2">
-              @for (star of [1,1,1,1,1]; track $index) { @if ($index <=
-              advisor.averageRating) {
-              <span
-                class="icon-[tabler--star-filled] text-yellow-300 text-xs inline"
+            <div class="flex justify-between">
+              <div class="flex gap-1 mb-2">
+              @for (star of [1,1,1,1,1,1]; track $index) {
+                <span
+                class="text-secondary text-xs"
+                [ngClass]="{
+                  'icon-[tabler--star-filled]': $index < math.round(advisor.averageRating),
+                  'icon-[tabler--star]': $index > math.round(advisor.averageRating),
+                }"
               ></span>
-              } }
+               }
+              </div>
+              <span class="text-xs">{{advisor.averageRating}}</span>
             </div>
-            <p class="text-gray-500 line-clamp-4">
+            <p class="text-gray-500 line-clamp-4 flex-1 text-sm">
               {{ advisor.advisorDetail.description }}
             </p>
             <span class="text-secondary text-lg mt-1">
@@ -208,7 +178,6 @@
             </span>
           </div>
         </div>
-
         }
       </div>
     </div>
