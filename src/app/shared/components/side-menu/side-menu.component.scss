@@ -1,0 +1,9 @@
+  aside{
+    @apply bg-primary;
+  }
+  .menu {
+    @apply  bg-transparent min-w-64 p-4 relative lg:flex flex-col;
+    .router-link-active {
+      @apply bg-transparent text-[#CFAA61];
+    }
+  }

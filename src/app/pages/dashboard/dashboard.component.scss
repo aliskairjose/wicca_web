@@ -1,13 +1,5 @@
 .wrapper {
-  aside{
-    @apply bg-primary;
-  }
-  .menu {
-    @apply  bg-transparent min-w-64 p-4 relative lg:flex flex-col;
-    .router-link-active {
-      @apply bg-transparent text-[#CFAA61];
-    }
-  }
+
   @apply relative flex h-screen max-h-screen top-0;
   .main-panel {
     @apply flex flex-col justify-between bg-slate-100 md:pt-6 pt-10 relative float-start grow overflow-scroll md:px-6 md:py-4 p-2 h-screen;

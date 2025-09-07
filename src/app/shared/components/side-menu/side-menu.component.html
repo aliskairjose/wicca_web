@@ -1,0 +1,115 @@
+<aside
+  id="logo-sidebar"
+  class="overlay lg:shadow-none overlay-open:translate-x-0 drawer drawer-start hidden max-w-64 lg:relative lg:z-0 lg:flex lg:translate-x-0 h-screen max-h-screen"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="drawer-header p-4">
+    <div class="flex items-center justify-center gap-3">
+      <img src="imagotipo-transparent.png" alt="logo" srcset="" class="w-1/2" />
+    </div>
+  </div>
+  <div class="drawer-body px-2 flex flex-col justify-between">
+    <ul
+      class="menu w-64 space-y-0.5 [&_.nested-collapse-wrapper]:space-y-0.5 [&_ul]:space-y-0.5"
+    >
+      <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink=""
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--layout-dashboard] size-6"></span>
+          Dashboard
+        </a>
+        <a
+          id="usuarios"
+          data-collapse="#usuarios-collapse"
+          class="font-light hover:bg-transparent px-0 text-slate-100 collapse-toggle collapse-open:text-slate-100 collapse-open:bg-base-content/10 open"
+        >
+          <span class="icon-[tabler--layout-dashboard] size-6"></span>
+          Usuarios
+          <span
+            class="icon-[tabler--chevron-down] collapse-open:rotate-180 size-4 transition-all duration-300"
+          ></span>
+        </a>
+        <ul
+          id="usuarios-collapse"
+          class="open collapse w-auto overflow-hidden transition-[height] duration-300"
+          aria-labelledby="usuarios"
+        >
+          <li>
+            <a
+              class="font-light hover:bg-transparent px-0 text-slate-100"
+              routerLink="users"
+              routerLinkActive="router-link-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <span class="icon-[tabler--users] size-6"></span>
+              Usuarios
+            </a>
+            <a
+              class="font-light hover:bg-transparent px-0 text-slate-100"
+              routerLink="users"
+              routerLinkActive="router-link-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <span class="icon-[tabler--users-plus] size-6"></span>
+              Asesores
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink="chats"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--brand-wechat] size-6"></span>
+          Chats
+        </a>
+      </li>
+      <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink="chats"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--category] size-6"></span>
+          Categorías
+        </a>
+      </li>
+      <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink="request-logs"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--logs] size-6"></span>
+          Histórico de solicitudes
+        </a>
+      </li>
+      <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink="payments"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--report-money] size-6"></span>
+          Pagos
+        </a>
+      </li>
+    </ul>
+    <button type="button" class="btn btn-error">
+      Cerrar sesión
+      <span class="icon-[tabler--logout] size-5"></span>
+    </button>
+  </div>
+</aside>
