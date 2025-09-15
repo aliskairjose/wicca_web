@@ -14,6 +14,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: RoutesEnum.AbuotUs,
+    title: 'Quienes somos',
+    loadComponent: () =>
+      import('./pages/landing/about-us/about-us.component').then(
+        (m) => m.AboutUsComponent
+      ),
+  },
+  {
     path: RoutesEnum.Login,
     title: 'Login',
     loadComponent: () =>

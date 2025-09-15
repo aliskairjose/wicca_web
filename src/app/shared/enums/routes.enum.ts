@@ -4,6 +4,7 @@ export enum RoutesEnum {
   Logout = 'auth/logout',
   Dashboard = 'dashboard',
   Landing = '',
+  AbuotUs = 'about-us',
   Users = 'users',
   Advisors = 'advisors',
   User = 'user',
