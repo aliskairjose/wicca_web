@@ -1,44 +1,33 @@
-<nav
-  class="navbar border-b border-1 border-primary-content bg-base-100 z-[1] absolute start-0 top-0 mb-8 h-20"
->
-  <div class="w-full md:flex md:items-center md:gap-2 orbe-container">
-    <div class="flex items-center justify-between">
-      <div class="navbar-start items-center justify-between max-md:w-full">
-        <a
-          class="link text-base-content link-neutral text-xl font-semibold no-underline"
-          href="#"
-          ><img
-            src="logotipo-transparent.png"
-            alt="logo"
-            srcset=""
-            class="w-1/2"
-        /></a>
-        <div class="md:hidden">
-          <button
-            type="button"
-            class="collapse-toggle btn btn-outline btn-secondary btn-sm btn-square"
-            data-collapse="#navbar-collapse"
-            aria-controls="navbar-collapse"
-            aria-label="Toggle navigation"
-          >
-            <span
-              class="icon-[tabler--menu-2] collapse-open:hidden size-4"
-            ></span>
-            <span
-              class="icon-[tabler--x] collapse-open:block hidden size-4"
-            ></span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div
-      id="navbar-collapse"
-      class="md:navbar-end collapse hidden grow basis-full overflow-hidden transition-[height] duration-300 max-md:w-full"
-    >
-      <button class="btn btn-primary" (click)="goTo()">
-        Panel
-        <span class="icon-[tabler--user-circle] size-5"></span>
+<nav class="navbar rounded-box flex w-full items-center justify-between gap-2 shadow">
+  <div class="navbar-start max-md:w-1/4">
+    <a class="link text-base-content link-neutral text-xl font-semibold no-underline" href="#">
+      <img src="logotipo-transparent.png" alt="logo" srcset="" class="w-1/4" />
+    </a>
+  </div>
+  <div class="navbar-center max-md:hidden">
+    <ul class="menu menu-horizontal p-0 font-medium">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Preguntas frecuentes</a></li>
+      <li><a href="/about-us">Quienes somos?</a></li>
+    </ul>
+  </div>
+  <div class="navbar-end items-center gap-4">
+    <div class="dropdown relative inline-flex md:hidden rtl:[--placement:bottom-end]">
+      <button id="dropdown-default" type="button" class="dropdown-toggle btn btn-text btn-secondary btn-square"
+        aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+        <span class="icon-[tabler--menu-2] dropdown-open:hidden size-5"></span>
+        <span class="icon-[tabler--x] dropdown-open:block hidden size-5"></span>
       </button>
+      <ul class="dropdown-menu dropdown-open:opacity-100 idden min-w-60" role="menu" aria-orientation="vertical"
+        aria-labelledby="dropdown-default">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="/about-us">Quienes somos?</a></li>
+      </ul>
     </div>
+    <button class="btn btn-primary" (click)="goTo()">
+      Panel
+      <span class="icon-[tabler--user-circle] size-5"></span>
+    </button>
   </div>
 </nav>
