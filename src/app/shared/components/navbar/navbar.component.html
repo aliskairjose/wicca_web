@@ -1,14 +1,21 @@
-<nav class="navbar rounded-box flex w-full items-center justify-between gap-2 shadow">
+<nav class="navbar rounded-box flex w-full items-center justify-between gap-2 h-20 border-b">
   <div class="navbar-start max-md:w-1/4">
-    <a class="link text-base-content link-neutral text-xl font-semibold no-underline" href="#">
+    <a class="link text-base-content link-neutral text-xl font-semibold no-underline" routerLink="">
       <img src="logotipo-transparent.png" alt="logo" srcset="" class="w-1/4" />
     </a>
   </div>
   <div class="navbar-center max-md:hidden">
     <ul class="menu menu-horizontal p-0 font-medium">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Preguntas frecuentes</a></li>
-      <li><a href="/about-us">Quienes somos?</a></li>
+      <li>
+        <a routerLink="" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      </li>
+      <li>
+        <a href="#" routerLink="chats" routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }">Preguntas frecuentes</a>
+      </li>
+      <li>
+        <a routerLink="about-us" routerLinkActive="router-link-active">Quienes somos?</a>
+      </li>
     </ul>
   </div>
   <div class="navbar-end items-center gap-4">
@@ -20,9 +27,16 @@
       </button>
       <ul class="dropdown-menu dropdown-open:opacity-100 idden min-w-60" role="menu" aria-orientation="vertical"
         aria-labelledby="dropdown-default">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Preguntas frecuentes</a></li>
-        <li><a href="/about-us">Quienes somos?</a></li>
+        <li>
+          <a routerLink="" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        </li>
+        <li>
+          <a href="#" routerLink="chats" routerLinkActive="router-link-active"
+            [routerLinkActiveOptions]="{ exact: true }">Preguntas frecuentes</a>
+        </li>
+        <li>
+          <a routerLink="about-us" routerLinkActive="router-link-active">Quienes somos?</a>
+        </li>
       </ul>
     </div>
     <button class="btn btn-primary" (click)="goTo()">

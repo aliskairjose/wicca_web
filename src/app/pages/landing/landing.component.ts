@@ -8,48 +8,21 @@ import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
 import { HomeSelectors } from '../dashboard/home/store/home.selectors';
 import { UserInterface } from '../dashboard/users/user.interface';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, CommonModule, AvatarComponent],
+  imports: [NavbarComponent, FooterComponent, CommonModule, RouterOutlet],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent  {
 
-  math = Math;
-  topRatedAdvisors: TopRatedInterface[] = [];
-  newUsers: UserInterface[] = [];
-  #store = inject(Store);
+  #router = inject(Router);
 
-  steps: any[] = [
-    {
-      title: 'Registrate',
-      description: 'Descarga la app y registrate con nosotros de forma fácil y rápido.'
-    },
-    {
-      title: 'Busca',
-      description: 'Busca entre nuestros asesores quien más se acerque a tus necesidades.'
-    },
-    {
-      title: 'Consulta',
-      description: 'Solicita tus consultas por chat o por llamada, lo que más prefieras.'
-    },
-  ];
 
-  ngOnInit(): void {
-    this._loadData();
-  }
 
-  private async _loadData() {
-    await Promise.all([
-      firstValueFrom(this.#store.dispatch(new HomeAction.GetNewRegistrations)),
-      firstValueFrom(this.#store.dispatch(new HomeAction.GetTopAdvisors)),
-    ]);
-    this.newUsers = this.#store.selectSnapshot(HomeSelectors.newRegistrations);
-    this.topRatedAdvisors = this.#store.selectSnapshot(HomeSelectors.topRatedAdvisors);
-
-  }
+  
 }

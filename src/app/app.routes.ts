@@ -12,14 +12,24 @@ export const routes: Routes = [
       import('./pages/landing/landing.component').then(
         (m) => m.LandingComponent
       ),
-  },
-  {
-    path: RoutesEnum.AbuotUs,
-    title: 'Quienes somos',
-    loadComponent: () =>
-      import('./pages/landing/about-us/about-us.component').then(
-        (m) => m.AboutUsComponent
-      ),
+    children: [
+      {
+        path: RoutesEnum.Home,
+        title: 'Home',
+        loadComponent: () =>
+          import('./pages/landing/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+      },
+      {
+        path: RoutesEnum.AbuotUs,
+        title: 'Quienes somos',
+        loadComponent: () =>
+          import('./pages/landing/about-us/about-us.component').then(
+            (m) => m.AboutUsComponent
+          ),
+      },
+    ],
   },
   {
     path: RoutesEnum.Login,

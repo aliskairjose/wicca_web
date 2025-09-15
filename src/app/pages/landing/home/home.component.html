@@ -1,0 +1,184 @@
+ <ng-container [ngTemplateOutlet]="globalTeam"></ng-container>
+  <ng-container
+    [ngTemplateOutlet]="pasos"
+    [ngTemplateOutletContext]="{ steps: steps }"
+  ></ng-container>
+  <ng-container [ngTemplateOutlet]="app"></ng-container>
+  <ng-container [ngTemplateOutlet]="payment"></ng-container>
+  <ng-container [ngTemplateOutlet]="topAdvisors"></ng-container>
+  <ng-container [ngTemplateOutlet]="newRegisters"></ng-container>
+
+
+  <ng-template #globalTeam let-steps="steps">
+  <section class="section border-b md:mt-16 mt-1 space-y-3">
+    <div class="orbe-container">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+        <img src="images/flats/global-team.svg" alt="map" class="m-auto" />
+        <div class="my-auto">
+          <p
+            class="text-5xl font-medium -tracking-wide text-primary leading-tight text-center md:text-left"
+          >
+            !Asesores por todo el <span class="text-secondary">mundo</span>,
+            busca y encuentra!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #pasos let-steps="steps">
+  <section class="section">
+    <div class="orbe-container">
+      <div class="grid md:grid-cols-3 grid-cols-1 md:gap-4 gap-y-10">
+        @for (step of steps; track $index) {
+        <div class="flex flex-col items-center">
+          <div
+            class="relative inline-block before:block before:absolute before:-bottom-2 before:left-2 before:w-16 before:h-16 before:rounded-md before:rotate-[33.75deg] mb-6 before:bg-gradient-to-b before:from-green-100 before:to-transparent hover:before:bg-green-100"
+          >
+            <span
+              class="size-10 text-primary"
+              [class.icon-[tabler--user]]="$index === 0"
+              [class.icon-[tabler--world-search]]="$index === 1"
+              [class.icon-[tabler--message-user]]="$index === 2"
+            ></span>
+          </div>
+          <h6>{{ step.title }}</h6>
+          <p class="text-center text-gray-500">
+            {{ step.description }}
+          </p>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #newRegisters>
+  <section
+    class="section"
+    [ngClass]="{
+      hidden: newUsers.length === 0
+    }"
+  >
+    <div class="orbe-container">
+      <p class="section_title">Nuevos registrados</p>
+      <div class="flex md:gap-6 gap-2">
+        @for (user of newUsers; track $index) {
+        <div class="relative">
+          <img
+            class="rounded-2xl object-cover w-52"
+            [src]="user.avatar"
+            alt="{{ user._id }}"
+            srcset=""
+          />
+          <span class="absolute top-3 left-3 text-white">
+            {{ user.name }} {{ user.lastName }}
+            <!-- <small class="block">{{ advisor.advisorDetail.category }}</small> -->
+          </span>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #app>
+  <!-- <section class="section bg-gradient-to-r from-primary to-transparent"> -->
+  <section class="section bg-white">
+    <div class="orbe-container">
+      <div class="grid md:grid-cols-2 grid-cols-1">
+        <img
+          src="images/flats/mobil-app.svg"
+          alt="app"
+          class="size-9/12 m-auto order-last md:order-first"
+        />
+        <div class="md:px-6 px-2 my-auto">
+          <p class="section_title md:w-3/4 text-center md:text-left">
+            Descarga nuestra app para Android o iOS
+          </p>
+          <p class="section_description">
+            Accede conectate con nestros asesores de forma rápida y en cualquier
+            parte del munto a través de nuestra app, descargala para Android o
+            iOS desde el store de tu preferencia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #payment>
+  <section class="section">
+    <div class="orbe-container">
+      <div class="grid md:grid-cols-2 grid-cols-1">
+        <div class="md:px-6 px-2 my-auto">
+          <p class="section_title md:w-3/4 text-center md:text-left">
+            Recarga fácil y rapido.
+          </p>
+          <p class="section_description">
+            Recargar tu wallet es muy sencillo, a travéz de Paypal podrás
+            recargar tu billetera de forma rápida, fácil y segura!. Pronto
+            tendremos más metodos de pago para tu mayor comodidad.
+          </p>
+        </div>
+        <img
+          src="images/flats/credit-card-payment.svg"
+          alt="payment"
+          class="size-11/12 m-auto"
+        />
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #topAdvisors>
+  <section
+    class="section bg-white"
+    [ngClass]="{
+      hidden: topRatedAdvisors.length === 0
+    }"
+  >
+    <div class="orbe-container">
+      <p class="section_title center">Asesores destacados</p>
+      <p class="section_description text-center mx-auto md:w-1/2">
+        Comienza a interactuar con nuestros mejores aseores, te guiarán a través
+        de sus consultas y conseguiras aquello que mas quieres
+      </p>
+      <div class="flex justify-center md:gap-6 gap-2">
+        @for (advisor of topRatedAdvisors; track $index) {
+        <div class="advisor_card">
+          <app-avatar
+            [src]="advisor.avatar"
+            size="xl"
+            [isRounded]="false"
+            class="shadow"
+          />
+          <div class="advisor_card_body">
+            <div class="flex justify-between">
+              <div class="flex gap-1 mb-2">
+                @for (star of [1,1,1,1,1,1]; track $index) {
+                <span
+                  class="text-secondary text-xs"
+                  [ngClass]="{
+                  'icon-[tabler--star-filled]': $index < math.round(advisor.averageRating),
+                  'icon-[tabler--star]': $index > math.round(advisor.averageRating),
+                }"
+                ></span>
+                }
+              </div>
+              <span class="text-xs">{{ advisor.averageRating }}</span>
+            </div>
+            <p class="text-gray-500 line-clamp-4 flex-1 text-sm">
+              {{ advisor.advisorDetail.description }}
+            </p>
+            <span class="text-secondary text-lg mt-1">
+              - {{ advisor.name }} {{ advisor.lastName }}
+            </span>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+</ng-template>

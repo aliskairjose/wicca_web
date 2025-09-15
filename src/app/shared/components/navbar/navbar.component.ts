@@ -3,12 +3,12 @@ import { ButtonComponent } from '../button/button.component';
 import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
 import { Store } from '@ngxs/store';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, RouterLinkActive, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
