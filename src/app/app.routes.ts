@@ -29,6 +29,14 @@ export const routes: Routes = [
             (m) => m.AboutUsComponent
           ),
       },
+      {
+        path: RoutesEnum.AdvisorPolicy,
+        title: 'Políticas de expertos',
+        loadComponent: () =>
+          import('./pages/landing/advisor-policy/advisor-policy.component').then(
+            (m) => m.AdvisorPolicyComponent
+          ),
+      },
     ],
   },
   {

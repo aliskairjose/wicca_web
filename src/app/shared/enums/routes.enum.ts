@@ -6,6 +6,7 @@ export enum RoutesEnum {
   Landing = '',
   Home='',
   AbuotUs = 'about-us',
+  AdvisorPolicy= 'advisor-policy',
   Users = 'users',
   Advisors = 'advisors',
   User = 'user',
