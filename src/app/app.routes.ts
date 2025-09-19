@@ -120,6 +120,14 @@ export const routes: Routes = [
             (m) => m.UserComponent
           ),
       },
+      {
+        path: `${RoutesEnum.Advisors}/${RoutesEnum.User}/:id`,
+        title: 'Detalle de usuario',
+        loadComponent: () =>
+          import('./pages/dashboard/advisors/advisor/advisor.component').then(
+            (m) => m.AdvisorComponent
+          ),
+      },
     ],
   },
 ];
