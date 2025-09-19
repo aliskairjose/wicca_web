@@ -1,9 +1,7 @@
-import { AfterViewInit, Component, input } from '@angular/core';
-import { SummaryMonthlyStatusInterface } from 'src/app/pages/dashboard/home/interfaces/request-pie-chart.interface';
+import { AfterViewInit, Component, input, OnInit } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
-  ChartComponent,
   ApexDataLabels,
   ApexPlotOptions,
   ApexYAxis,
@@ -34,8 +32,9 @@ export type ChartOptions = {
   templateUrl: './column-chart.component.html',
   styleUrl: './column-chart.component.scss'
 })
-export class ColumnChartComponent implements AfterViewInit {
-  series = input<SummaryMonthlyStatusInterface[]>([]);
+export class ColumnChartComponent implements AfterViewInit, OnInit {
+  series = input<any[]>([]);
+  title = input<string>();
 
   chartOptions: Partial<ChartOptions> = {
     series: [],
@@ -75,22 +74,34 @@ export class ColumnChartComponent implements AfterViewInit {
     },
     yaxis: {
       title: {
-        text: "(Solicitudes)"
+        text: ''
       }
     },
     fill: {
       opacity: 1
     },
-    tooltip: {
-      y: {
-        formatter: function (val) {
-          return val + " solicitudes";
-        }
-      }
-    }
+    // tooltip: {
+    //   y: {
+    //     formatter: function (val) {
+    //       return val + " solicitudes";
+    //     }
+    //   }
+    // }
   };
 
+  ngOnInit() {
+    console.log(this.title());
+    this.chartOptions.yaxis!.title!.text = this.title()?.toUpperCase();
+  }
+
   ngAfterViewInit(): void {
-    setTimeout(() => this.chartOptions.series = this.series(), 0);
+    setTimeout(() => {
+      this.chartOptions.series = this.series();
+    }, 0);
+  }
+
+  format(val: any) {
+    return val + " " + this.title();
   }
 }
+

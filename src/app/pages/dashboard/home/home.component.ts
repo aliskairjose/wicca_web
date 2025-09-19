@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
 import { RouterLink } from '@angular/router';
 import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from './interfaces/request-pie-chart.interface';
-import { UserSummaryInterface } from '../request-logs/interfaces/summary.interface';
+import { AccumulatedTimeInterface, UserSummaryInterface } from '../request-logs/interfaces/summary.interface';
 import { TopRatedInterface } from './interfaces/top-rated.interface';
 import { UserInterface } from '../users/user.interface';
 
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   series: number[] = [];
   labels: string[] = [];
   currentYear = new Date().getFullYear();
+  accumulatedTime: AccumulatedTimeInterface[] = [];
   summaryMonthly: SummaryMonthlyStatusInterface[] = [];
   topRatedAdvisors: TopRatedInterface[] = [];
   newUsers: UserInterface[] = [];
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
 
   private async loadData(year: number) {
     await Promise.all([
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetAccumulatedTime)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetNewRegistrations)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetTopAdvisors)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetUserSummary)),
@@ -46,6 +48,8 @@ export class HomeComponent implements OnInit {
     this.newUsers = this.#store.selectSnapshot(HomeSelectors.newRegistrations);
 
     this.topRatedAdvisors = this.#store.selectSnapshot(HomeSelectors.topRatedAdvisors);
+
+    this.accumulatedTime = this.#store.selectSnapshot(HomeSelectors.accumulatedTime);
 
     this.summaryUser = this.#store.selectSnapshot(HomeSelectors.summaryUser);
 

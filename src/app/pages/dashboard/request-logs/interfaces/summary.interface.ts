@@ -11,3 +11,8 @@ export interface RoleSummary {
   Admin: number;
   Advisor: number;
 }
+
+export interface AccumulatedTimeInterface {
+  name: string;
+  data: number[];
+}

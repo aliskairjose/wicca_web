@@ -2,7 +2,8 @@
   <ng-container [ngTemplateOutlet]="section1"></ng-container>
   <ng-container [ngTemplateOutlet]="section2"></ng-container>
   <ng-container [ngTemplateOutlet]="section3"></ng-container>
-  <ng-container [ngTemplateOutlet]="section4"></ng-container>
+  <!-- <ng-container [ngTemplateOutlet]="section4"></ng-container> -->
+  <ng-container [ngTemplateOutlet]="section5"></ng-container>
 </main>
 
 <ng-template #section1>
@@ -95,7 +96,7 @@
     <div class="card xl:w-full border bordered">
       <div class="card-body">
         <h6 class="title">Resumen de solicitudes {{ currentYear }}</h6>
-        <app-column-chart [series]="summaryMonthly" />
+        <app-column-chart [series]="summaryMonthly" title="solicitudes" />
       </div>
     </div>
     }
@@ -124,6 +125,19 @@
       </div>
       }
     </div>
+  </div>
+</ng-template>
+
+<ng-template #section5>
+  <div class="xl:flex xl:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
+    @if (accumulatedTime.length > 0) {
+    <div class="card xl:w-full border bordered">
+      <div class="card-body">
+        <h6 class="title">Tiempo acumulado {{ currentYear }}</h6>
+        <app-column-chart [series]="accumulatedTime" title="segundos" />
+      </div>
+    </div>
+    }
   </div>
 </ng-template>
 

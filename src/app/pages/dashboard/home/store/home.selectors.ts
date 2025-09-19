@@ -8,6 +8,8 @@ export class HomeSelectors {
 
   static summaryUser = createSelector([HomeSelectors.getSlice.summaryUser], (summaryUser) => summaryUser);
 
+  static accumulatedTime = createSelector([HomeSelectors.getSlice.accumulatedTime], (accumulatedTime) => accumulatedTime);
+
   static newRegistrations = createSelector([HomeSelectors.getSlice.newRegistrations], (newRegistrations) => newRegistrations);
 
   static summaryStatus = createSelector([HomeSelectors.getSlice.summaryStatus], (summaryStatus) => summaryStatus);

@@ -1,6 +1,10 @@
 const ACTION_SCOPE = '[Dashboard API]';
 
 export namespace HomeAction {
+  export class GetAccumulatedTime {
+    static readonly type = `${ACTION_SCOPE} Get AccumulatedTime`;
+    constructor(readonly id?: string) { }
+  }
   export class GetUserSummary {
     static readonly type = `${ACTION_SCOPE} Get User Summary`;
   }
