@@ -5,11 +5,15 @@ import { UserInterface } from '../user.interface';
 import { UserService } from '../services/user.service';
 import { UserAction } from './user.actions';
 import { ResponseInterface } from '@shared/interfaces';
+import { AccumulatedTimeInterfaceMonthInterface } from '../../advisors/interfaces/accumulated-time-month.interface';
+import { RoleEnum } from '@shared/enums';
 
 export interface UsersStateModel {
   users: ResponseInterface<UserInterface> | undefined;
   selectedUser: UserInterface | undefined;
+  selectedAdvisor: UserInterface | undefined;
   newUser: UserInterface | undefined;
+  monthlyTimeAccumulated: AccumulatedTimeInterfaceMonthInterface | undefined;
 }
 
 @State<UsersStateModel>({
@@ -17,16 +21,27 @@ export interface UsersStateModel {
   defaults: {
     users: undefined,
     selectedUser: undefined,
-    newUser: undefined
+    selectedAdvisor: undefined,
+    newUser: undefined,
+    monthlyTimeAccumulated: undefined
   },
 })
 @Injectable()
 export class UsersState {
   #userService = inject(UserService);
 
+  @Action(UserAction.GetMonthlyTimeAccumulated)
+  getMonthlyTimeAccumulated(ctx: StateContext<UsersStateModel>, { id }: UserAction.GetMonthlyTimeAccumulated) {
+    const state = ctx.getState();
+    return (state.selectedUser?._id === id)
+      ? ctx
+      : this.#userService
+        .getMonthlyTimeAccumulated(id)
+        .pipe(tap((monthlyTimeAccumulated: AccumulatedTimeInterfaceMonthInterface) => ctx.patchState({ monthlyTimeAccumulated })));
+  }
+
   @Action(UserAction.Create)
   create(ctx: StateContext<UsersStateModel>, { payload }: UserAction.Create) {
-    console.log('Action create user', payload);
     return this.#userService
       .create(payload)
       .pipe(tap((newUser: UserInterface) => ctx.patchState({ newUser })));
@@ -40,7 +55,14 @@ export class UsersState {
       : this.#userService
         .byId(id)
         .pipe(
-          tap((selectedUser: UserInterface) => ctx.patchState({ selectedUser })
+          tap((user: UserInterface) => {
+            if (user.role === RoleEnum.Advisor) {
+              ctx.patchState({ selectedAdvisor: user });
+            }
+            if (user.role === RoleEnum.Advisor) {
+              ctx.patchState({ selectedUser: user });
+            }
+          }
           )
         );
   }

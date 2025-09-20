@@ -6,6 +6,7 @@ import { AdvisorInterface, UserInterface } from '../user.interface';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { AppConfig } from '@shared/classes/app.config';
 import { UserSummaryInterface } from '../../request-logs/interfaces/summary.interface';
+import { AccumulatedTimeInterfaceMonthInterface } from '../../advisors/interfaces/accumulated-time-month.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +44,9 @@ export class UserService {
 
   createdvisorInfo(data: AdvisorInterface): Observable<AdvisorInterface> {
     return this.http.post<AdvisorInterface>(AppConfig.baseUrl(Api.Advisor), data);
+  }
+
+  getMonthlyTimeAccumulated(id: string): Observable<AccumulatedTimeInterfaceMonthInterface> {
+    return this.http.get<AccumulatedTimeInterfaceMonthInterface>(AppConfig.baseUrl(`${Api.AccumulatedTimeMonthly}/${id}`));
   }
 }

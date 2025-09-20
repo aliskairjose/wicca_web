@@ -16,4 +16,8 @@ export class UserSelectors {
   );
 
   static selectedUser = createSelector([UserSelectors.getSlices.selectedUser], (selectedUser) => selectedUser);
+
+  static selectedAdvisor = createSelector([UserSelectors.getSlices.selectedAdvisor], (selectedAdvisor) => selectedAdvisor);
+
+  static monthlyTimeAccumulated = createSelector([UserSelectors.getSlices.monthlyTimeAccumulated], (monthlyTimeAccumulated) => monthlyTimeAccumulated);
 }
