@@ -5,41 +5,35 @@
     <ng-container [ngTemplateOutlet]="wallet"></ng-container>
   </div>
   <div class="xl:col-span-8 md:col-span-6 col-span-12 space-y-6">
-    <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
     <ng-container [ngTemplateOutlet]="ratesTemplate"></ng-container>
     <ng-container [ngTemplateOutlet]="bio"></ng-container>
     <div class="grid xl:grid-cols-2 grid-cols-1 gap-4">
       <ng-container [ngTemplateOutlet]="chats"></ng-container>
       <ng-container [ngTemplateOutlet]="advisorReviews"></ng-container>
     </div>
+    <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
   </div>
 </main>
 
 <ng-template #requestLogs>
   <div class="grid xl:grid-cols-2 grid-cols-1 md:gap-3 gap-1">
     <div>
+      <h5>Solicitudes</h5>
       <app-circular-chart
+        type="donut"
         [labels]="labels"
         [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
       />
     </div>
-    <div class="flex flex-col xl:justify-evenly xl:space-y-0 space-y-2">
-      <div class="card">
-        <div class="card-body">
-          <div class="flex justify-between items-center">
-            <h5>Solicitudes Rechazadas</h5>
-            <h1 class="text-error">{{ requestsStatus.rejects }}</h1>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <div class="flex justify-between items-center">
-            <h5>Solicitudes Aceptadas</h5>
-            <h1 class="text-primary">{{ requestsStatus.accepts }}</h1>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h5>
+        Tiempo acumulado
+        <span class="text-sm"
+          >{{ months[timeAccumulatedMonthly!.month] }}
+          {{ timeAccumulatedMonthly!.year }}</span
+        >
+      </h5>
+      <app-circular-chart [labels]="timeLabel" [series]="timeAccumulated" />
     </div>
   </div>
 </ng-template>

@@ -9,6 +9,7 @@ import { UserInterface } from '../../users/user.interface';
 import { UserSelectors } from '../../users/store/user.selectors';
 import { UserAction } from '../../users/store/user.actions';
 import { AccumulatedTimeInterfaceMonthInterface } from '../interfaces/accumulated-time-month.interface';
+import { MONTHS } from '@shared/constansts';
 
 const ConnStatus = {
   Online: 'online-top',
@@ -26,13 +27,16 @@ const ConnStatus = {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdvisorComponent {
+  months = MONTHS;
   role = RoleEnum;
   user = signal<UserInterface | undefined>(undefined)
-  timeAccumulated: AccumulatedTimeInterfaceMonthInterface | undefined;
+  timeAccumulatedMonthly: AccumulatedTimeInterfaceMonthInterface | undefined;
   #route = inject(ActivatedRoute);
   #store = inject(Store);
   users: any[] = [];
   labels = ['Aceptados', 'Rechazados'];
+  timeLabel: string[] = [];
+  timeAccumulated: number[] = [];
 
   fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
   statusClass = computed(() => {
@@ -53,6 +57,15 @@ export class AdvisorComponent {
       accepts: accepts!.length,
     }
   }
+
+  private _timeAccumulatedFormat() {
+    this.timeAccumulatedMonthly?.types.forEach(t => {
+      this.timeLabel.push(t.type);
+      this.timeAccumulated.push(t.totalTimeInSeconds);
+    });
+
+  }
+
   get totalEarnings() {
     return (this.user()?.wallet?.balance ?? 0) * 0.4;
   }
@@ -62,7 +75,7 @@ export class AdvisorComponent {
     await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
     await firstValueFrom(this.#store.dispatch(new UserAction.GetMonthlyTimeAccumulated(params['id'])));
     this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
-    this.timeAccumulated = this.#store.selectSnapshot(UserSelectors.monthlyTimeAccumulated);
-
+    this.timeAccumulatedMonthly = this.#store.selectSnapshot(UserSelectors.monthlyTimeAccumulated);
+    this._timeAccumulatedFormat();
   }
 }

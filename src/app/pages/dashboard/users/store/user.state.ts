@@ -32,12 +32,9 @@ export class UsersState {
 
   @Action(UserAction.GetMonthlyTimeAccumulated)
   getMonthlyTimeAccumulated(ctx: StateContext<UsersStateModel>, { id }: UserAction.GetMonthlyTimeAccumulated) {
-    const state = ctx.getState();
-    return (state.selectedUser?._id === id)
-      ? ctx
-      : this.#userService
-        .getMonthlyTimeAccumulated(id)
-        .pipe(tap((monthlyTimeAccumulated: AccumulatedTimeInterfaceMonthInterface) => ctx.patchState({ monthlyTimeAccumulated })));
+    return this.#userService
+      .getMonthlyTimeAccumulated(id)
+      .pipe(tap((monthlyTimeAccumulated: AccumulatedTimeInterfaceMonthInterface) => ctx.patchState({ monthlyTimeAccumulated })));
   }
 
   @Action(UserAction.Create)

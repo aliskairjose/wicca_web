@@ -17,6 +17,7 @@ type ChartOptions = {
 export class CircularChartComponent implements AfterViewInit {
   series = input<number[]>([]);
   labels = input<string[]>([]);
+  type = input<any>('pie')
 
   chartOptions: Partial<ChartOptions> = {
     series: [],
@@ -43,6 +44,7 @@ export class CircularChartComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.chartOptions.series = this.series();
     this.chartOptions.labels = this.labels();
+    // this.chartOptions.chart!.type = this.type();
 
   }
 
