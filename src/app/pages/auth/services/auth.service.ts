@@ -20,4 +20,8 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.get(AppConfig.baseUrl(Api.Logout));
   }
+
+  verifyAccount(token: string): Observable<any> {
+    return this.http.get(AppConfig.baseUrl(`${Api.VerifyAccount}/${token}`));
+  }
 }

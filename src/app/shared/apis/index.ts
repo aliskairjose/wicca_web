@@ -6,6 +6,7 @@ export enum Api {
   Settings = 'settings',
   Login = 'auth/sign-in',
   Logout = 'auth/sign-out',
+  VerifyAccount = 'auth/verify-email',
   Register = 'auth/sign-up',
   ForgotPassword = 'auth/forgot-password',
   ResetPassword = 'auth/reset-password',

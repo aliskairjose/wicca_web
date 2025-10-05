@@ -1,0 +1,31 @@
+@defer () { @if (isVerified()) {
+<ng-container [ngTemplateOutlet]="verified"></ng-container>
+}@else {
+<ng-container [ngTemplateOutlet]="error"></ng-container>
+
+} }
+
+<ng-template #verified>
+  <div class="orbe-container h-screen flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center gap-y-4 text-center">
+      <img src="/images/check.png" alt="check" class="h-28" />
+      <h2>Felicidades</h2>
+      <p class="text-xl">
+        Tu dirección de correo electrónico ha sido verificada exitosamente.
+      </p>
+      <p class="text-xl">
+        Ya puedes iniciar sesión en tu cuenta
+        <span class="font-semibold">OrbeApp</span>.
+      </p>
+    </div>
+  </div>
+</ng-template>
+<ng-template #error>
+  <div class="orbe-container h-screen flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center gap-y-4 text-center">
+      <img src="/images/check.png" alt="check" class="h-28" />
+      <h2>Lo sentimos</h2>
+      <p class="text-xl">Este enlace ya no esta activo.</p>
+    </div>
+  </div>
+</ng-template>

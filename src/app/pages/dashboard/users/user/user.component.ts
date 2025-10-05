@@ -6,7 +6,7 @@ import { UserSelectors } from '../store/user.selectors';
 import { UserInterface } from '../user.interface';
 import { firstValueFrom } from 'rxjs';
 import { RoleEnum } from '@shared/enums';
-import { IconComponent, AvatarComponent, CircularChartComponent } from '@shared/components';
+import { IconComponent, AvatarComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 
 const ConnStatus = {
@@ -18,7 +18,7 @@ const ConnStatus = {
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule, IconComponent, AvatarComponent, CircularChartComponent],
+  imports: [CommonModule, IconComponent, AvatarComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -36,8 +36,8 @@ export class UserComponent implements OnInit {
   statusClass = computed(() => `${ConnStatus[this.user()!.connectStatus]}`)
 
   async ngOnInit() {
-    const params: Params = await firstValueFrom(this.#route.params);
-    await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
+    const { id } = await firstValueFrom(this.#route.params);
+    await firstValueFrom(this.#store.dispatch(new UserAction.Get(id)));
     this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
   }
 

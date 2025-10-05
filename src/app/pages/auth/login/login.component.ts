@@ -6,12 +6,11 @@ import { SocketService, ToastService } from '@shared/services';
 import { AuthActions } from '../store/auth.actions';
 import { MessageEnum, RoutesEnum } from '@shared/enums';
 import { Router, RouterModule } from '@angular/router';
-import { SelectComponent } from "../../../shared/components/select/select.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [InputComponent, ButtonComponent, ReactiveFormsModule, RouterModule, SelectComponent],
+  imports: [InputComponent, ButtonComponent, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

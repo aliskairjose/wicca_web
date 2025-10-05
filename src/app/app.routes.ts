@@ -1,10 +1,32 @@
 import { Routes } from '@angular/router';
 import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { authGuard } from '@shared/guards';
-import { HomeComponent } from './pages/dashboard/home/home.component';
 import { AppConfig } from '@shared/classes/app.config';
 
 export const routes: Routes = [
+  {
+    path: 'auth',
+    loadComponent: () =>
+      import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+    children: [
+      {
+        path: RoutesEnum.Login,
+        title: 'Login',
+        loadComponent: () =>
+          import('./pages/auth/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+      },
+      {
+        path: `${RoutesEnum.VerifyEmail}/:id`,
+        title: 'Verify Account',
+        loadComponent: () =>
+          import('./pages/auth/verify-account/verify-account.component').then(
+            (m) => m.VerifyAccountComponent
+          ),
+      },
+    ]
+  },
   {
     path: RoutesEnum.Landing,
     title: AppConfig.APP_NAME,
@@ -38,14 +60,6 @@ export const routes: Routes = [
           ),
       },
     ],
-  },
-  {
-    path: RoutesEnum.Login,
-    title: 'Login',
-    loadComponent: () =>
-      import('./pages/auth/login/login.component').then(
-        (m) => m.LoginComponent
-      ),
   },
   {
     path: RoutesEnum.Dashboard,

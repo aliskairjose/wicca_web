@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
     inject(ApplicationRef)
       .isStable.pipe(first((isStable) => isStable))
       .subscribe(() => console.log('App is stable'));
-    // .subscribe(() => this.socketService.connect());
   }
 
   ngOnInit() {
