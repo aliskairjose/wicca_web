@@ -4,3 +4,4 @@ export { RoutesEnum } from "./routes.enum"
 export { ToastTypeEnum } from "./toast.enum"
 export { RoleEnum } from "./role.enum"
 export { LanguageEnum } from "./language.enum"
+export { StatusEnum } from "./status.enum";

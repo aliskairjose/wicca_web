@@ -13,6 +13,7 @@ export enum Api {
   Menu = 'web-menu',
   Advisor = 'advisor',
   Users = 'users',
+  UpdateAdvisorSatus = 'users/advisor/status',
   UserSummary = 'dashboard/users/summary',
   Payments = 'payments',
   Rooms = 'chat/rooms',

@@ -30,6 +30,10 @@ export namespace UserAction {
     static readonly type = `${ACTION_SCOPE} Update user`;
     constructor(readonly id: string, readonly payload: Partial<UserInterface>) { }
   }
+  export class UpdateStatus {
+    static readonly type = `${ACTION_SCOPE} Update user status`;
+    constructor(readonly id: string, readonly payload: Partial<UserInterface>) { }
+  }
   export class GetMonthlyTimeAccumulated {
     static readonly type = `${ACTION_SCOPE} Get monthly time accumulated`;
     constructor(readonly id: string) { }

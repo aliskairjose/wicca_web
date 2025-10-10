@@ -1,4 +1,4 @@
-import { RoleEnum } from '@shared/enums';
+import { RoleEnum, StatusEnum } from '@shared/enums';
 import { ReviewInterface } from '@shared/interfaces';
 import { ConnectStatusType } from '@shared/types';
 import { RoomInterface } from '../chat/interfaces/room.interface';
@@ -10,10 +10,13 @@ export interface UserInterface {
   lastName: string;
   email: string;
   role: RoleEnum;
+  dob: Date;
   phone: string,
+  country: string;
   language?: string[];
   isActive: boolean;
   connectStatus: ConnectStatusType;
+  status?: StatusEnum;
   socketId?: string;
   lastConnect: Date;
   createdAt: Date;
@@ -32,11 +35,17 @@ interface RequestLogs {
   createdAt: Date;
 }
 export interface AdvisorInterface {
-  callPrice: number;
-  category: string;
+  alias: string;
   chatPrice: number;
-  description: string;
+  callPrice: number;
   enabledCall: boolean;
+  description: string;
+  category: string;
+  decription: string;
+  experience: string;
+  dniImage: string;
+  dniID: string;
+  dniType: string;
 }
 
 export interface WalletInterface {

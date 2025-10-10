@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
-import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum } from '@shared/enums';
+import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum, StatusEnum } from '@shared/enums';
 import { AvatarComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { RouterLink } from '@angular/router';
@@ -54,6 +54,13 @@ export class AdvisorsComponent {
 
   enabledCall = signal<boolean>(false);
 
+  status = [
+    { val: StatusEnum.APPROVE, title: 'Aprobado' },
+    { val: StatusEnum.PENDING, title: 'Pendiente de aprobación' },
+    { val: StatusEnum.REJECT, title: 'Rechazado' },
+    { val: StatusEnum.UNDER_REVIEW, title: 'En revisión' },
+  ]
+
 
   languages: OPTION_DATA[] = [
     { val: '', title: 'Seleccione un idioma' },
@@ -83,6 +90,15 @@ export class AdvisorsComponent {
     return this.advisorForm.controls;
   }
 
+  changeStatus(event: any, user: UserInterface) {
+    const status = event.target.value;
+    if (status !== user.status) {
+      const _user: Partial<UserInterface> = {
+        status: status
+      };
+      this.updateStatus(user._id, _user);
+    }
+  }
 
   private _loadForm(): void {
     this.form = this.#fb.group({
@@ -170,6 +186,14 @@ export class AdvisorsComponent {
 
   private async update(id: string, payload: Partial<UserInterface>) {
     await firstValueFrom(this.#store.dispatch(new UserAction.Update(id, payload)));
+    const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
+    this.users.set([]);
+    setTimeout(() => this.users.set(results), 100);
+    this.metadata.set(metadata);
+  }
+
+  private async updateStatus(id: string, payload: Partial<UserInterface>) {
+    await firstValueFrom(this.#store.dispatch(new UserAction.UpdateStatus(id, payload)));
     const { results, metadata } = this.#store.selectSnapshot(UserSelectors.list)!;
     this.users.set([]);
     setTimeout(() => this.users.set(results), 100);

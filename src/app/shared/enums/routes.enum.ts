@@ -1,8 +1,8 @@
 export enum RoutesEnum {
   Login = 'login',
   VerifyEmail = 'verify-email',
-  Register = 'auth/register',
-  Logout = 'auth/logout',
+  Register = 'register',
+  Logout = 'logout',
   Dashboard = 'dashboard',
   Landing = '',
   Home = '',

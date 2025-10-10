@@ -8,18 +8,18 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ButtonComponent, RouterLinkActive, RouterLink],
+  imports: [RouterLinkActive, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
   #router = inject(Router);
-  #store = inject( Store );
+  #store = inject(Store);
 
   goTo(): void {
     const route = this._isAuthorized()
       ? RoutesEnum.Dashboard
-      : RoutesEnum.Login;
+      : `auth/${RoutesEnum.Login}`;
     this.#router.navigate([route]);
   }
 

@@ -97,5 +97,20 @@ export class UsersState {
       })
       );
   }
+  @Action(UserAction.UpdateStatus)
+  updateSatus(ctx: StateContext<UsersStateModel>, { id, payload }: UserAction.UpdateStatus) {
+    let state = ctx.getState();
+    return this.#userService
+      .updateStatus(id, payload)
+      .pipe(tap((user: UserInterface) => {
+        const data: ResponseInterface<UserInterface> = {
+          metadata: state.users!.metadata,
+          results: []
+        }
+        data.results = state.users!.results.map(u => (u._id === id) ? user : u);
+        ctx.patchState({ users: data });
+      })
+      );
+  }
 
 }

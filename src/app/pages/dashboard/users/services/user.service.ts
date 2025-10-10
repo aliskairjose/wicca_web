@@ -34,6 +34,10 @@ export class UserService {
     return this.http.patch<UserInterface>(`${AppConfig.baseUrl(Api.Users)}/${id}`, data);
   }
 
+  updateStatus(id: string, data: Partial<UserInterface>): Observable<UserInterface> {
+    return this.http.patch<UserInterface>(`${AppConfig.baseUrl(Api.UpdateAdvisorSatus)}/${id}`, data);
+  }
+
   getSummaryUser(): Observable<UserSummaryInterface> {
     return this.http.get<UserSummaryInterface>(AppConfig.baseUrl(Api.UserSummary));
   }

@@ -47,7 +47,18 @@
         </td>
         <td>{{ user.email }}</td>
         <td>
-          <span [appStatus]="user.isActive" class="w-full"></span>
+          <!-- <span [appStatus]="user.isActive" class="w-full"></span> -->
+          <select
+            class="select select-xs max-w-sm w-auto"
+            aria-label="select"
+            (change)="changeStatus($event, user)"
+          >
+            @for (s of status; track $index) {
+            <option [selected]="s.val === user.status" [value]="s.val">
+              {{ s.title }}
+            </option>
+            }
+          </select>
         </td>
         <td>
           <div class="flex items-center gap-1">
@@ -58,10 +69,14 @@
           </div>
         </td>
         <td>
-          {{ user.wallet?.balance | currency }}
+          {{ user.wallet?.balance || 0 | currency }}
         </td>
         <td>
-          {{ user.wallet!.balance * 0.4 | currency }}
+          @if (user.wallet) {
+          {{ user.wallet.balance * 0.4 | currency }}
+          }@else {
+          {{ 0 | currency }}
+          }
         </td>
         <td class="text-nowrap text-center">
           {{ user.createdAt | date : "MMM d, y" }}
