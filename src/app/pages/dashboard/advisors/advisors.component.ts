@@ -53,9 +53,9 @@ export class AdvisorsComponent {
   isAdvisor = computed(() => this.selectedRole() === RoleEnum.Advisor);
 
   enabledCall = signal<boolean>(false);
-
+  statusEnum = StatusEnum
   status = [
-    { val: StatusEnum.APPROVE, title: 'Aprobado' },
+    { val: StatusEnum.APPROVED, title: 'Aprobado' },
     { val: StatusEnum.PENDING, title: 'Pendiente de aprobación' },
     { val: StatusEnum.REJECT, title: 'Rechazado' },
     { val: StatusEnum.UNDER_REVIEW, title: 'En revisión' },

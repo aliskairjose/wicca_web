@@ -49,6 +49,7 @@
         <td>
           <!-- <span [appStatus]="user.isActive" class="w-full"></span> -->
           <select
+            [disabled]="user.status === statusEnum.APPROVED"
             class="select select-xs max-w-sm w-auto"
             aria-label="select"
             (change)="changeStatus($event, user)"
