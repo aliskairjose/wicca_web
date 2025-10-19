@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { UserInterface } from './user.interface';
 import { UserAction } from './store/user.actions';
@@ -14,14 +14,12 @@ import { RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { OPTION_DATA } from '@shared/components/select/select.component';
 import { CategoryAction } from '../categories/store/category.action';
-import { CategorySelectors } from '../categories/store/category.selectors';
-import { CategoryInterface } from '../categories/interfaces/category.interface';
 import { Helper } from '@shared/helpers';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent],
+  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -29,7 +27,6 @@ export class UsersComponent implements OnInit {
   form!: FormGroup;
   advisorForm!: FormGroup;
   #fb = inject(FormBuilder);
-  #advisorFb = inject(FormBuilder);
 
   isSubmited = signal(false);
   pagination: PaginationInterface = {
@@ -108,9 +105,12 @@ export class UsersComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.advisorForm.reset();
-    this.form.reset();
-    this.isEdit.set(false);
+    const hasValues = Object.values(this.form.value).every(v => !v);
+    if (hasValues) {
+      this.advisorForm.reset();
+      this.form.reset();
+      this.isEdit.set(false);
+    }
   }
 
   private changeUserStatus(user: UserInterface): void {
