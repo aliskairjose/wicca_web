@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  importProvidersFrom,
   LOCALE_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -31,10 +32,15 @@ import { PaymentState } from './pages/dashboard/payments/store/payment.state';
 import { CategoryState } from './pages/dashboard/categories/store/category.state';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { environment } from '@envs/environment';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 registerLocaleData(localeEsAr, 'es-Ar');
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
+    importProvidersFrom(NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })),
     provideEnvironmentNgxMask(),
     { provide: LOCALE_ID, useValue: 'es-Ar' },
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -53,6 +59,8 @@ export const appConfig: ApplicationConfig = {
       // withNgxsRouterPlugin(),
       withNgxsStoragePlugin({ keys: [AuthState] }),
       withNgxsWebSocketPlugin({ url: 'http://192.168.1.15:3000' }),
+
     ),
+
   ],
 };

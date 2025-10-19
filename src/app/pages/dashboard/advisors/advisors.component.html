@@ -1,332 +1,348 @@
-<div class="w-full flex justify-end mb-6">
-  <button
-    type="button"
-    class="btn btn-primary btn-outline"
-    aria-haspopup="dialog"
-    aria-expanded="false"
-    aria-controls="newuser-modal"
-    data-overlay="#newuser-modal"
+<ng-container [ngTemplateOutlet]="advisors"></ng-container>
+<!-- @defer (on viewport) {
+} @placeholder (minimum 500ms) {
+<p>Loading content...</p>
+} @loading {
+<div class="spinner"></div>
+} @error {
+<p>Failed to load component.</p>
+} -->
+<ng-template #advisors>
+  <div class="w-full flex justify-end mb-6">
+    <button
+      type="button"
+      class="btn btn-primary btn-outline"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="newuser-modal"
+      data-overlay="#newuser-modal"
+    >
+      Agregar Asesor
+      <span class="icon-[tabler--user-plus] size-5"></span>
+    </button>
+  </div>
+  <app-table-container
+    [metadata]="metadata()!"
+    (onChange)="onChangeTable($event)"
   >
-    Agregar Asesor
-    <span class="icon-[tabler--user-plus] size-5"></span>
-  </button>
-</div>
-<app-table-container
-  [metadata]="metadata()!"
-  (onChange)="onChangeTable($event)"
->
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Email</th>
-        <th>Status</th>
-        <th>Activo</th>
-        <th>Rate</th>
-        <th>Balance</th>
-        <th>Disponible (40%)</th>
-        <th>Usuario desde</th>
-        <th>Última conexión</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (user of users(); track $index) {
-      <tr class="hover">
-        <td class="text-nowrap">
-          <div class="flex">
-            <app-avatar [src]="user.avatar" [status]="user.connectStatus" />
-            <div class="flex flex-col ms-1.5">
-              <span class="font-medium"
-                >{{ user.name }} {{ user.lastName }}</span
-              >
-              <span class="text-xs text-secondary tracking-wider">{{
-                user.phone
-              }}</span>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Activo</th>
+          <th>Rate</th>
+          <th>Balance</th>
+          <th>Disponible (40%)</th>
+          <th>Usuario desde</th>
+          <th>Última conexión</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track $index) {
+        <tr class="hover">
+          <td class="text-nowrap">
+            <div class="flex">
+              <app-avatar [src]="user.avatar" [status]="user.connectStatus" />
+              <div class="flex flex-col ms-1.5">
+                <span class="font-medium"
+                  >{{ user.name }} {{ user.lastName }}</span
+                >
+                <span class="text-xs text-secondary tracking-wider">{{
+                  user.phone
+                }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ user.email }}</td>
+          <td>
+            <select
+              [disabled]="user.status === statusEnum.APPROVED"
+              class="select select-xs max-w-sm w-auto"
+              aria-label="select"
+              (change)="changeStatus($event, user)"
+            >
+              @for (s of status; track $index) {
+              <option [selected]="s.val === user.status" [value]="s.val">
+                {{ s.title }}
+              </option>
+              }
+            </select>
+          </td>
+          <td>
+            <span [appStatus]="user.isActive" class="w-full"></span>
+          </td>
+          <td>
+            <div class="flex items-center gap-1">
+              {{ user.rate?.average }}
+              <span
+                class="icon-[tabler--star-filled] size-5 text-yellow-300"
+              ></span>
+            </div>
+          </td>
+          <td>
+            {{ user.wallet?.balance || 0 | currency }}
+          </td>
+          <td>
+            @if (user.wallet) {
+            {{ user.wallet.balance * 0.4 | currency }}
+            }@else {
+            {{ 0 | currency }}
+            }
+          </td>
+          <td class="text-nowrap text-center">
+            {{ user.createdAt | date : "MMM d, y" }}
+          </td>
+          <td class="text-nowrap text-center">
+            {{ user.lastConnect | date : "MMM d, y, h:mm a" }}
+          </td>
+          <td class="space-x-3">
+            <button
+              class="btn btn-square btn-primary btn-outline btn-sm"
+              aria-label="Icon Button EYE"
+              (click)="showDetails(user)"
+            >
+              <span class="icon-[tabler--eye]"></span>
+            </button>
+
+            <button
+              class="btn btn-square btn-error btn-outline btn-sm"
+              aria-label="Icon Button Trash"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="delete-modal"
+              data-overlay="#delete-modal"
+              (click)="openModal(user)"
+            >
+              <span class="icon-[tabler--trash]"></span>
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </app-table-container>
+
+  <!-- NEW USER MODAL -->
+  <div
+    id="newuser-modal"
+    class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+    role="dialog"
+    tabindex="-1"
+  >
+    <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Agregar nuevo usuario</h3>
+          <button
+            type="button"
+            class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+            aria-label="Close"
+            data-overlay="#newuser-modal"
+            (click)="resetForm()"
+          >
+            <span class="icon-[tabler--x] size-4"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <nav
+            class="tabs tabs-bordered tabs-sm"
+            aria-label="Tabs"
+            role="tablist"
+            aria-orientation="horizontal"
+          >
+            <button
+              type="button"
+              class="tab active-tab:tab-active active"
+              id="tabs-sm-item-1"
+              data-tab="#tabs-sm-1"
+              aria-controls="tabs-sm-1"
+              role="tab"
+              aria-selected="true"
+            >
+              Datos personales
+            </button>
+            <button
+              type="button"
+              class="tab active-tab:tab-active"
+              id="tabs-sm-item-2"
+              data-tab="#tabs-sm-2"
+              aria-controls="tabs-sm-2"
+              role="tab"
+              aria-selected="false"
+              [disabled]="!isAdvisor()"
+            >
+              Datos de asesor
+            </button>
+          </nav>
+
+          <div class="mt-2">
+            <div
+              id="tabs-sm-1"
+              role="tabpanel"
+              aria-labelledby="tabs-sm-item-1"
+            >
+              <form [formGroup]="form">
+                <div
+                  class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
+                >
+                  <app-input
+                    [isSubmitted]="isSubmited()"
+                    [control]="f['name']"
+                    formControlName="name"
+                    label="Nombre"
+                    type="text"
+                  />
+                  <app-input
+                    [isSubmitted]="isSubmited()"
+                    [control]="f['lastName']"
+                    formControlName="lastName"
+                    label="Apellido"
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <app-input
+                    [isSubmitted]="isSubmited()"
+                    [control]="f['email']"
+                    formControlName="email"
+                    label="Correo electrónico"
+                    type="email"
+                  />
+                </div>
+                <div
+                  class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
+                >
+                  <div class="flex flex-col justify-between">
+                    <label class="label label-text">Seleccione el idioma</label>
+                    <div class="flex gap-6">
+                      <app-input type="checkbox" placeholder="Ingles" />
+                      <app-input type="checkbox" placeholder="Español" />
+                    </div>
+                  </div>
+                  <app-input
+                    [isSubmitted]="isSubmited()"
+                    [control]="f['phone']"
+                    formControlName="phone"
+                    label="Teléfono"
+                    type="text"
+                  />
+                  <app-input
+                    [isSubmitted]="isSubmited()"
+                    [control]="f['country']"
+                    formControlName="country"
+                    label="País"
+                    type="text"
+                  />
+                </div>
+              </form>
+            </div>
+            <div
+              id="tabs-sm-2"
+              class="hidden"
+              role="tabpanel"
+              aria-labelledby="tabs-sm-item-2"
+            >
+              <form [formGroup]="advisorForm">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                  <app-input
+                    [control]="advisorF['chatPrice']"
+                    formControlName="chatPrice"
+                    label="Precio de chat"
+                    type="money"
+                  />
+                  <app-input
+                    [control]="advisorF['callPrice']"
+                    formControlName="callPrice"
+                    label="Precio de llamada"
+                    type="money"
+                    [disabled]="!enabledCall()"
+                  />
+                  <app-input
+                    [control]="advisorF['enabledCall']"
+                    formControlName="enabledCall"
+                    label="Habilitar llamada"
+                    placeholder="Habilitar llamada"
+                    type="checkbox"
+                    (onInputChange)="onCheckChange($event)"
+                  />
+                </div>
+                <app-select
+                  [control]="advisorF['category']"
+                  [data]="categories"
+                  label="Categoría"
+                  formControlName="category"
+                />
+                <app-textarea
+                  [control]="advisorF['description']"
+                  formControlName="description"
+                  label="Descripción"
+                />
+              </form>
             </div>
           </div>
-        </td>
-        <td>{{ user.email }}</td>
-        <td>
-          <select
-            [disabled]="user.status === statusEnum.APPROVED"
-            class="select select-xs max-w-sm w-auto"
-            aria-label="select"
-            (change)="changeStatus($event, user)"
-          >
-            @for (s of status; track $index) {
-            <option [selected]="s.val === user.status" [value]="s.val">
-              {{ s.title }}
-            </option>
-            }
-          </select>
-        </td>
-        <td>
-          <span [appStatus]="user.isActive" class="w-full"></span>
-        </td>
-        <td>
-          <div class="flex items-center gap-1">
-            {{ user.rate?.average }}
-            <span
-              class="icon-[tabler--star-filled] size-5 text-yellow-300"
-            ></span>
-          </div>
-        </td>
-        <td>
-          {{ user.wallet?.balance || 0 | currency }}
-        </td>
-        <td>
-          @if (user.wallet) {
-          {{ user.wallet.balance * 0.4 | currency }}
-          }@else {
-          {{ 0 | currency }}
-          }
-        </td>
-        <td class="text-nowrap text-center">
-          {{ user.createdAt | date : "MMM d, y" }}
-        </td>
-        <td class="text-nowrap text-center">
-          {{ user.lastConnect | date : "MMM d, y, h:mm a" }}
-        </td>
-        <td class="space-x-3">
-          <button
-            class="btn btn-square btn-primary btn-outline btn-sm"
-            aria-label="Icon Button EYE"
-            [routerLink]="[routeEnum.User, user._id]"
-          >
-            <span class="icon-[tabler--eye]"></span>
-          </button>
-
-          <button
-            class="btn btn-square btn-error btn-outline btn-sm"
-            aria-label="Icon Button Trash"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-            aria-controls="delete-modal"
-            data-overlay="#delete-modal"
-            (click)="openModal(user)"
-          >
-            <span class="icon-[tabler--trash]"></span>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</app-table-container>
-
-<!-- NEW USER MODAL -->
-<div
-  id="newuser-modal"
-  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
-  role="dialog"
-  tabindex="-1"
->
-  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Agregar nuevo usuario</h3>
-        <button
-          type="button"
-          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
-          aria-label="Close"
-          data-overlay="#newuser-modal"
-          (click)="resetForm()"
-        >
-          <span class="icon-[tabler--x] size-4"></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <nav
-          class="tabs tabs-bordered tabs-sm"
-          aria-label="Tabs"
-          role="tablist"
-          aria-orientation="horizontal"
-        >
+        </div>
+        <div class="modal-footer">
           <button
             type="button"
-            class="tab active-tab:tab-active active"
-            id="tabs-sm-item-1"
-            data-tab="#tabs-sm-1"
-            aria-controls="tabs-sm-1"
-            role="tab"
-            aria-selected="true"
+            class="btn btn-soft btn-error"
+            data-overlay="#newuser-modal"
+            (click)="resetForm()"
           >
-            Datos personales
+            Cancelar
           </button>
-          <button
-            type="button"
-            class="tab active-tab:tab-active"
-            id="tabs-sm-item-2"
-            data-tab="#tabs-sm-2"
-            aria-controls="tabs-sm-2"
-            role="tab"
-            aria-selected="false"
-            [disabled]="!isAdvisor()"
-          >
-            Datos de asesor
-          </button>
-        </nav>
-
-        <div class="mt-2">
-          <div id="tabs-sm-1" role="tabpanel" aria-labelledby="tabs-sm-item-1">
-            <form [formGroup]="form">
-              <div
-                class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
-              >
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['name']"
-                  formControlName="name"
-                  label="Nombre"
-                  type="text"
-                />
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['lastName']"
-                  formControlName="lastName"
-                  label="Apellido"
-                  type="text"
-                />
-              </div>
-              <div>
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['email']"
-                  formControlName="email"
-                  label="Correo electrónico"
-                  type="email"
-                />
-              </div>
-              <div
-                class="grid md:grid-cols-2 grid-cols-1 md:gap-x-4 md:gap-y-2 gap-2"
-              >
-                <div class="flex flex-col justify-between">
-                  <label class="label label-text">Seleccione el idioma</label>
-                  <div class="flex gap-6">
-                    <app-input type="checkbox" placeholder="Ingles" />
-                    <app-input type="checkbox" placeholder="Español" />
-                  </div>
-                </div>
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['phone']"
-                  formControlName="phone"
-                  label="Teléfono"
-                  type="text"
-                />
-                <app-input
-                  [isSubmitted]="isSubmited()"
-                  [control]="f['country']"
-                  formControlName="country"
-                  label="País"
-                  type="text"
-                />
-              </div>
-            </form>
-          </div>
-          <div
-            id="tabs-sm-2"
-            class="hidden"
-            role="tabpanel"
-            aria-labelledby="tabs-sm-item-2"
-          >
-            <form [formGroup]="advisorForm">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                <app-input
-                  [control]="advisorF['chatPrice']"
-                  formControlName="chatPrice"
-                  label="Precio de chat"
-                  type="money"
-                />
-                <app-input
-                  [control]="advisorF['callPrice']"
-                  formControlName="callPrice"
-                  label="Precio de llamada"
-                  type="money"
-                  [disabled]="!enabledCall()"
-                />
-                <app-input
-                  [control]="advisorF['enabledCall']"
-                  formControlName="enabledCall"
-                  label="Habilitar llamada"
-                  placeholder="Habilitar llamada"
-                  type="checkbox"
-                  (onInputChange)="onCheckChange($event)"
-                />
-              </div>
-              <app-select
-                [control]="advisorF['category']"
-                [data]="categories"
-                label="Categoría"
-                formControlName="category"
-              />
-              <app-textarea
-                [control]="advisorF['description']"
-                formControlName="description"
-                label="Descripción"
-              />
-            </form>
-          </div>
+          <button type="button" class="btn btn-primary">Guardar</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-soft btn-error"
-          data-overlay="#newuser-modal"
-          (click)="resetForm()"
-        >
-          Cancelar
-        </button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- Delete User Modal -->
-<div
-  id="delete-modal"
-  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
-  role="dialog"
-  tabindex="-1"
->
-  <div class="modal-dialog overlay-open:opacity-100">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Cambio de estado</h3>
-        <button
-          type="button"
-          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
-          aria-label="Close"
-          data-overlay="#delete-modal"
-        >
-          <span class="icon-[tabler--x] size-4"></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Esta seguro que desea
-        {{ modalUser?.isActive ? "deshabilitar" : "habilitar" }} a
-        {{ modalUser?.name }}
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-soft btn-outline btn-primary"
-          data-overlay="#delete-modal"
-        >
-          No
-        </button>
-        <button
-          type="button"
-          class="btn btn-error btn-soft"
-          data-overlay="#delete-modal"
-          (click)="delete()"
-        >
-          Si, deseo {{ modalUser?.isActive ? "deshabilitarlo" : "habilitarlo" }}
-        </button>
+  <!-- Delete User Modal -->
+  <div
+    id="delete-modal"
+    class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+    role="dialog"
+    tabindex="-1"
+  >
+    <div class="modal-dialog overlay-open:opacity-100">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Cambio de estado</h3>
+          <button
+            type="button"
+            class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+            aria-label="Close"
+            data-overlay="#delete-modal"
+          >
+            <span class="icon-[tabler--x] size-4"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Esta seguro que desea
+          {{ modalUser?.isActive ? "deshabilitar" : "habilitar" }} a
+          {{ modalUser?.name }}
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-soft btn-outline btn-primary"
+            data-overlay="#delete-modal"
+          >
+            No
+          </button>
+          <button
+            type="button"
+            class="btn btn-error btn-soft"
+            data-overlay="#delete-modal"
+            (click)="delete()"
+          >
+            Si, deseo
+            {{ modalUser?.isActive ? "deshabilitarlo" : "habilitarlo" }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>

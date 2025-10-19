@@ -7,7 +7,7 @@ import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum, StatusEnum } from '@shared/enums';
 import { AvatarComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { OPTION_DATA } from '@shared/components/select/select.component';
 import { CategoryAction } from '../categories/store/category.action';
@@ -29,6 +29,9 @@ export class AdvisorsComponent {
   advisorForm!: FormGroup;
   #fb = inject(FormBuilder);
   #advisorFb = inject(FormBuilder);
+
+  #router = inject(Router);
+  #route = inject(ActivatedRoute);
 
   isSubmited = signal(false);
   pagination: PaginationInterface = {
@@ -98,6 +101,17 @@ export class AdvisorsComponent {
       };
       this.updateStatus(user._id, _user);
     }
+  }
+
+  showDetails(user: UserInterface): void {
+    if (user.status === StatusEnum.APPROVED) {
+      this._goToDetails(user._id);
+    }
+  }
+
+  private _goToDetails(userId: string): void {
+    this.#router.navigate([RoutesEnum.User, userId], { relativeTo: this.#route });
+
   }
 
   private _loadForm(): void {

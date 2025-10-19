@@ -1,11 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ApplicationRef, Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ApplicationRef, Component, Inject, inject, OnInit, PLATFORM_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { SocketService } from '@shared/services';
 import { IStaticMethods } from 'flyonui/flyonui';
 import { first } from 'rxjs';
 import { Notyf } from 'notyf';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 declare global {
   interface Window {
@@ -15,9 +16,10 @@ declare global {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit {
   router = inject(Router);

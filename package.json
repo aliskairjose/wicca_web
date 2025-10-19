@@ -38,6 +38,7 @@
     "ng-apexcharts": "^1.8.0",
     "ngx-mask": "^20.0.3",
     "ngx-socket-io": "^4.7.0",
+    "ngx-spinner": "^18.0.0",
     "notyf": "^3.10.0",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.8.1",

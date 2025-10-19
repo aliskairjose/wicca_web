@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { inject, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
@@ -6,11 +6,13 @@ import { RoutesEnum, ToastTypeEnum } from '@shared/enums';
 import { ToastService } from '@shared/services';
 import { catchError, map, throwError } from 'rxjs';
 import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export const httpInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const router = inject(Router);
   const store = inject(Store);
   const toast = inject(ToastService);
+  const spinner = inject(NgxSpinnerService);
 
   const token: Signal<string | null> = store.selectSignal(AuthSelectors.token);
 
@@ -20,9 +22,11 @@ export const httpInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
     },
   });
 
+  spinner.show();
+
   return next(cloneRequest).pipe(
     map((event: HttpEvent<unknown>) => {
-      // if (event instanceof HttpResponse) spinner.hide();
+      if (event instanceof HttpResponse) spinner.hide();
       return event;
     }),
     catchError((error: HttpErrorResponse) => {
