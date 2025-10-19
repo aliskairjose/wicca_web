@@ -2,7 +2,7 @@ import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@an
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
-import { RoleEnum } from '@shared/enums';
+import { RoleEnum, StatusEnum } from '@shared/enums';
 import { IconComponent, AvatarComponent, CircularChartComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 import { UserInterface } from '../../users/user.interface';
@@ -28,6 +28,7 @@ const ConnStatus = {
 })
 export class AdvisorComponent {
   months = MONTHS;
+  statusEnum = StatusEnum;
   role = RoleEnum;
   user = signal<UserInterface | undefined>(undefined)
   timeAccumulatedMonthly: AccumulatedTimeInterfaceMonthInterface | undefined;

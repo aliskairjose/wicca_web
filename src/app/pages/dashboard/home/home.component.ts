@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   summaryMonthly: SummaryMonthlyStatusInterface[] = [];
   topRatedAdvisors: TopRatedInterface[] = [];
   newUsers: UserInterface[] = [];
+  nominatedAdvisors: UserInterface[] = [];
 
   ngOnInit() {
     this.loadData(this.currentYear);
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
 
   private async loadData(year: number) {
     await Promise.all([
+      firstValueFrom(this.#store.dispatch(new HomeAction.GetNominatedAdvisors)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetAccumulatedTime)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetNewRegistrations)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetTopAdvisors)),
@@ -44,6 +46,8 @@ export class HomeComponent implements OnInit {
       firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryStatus)),
       firstValueFrom(this.#store.dispatch(new HomeAction.GetSummaryMonthlyStatus(year))),
     ]);
+
+    this.nominatedAdvisors = this.#store.selectSnapshot(HomeSelectors.nominatedAdvisors);
 
     this.newUsers = this.#store.selectSnapshot(HomeSelectors.newRegistrations);
 

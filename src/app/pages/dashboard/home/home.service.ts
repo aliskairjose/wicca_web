@@ -21,6 +21,9 @@ export class HomeService {
   getNewRegistrations(): Observable<UserInterface[]> {
     return this.http.get<UserInterface[]>(AppConfig.baseUrl(Api.NewRegistrations));
   }
+  getNominatedAdvisors(): Observable<UserInterface[]> {
+    return this.http.get<UserInterface[]>(AppConfig.baseUrl(Api.NominatedAdvisors));
+  }
 
   getAccumulatedTime(): Observable<AccumulatedTimeInterface[]> {
     return this.http.get<AccumulatedTimeInterface[]>(AppConfig.baseUrl(Api.AccumulatedTime));

@@ -6,6 +6,8 @@ export class HomeSelectors {
 
   static topRatedAdvisors = createSelector([HomeSelectors.getSlice.topRatedAdvisors], (topRatedAdvisors) => topRatedAdvisors);
 
+  static nominatedAdvisors = createSelector([HomeSelectors.getSlice.nominatedAdvisors], (nominatedAdvisors) => nominatedAdvisors);
+
   static summaryUser = createSelector([HomeSelectors.getSlice.summaryUser], (summaryUser) => summaryUser);
 
   static accumulatedTime = createSelector([HomeSelectors.getSlice.accumulatedTime], (accumulatedTime) => accumulatedTime);

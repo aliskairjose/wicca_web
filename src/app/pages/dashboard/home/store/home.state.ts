@@ -11,6 +11,7 @@ import { TopRatedInterface } from "../interfaces/top-rated.interface";
 import { UserInterface } from "../../users/user.interface";
 
 export interface HomeStateModel {
+  nominatedAdvisors: UserInterface[] | [];
   topRatedAdvisors: TopRatedInterface[] | [];
   newRegistrations: UserInterface[] | [];
   summaryUser: UserSummaryInterface | undefined;
@@ -22,6 +23,7 @@ export interface HomeStateModel {
 @State<HomeStateModel>({
   name: 'home',
   defaults: {
+    nominatedAdvisors: [],
     topRatedAdvisors: [],
     accumulatedTime: [],
     newRegistrations: [],
@@ -37,6 +39,16 @@ export class HomeState {
   #requestService = inject(RequestLogsService);
   #userService = inject(UserService);
 
+
+  @Action(HomeAction.GetNominatedAdvisors)
+  getNominatedAdvisors(ctx: StateContext<HomeStateModel>) {
+    return this.#homeService
+      .getNominatedAdvisors()
+      .pipe(
+        tap(nominatedAdvisors => ctx.patchState({ nominatedAdvisors })
+        )
+      );
+  }
 
   @Action(HomeAction.GetAccumulatedTime)
   getAccumulatedTime(ctx: StateContext<HomeStateModel>) {

@@ -21,6 +21,7 @@
         <th>Usuario</th>
         <th>Email</th>
         <th>Status</th>
+        <th>Activo</th>
         <th>Rate</th>
         <th>Balance</th>
         <th>Disponible (40%)</th>
@@ -47,7 +48,6 @@
         </td>
         <td>{{ user.email }}</td>
         <td>
-          <!-- <span [appStatus]="user.isActive" class="w-full"></span> -->
           <select
             [disabled]="user.status === statusEnum.APPROVED"
             class="select select-xs max-w-sm w-auto"
@@ -60,6 +60,9 @@
             </option>
             }
           </select>
+        </td>
+        <td>
+          <span [appStatus]="user.isActive" class="w-full"></span>
         </td>
         <td>
           <div class="flex items-center gap-1">

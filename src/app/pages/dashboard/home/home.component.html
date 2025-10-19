@@ -1,8 +1,8 @@
 <main class="md:space-y-8 space-y-4">
   <ng-container [ngTemplateOutlet]="section1"></ng-container>
   <ng-container [ngTemplateOutlet]="section2"></ng-container>
+  <ng-container [ngTemplateOutlet]="section4"></ng-container>
   <ng-container [ngTemplateOutlet]="section3"></ng-container>
-  <!-- <ng-container [ngTemplateOutlet]="section4"></ng-container> -->
   <ng-container [ngTemplateOutlet]="section5"></ng-container>
 </main>
 
@@ -76,7 +76,7 @@
 </ng-template>
 
 <ng-template #section2>
-  <div class="grid md:grid-cols-2 grid-cols-1 gap-2">
+  <div class="grid md:grid-cols-2 grid-cols-1 gap-2 bg-gray-50 p-2">
     <div class="card-body">
       @if(series.length > 0) {
       <h6 class="title">Solicitudes de servicios {{ currentYear }}</h6>
@@ -84,7 +84,8 @@
       }
     </div>
     <div class="grid xl:grid-cols-2 grid-cols-1 gap-2">
-      <ng-container [ngTemplateOutlet]="topAsesors"></ng-container>
+      <!-- <ng-container [ngTemplateOutlet]="topAsesors"></ng-container> -->
+      <ng-container [ngTemplateOutlet]="nominated"></ng-container>
       <ng-container [ngTemplateOutlet]="newRegistrations"></ng-container>
     </div>
   </div>
@@ -105,8 +106,8 @@
 
 <ng-template #section4>
   <div>
-    <h6>Top 10</h6>
-    <div class="flex overflow-x-auto gap-2 relative p-2">
+    <h6>Top 10 asesores</h6>
+    <div class="flex overflow-x-auto gap-2 relative p-2 bg-gray-50 rounded-md">
       @for (item of topRatedAdvisors; track $index) {
       <div class="card sm:card-side w-72 min-h-16 ps-2 border bordered">
         <app-avatar [src]="item.avatar" size="lg" class="m-auto" />
@@ -138,6 +139,45 @@
       </div>
     </div>
     }
+  </div>
+</ng-template>
+
+<ng-template #nominated>
+  <div class="h-auto overflow-auto">
+    <div class="card grow border bordered">
+      <div class="card-body">
+        <h6 class="title">Asesores en revisión</h6>
+        <ul
+          class="divide-base-content/25 divide-y *:py-3 mt-2 divide-secondary"
+        >
+          @for (user of nominatedAdvisors; track $index) {
+          <li>
+            <a
+              class="flex items-start sm:items-center"
+              [routerLink]="['users/user', user._id]"
+            >
+              <app-avatar [src]="user.avatar" class="me-3" />
+              <div
+                class="flex grow flex-col items-start justify-between sm:flex-row"
+              >
+                <div class="user-info flex flex-col w-full">
+                  <span class="text-sm text-base-content font-medium">
+                    {{ user.name }} {{ user.lastName }}
+                  </span>
+                  <small class="text-base-content/50">
+                    {{ user.phone }}
+                  </small>
+                  <small class="text-base-content/50 self-end">
+                    {{ user.status }}
+                  </small>
+                </div>
+              </div>
+            </a>
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </ng-template>
 
@@ -180,41 +220,45 @@
 </ng-template>
 
 <ng-template #newRegistrations>
-  <div class="card grow border bordered">
-    <div class="card-body">
-      <h6 class="title">Nuevos registros</h6>
-      <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-        @for (user of newUsers; track $index) {
-        <li>
-          <a
-            class="flex items-start sm:items-center"
-            [routerLink]="['users/user', user._id]"
-          >
-            <app-avatar [src]="user.avatar" class="me-3" />
-            <div
-              class="flex grow flex-col items-start justify-between sm:flex-row"
+  <div class="h-72 overflow-auto">
+    <div class="card grow border bordered">
+      <div class="card-body">
+        <h6 class="title">Nuevos registros</h6>
+        <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+          @for (user of newUsers; track $index) {
+          <li>
+            <a
+              class="flex items-start sm:items-center"
+              [routerLink]="['users/user', user._id]"
             >
-              <div class="user-info flex flex-col">
-                <span class="text-sm text-base-content font-medium">
-                  {{ user.name }} {{ user.lastName }}
-                </span>
-                <small class="text-base-content/50">
-                  {{ user.createdAt | date }}
-                </small>
+              <app-avatar [src]="user.avatar" class="me-3" />
+              <div
+                class="flex grow flex-col items-start justify-between sm:flex-row"
+              >
+                <div class="user-info flex flex-col">
+                  <span class="text-sm text-base-content font-medium">
+                    {{ user.name }} {{ user.lastName }}
+                  </span>
+                  <small class="text-base-content/50">
+                    {{ user.createdAt | date }}
+                  </small>
+                </div>
+                <div
+                  class="action max-sm:mt-1 flex flex-col items-center gap-1"
+                >
+                  <app-badge
+                    [text]="user.role"
+                    [theme]="user.role === 'Advisor' ? 'success' : 'primary'"
+                    [outline]="true"
+                    size="sm"
+                  />
+                </div>
               </div>
-              <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
-                <app-badge
-                  [text]="user.role"
-                  [theme]="user.role === 'Advisor' ? 'success' : 'primary'"
-                  [outline]="true"
-                  size="sm"
-                />
-              </div>
-            </div>
-          </a>
-        </li>
-        }
-      </ul>
+            </a>
+          </li>
+          }
+        </ul>
+      </div>
     </div>
   </div>
 </ng-template>
