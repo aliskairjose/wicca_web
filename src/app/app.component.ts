@@ -3,10 +3,10 @@ import { ApplicationRef, Component, Inject, inject, OnInit, PLATFORM_ID, CUSTOM_
 import { RouterOutlet } from '@angular/router';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { SocketService } from '@shared/services';
-import { IStaticMethods } from 'flyonui/flyonui';
 import { first } from 'rxjs';
 import { Notyf } from 'notyf';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { IStaticMethods } from 'flyonui/flyonui';
 
 declare global {
   interface Window {
@@ -40,9 +40,10 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
-          if (typeof window != 'undefined') {
-            window.HSStaticMethods.autoInit();
-          }
+          // if (typeof window != 'undefined') {
+          //   window.HSStaticMethods.autoInit();
+          // }
+          window.HSStaticMethods.autoInit();
         }, 100);
       }
     });
