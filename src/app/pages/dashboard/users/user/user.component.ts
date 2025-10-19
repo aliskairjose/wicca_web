@@ -25,31 +25,23 @@ const ConnStatus = {
 })
 export class UserComponent implements OnInit {
   role = RoleEnum;
-  user = signal<UserInterface | undefined>(undefined)
+  user: UserInterface | undefined;
 
   #route = inject(ActivatedRoute);
   #store = inject(Store);
   users: any[] = [];
   labels = ['Aceptados', 'Rechazados'];
 
-  fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
-  statusClass = computed(() => `${ConnStatus[this.user()!.connectStatus]}`)
+  fullName = computed(() => `${this.user?.name} ${this.user?.lastName}`);
+  statusClass = computed(() => `${ConnStatus[this.user!.connectStatus]}`)
 
   async ngOnInit() {
     const { id } = await firstValueFrom(this.#route.params);
     await firstValueFrom(this.#store.dispatch(new UserAction.Get(id)));
-    this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
+    this.user = this.#store.selectSnapshot(UserSelectors.selectedUser);
   }
 
-  get requestsStatus() {
-    const rejects = this.user()?.requestLogs.filter(logs => logs.status === 'Rechazado');
-    const accepts = this.user()?.requestLogs.filter(logs => logs.status === 'Aceptado');
-    return {
-      rejects: rejects?.length,
-      accepts: accepts?.length,
-    }
-  }
   get totalEarnings() {
-    return (this.user()?.wallet?.balance ?? 0) * 0.4;
+    return (this.user?.wallet?.balance ?? 0) * 0.4;
   }
 }

@@ -56,7 +56,7 @@ export class UsersState {
             if (user.role === RoleEnum.Advisor) {
               ctx.patchState({ selectedAdvisor: user });
             }
-            if (user.role === RoleEnum.Advisor) {
+            if (user.role === RoleEnum.User) {
               ctx.patchState({ selectedUser: user });
             }
           }
