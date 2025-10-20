@@ -125,9 +125,50 @@
         </a>
       </li>
     </ul>
-    <button type="button" class="btn btn-error" (click)="logOut()">
-      Cerrar sesión
-      <span class="icon-[tabler--logout] size-5"></span>
+    <button type="button" class="btn btn-error" (click)="openModal()">
+      <span class="text-white">Cerrar sesión</span>
+      <span class="icon-[tabler--logout] size-5 text-white"></span>
     </button>
   </div>
 </aside>
+
+<div
+  id="logout-modal"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+  role="dialog"
+  tabindex="-1">
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Cierre de sesión</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="modal.close() "
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que deseas cerrar sesión?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-outline btn-primary"
+          (click)="modal.close()"
+        >
+          No
+        </button>
+        <button
+          type="button"
+          class="btn btn-error btn-soft"
+          (click)="logOut()"
+        >
+          Si, cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
