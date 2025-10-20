@@ -57,11 +57,12 @@
         {{ fullName() }}
         <p class="text-base text-secondary font-light text-center">
           {{ user.email }}
+          <br />
+          <small class="text-sm text-gray-400">{{ user.phone }}</small>
         </p>
       </div>
     </div>
-    <div class="card-body">
-      @if(user.role === role.Advisor){
+    <div class="card-body bg-gray-50">
       <div class="grid grid-cols-2">
         <ul class="list-none space-y-1.5">
           <li>
@@ -92,7 +93,6 @@
           </li>
         </ul>
       </div>
-      }
     </div>
   </div>
 </ng-template>
@@ -123,14 +123,22 @@
 <ng-template #bio>
   <div class="card">
     <div class="card-body">
-      @if(user.role === role.Advisor){
       <div>
         <div class="mt-2.5">
           <h6 class="mb-1.5 text-secondary">Acerca de mi</h6>
           <p>{{ user.advisor?.description }}</p>
         </div>
       </div>
-      }
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <div class="mt-2.5">
+          <h6 class="mb-1.5 text-secondary">Experiencia</h6>
+          <p>{{ user.advisor?.experience }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </ng-template>
