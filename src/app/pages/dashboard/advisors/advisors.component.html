@@ -353,6 +353,9 @@
       <div class="modal-header">
         <h3 class="modal-title">
           {{ modalUser.name }} {{ modalUser.lastName }}
+          <p class="text-lg text-gray-600">
+            Alias: {{ modalUser.advisor?.alias }}
+          </p>
         </h3>
         <button
           type="button"
@@ -371,6 +374,10 @@
               <p class="flex flex-row items-center gap-2">
                 <span class="icon-[tabler--phone]"></span>
                 {{ modalUser.phone }}
+              </p>
+              <p class="flex flex-row items-center gap-2">
+                <span class="icon-[tabler--map]"></span>
+                {{ modalUser.country }}
               </p>
               <p class="flex flex-row items-center gap-2">
                 <span class="icon-[tabler--mail]"></span>
@@ -413,7 +420,11 @@
           </div>
           <div>
             <p class="text-base mb-2">Video presentación</p>
-            <video [src]="modalUser.advisor?.videoIntro" controls></video>
+            <video
+              class="border-2 border-black rounded-md"
+              [src]="modalUser.advisor?.videoIntro"
+              controls
+            ></video>
           </div>
         </div>
       </div>
@@ -423,14 +434,7 @@
           class="btn btn-soft btn-outline btn-primary"
           (click)="closeModal('#nominated-modal')"
         >
-          No
-        </button>
-        <button
-          type="button"
-          class="btn btn-error btn-soft"
-          (click)="closeModal('#nominated-modal')"
-        >
-          Save
+          Cerrar
         </button>
       </div>
     </div>
