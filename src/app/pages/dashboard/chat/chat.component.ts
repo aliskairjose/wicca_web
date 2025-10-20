@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Inject, inject, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { RoomInterface } from './interfaces/room.interface';
@@ -6,7 +6,7 @@ import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { ChatActions } from './store/chat.actions';
 import { ChatSelectors } from './store/chat.selectors';
 import { firstValueFrom } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent, ChatBurbleComponent, TableContainerComponent } from '@shared/components';
 import { HSOverlay } from 'flyonui/flyonui';
@@ -32,26 +32,28 @@ export class ChatComponent {
   selectedRoom: RoomInterface | undefined;
   metadata = signal<MetadataInterface | undefined>(undefined);
 
-  constructor() {
+  constructor(
+    @Inject(DOCUMENT)
+    private document: Document
+  ) {
     this._getData();
   }
 
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
-    console.log(this.pagination)
     this.dispatch();
   }
 
   async openModal(id: string) {
     await firstValueFrom(this.#store.dispatch(new ChatActions.Get(id)));
     this.selectedRoom = this.#store.selectSnapshot(ChatSelectors.selectedRoom)!;
-    const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
+    const modal = new HSOverlay(this.document.querySelector('#scroll-inside-modal')!);
     modal.open();
   }
 
   closeModal() {
-    const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
+    const modal = new HSOverlay(this.document.querySelector('#scroll-inside-modal')!);
     modal.close();
   }
 

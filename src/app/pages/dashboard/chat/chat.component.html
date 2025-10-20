@@ -58,7 +58,7 @@
 
 <ng-template #user let-user="user">
   <span class="badge badge-outline badge-primary badge-lg">
-    <img [src]="user.avatar" alt="imagen" class="size-4.5 rounded-full" />
+    <img [src]="user?.avatar" alt="imagen" class="size-4.5 rounded-full" />
     {{ user.name }} {{ user.lastName }}
   </span>
 </ng-template>

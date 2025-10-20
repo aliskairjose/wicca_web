@@ -1,11 +1,11 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, Inject, inject, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum, StatusEnum } from '@shared/enums';
-import { AvatarComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
+import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { Router, RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
@@ -17,10 +17,13 @@ import { Helper } from '@shared/helpers';
 import { UserInterface } from '../users/user.interface';
 import { UserAction } from '../users/store/user.actions';
 import { UserSelectors } from '../users/store/user.selectors';
+import { HSOverlay } from 'flyonui/flyonui';
+
+
 @Component({
   selector: 'app-advisors',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent],
+  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent, ButtonComponent, AvatarComponent],
   templateUrl: './advisors.component.html',
   styleUrl: './advisors.component.scss'
 })
@@ -71,7 +74,7 @@ export class AdvisorsComponent {
   ];
 
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document) {
     this.getData();
   }
 
@@ -102,6 +105,60 @@ export class AdvisorsComponent {
     }
   }
 
+  onChangeTable(e: any): void {
+    this.queryParams['search'] = e.term;
+    this.pagination = e.pagination();
+    this.getData()
+  }
+
+  onCheckChange(value: any): void {
+    this.enabledCall.set(value);
+    if (value) {
+      this.advisorF['callPrice'].setValidators([Validators.required]);
+    } else {
+      this.advisorF['callPrice'].clearValidators();
+      this.advisorF['callPrice'].setValue('');
+    }
+    this.advisorF['callPrice'].updateValueAndValidity();
+  }
+
+  delete() {
+    this.changeUserStatus(this.modalUser!);
+    this.modalUser = undefined;
+  }
+
+  openModal(type: string, user?: UserInterface): void {
+    if (user) {
+      this.modalUser = { ...user };
+    }
+    setTimeout(() => {
+      const modal = new HSOverlay(this.document.querySelector(type)!);
+      modal.open();
+    }, 100);
+  }
+
+  closeModal(type: string): void {
+    const modal = new HSOverlay(this.document.querySelector(type)!);
+    modal.close();
+  }
+
+  async createUser(): Promise<void> {
+    this.isSubmited.set(true);
+    if (this.form.valid) {
+      firstValueFrom(this.#store.dispatch(new UserAction.Create(this.form.value)));
+      if (this.isAdvisor()) {
+        const newUser = this.#store.selectSnapshot(UserSelectors.newUser)!;
+        const advisorData = {
+          ...this.advisorForm.value,
+          user: newUser._id
+        };
+        await firstValueFrom(this.#store.dispatch(new UserAction.CreateAdvisorInfo(advisorData)));
+      }
+      this.resetForm();
+      this.ngOnInit();
+    }
+  }
+
   private _loadForm(): void {
     this.form = this.#fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -126,55 +183,14 @@ export class AdvisorsComponent {
     });
   }
 
-  onChangeTable(e: any): void {
-    this.queryParams['search'] = e.term;
-    this.pagination = e.pagination();
-    this.getData()
-  }
 
-  onCheckChange(value: any): void {
-    this.enabledCall.set(value);
-    if (value) {
-      this.advisorF['callPrice'].setValidators([Validators.required]);
-    } else {
-      this.advisorF['callPrice'].clearValidators();
-      this.advisorF['callPrice'].setValue('');
-    }
-    this.advisorF['callPrice'].updateValueAndValidity();
-  }
-
-  async createUser(): Promise<void> {
-    this.isSubmited.set(true);
-    if (this.form.valid) {
-      firstValueFrom(this.#store.dispatch(new UserAction.Create(this.form.value)));
-      if (this.isAdvisor()) {
-        const newUser = this.#store.selectSnapshot(UserSelectors.newUser)!;
-        const advisorData = {
-          ...this.advisorForm.value,
-          user: newUser._id
-        };
-        await firstValueFrom(this.#store.dispatch(new UserAction.CreateAdvisorInfo(advisorData)));
-      }
-      this.resetForm();
-      this.ngOnInit();
-    }
-  }
-
-  openModal(user: UserInterface) {
-    this.modalUser = user;
-  }
-
-  delete() {
-    this.changeUserStatus(this.modalUser!);
-    this.modalUser = undefined;
-  }
-
-  resetForm(): void {
+  private resetForm(): void {
     this.advisorForm.reset();
     this.form.reset();
     this.isEdit.set(false);
     this.selectedRole.set('');
     this.enabledCall.set(false);
+
   }
 
   private changeUserStatus(user: UserInterface): void {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, OnChanges } from '@angular/core';
+import { Component, inject, OnInit, signal, OnChanges, Inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { ButtonComponent, InputComponent, SwitchComponent, TableContainerComponent } from '@shared/components';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
@@ -7,7 +7,7 @@ import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { firstValueFrom } from 'rxjs';
 import { CategoryAction } from './store/category.action';
 import { CategorySelectors } from './store/category.selectors';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DOCUMENT } from '@angular/common';
 import { HSOverlay } from 'flyonui/flyonui';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StatusDirective } from '@shared/directives';
@@ -35,7 +35,7 @@ export class CategoriesComponent implements OnInit {
   isActive = true;
   id = '';
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document) {
     this.getData();
   }
 
@@ -111,17 +111,17 @@ export class CategoriesComponent implements OnInit {
   }
 
   private openModal() {
-    const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
+    const modal = new HSOverlay(this.document.querySelector('#scroll-inside-modal')!);
     modal.open();
   }
 
   private openDeleteModal() {
-    const modal = new HSOverlay(document.querySelector('#delete-modal')!);
+    const modal = new HSOverlay(this.document.querySelector('#delete-modal')!);
     modal.open();
   }
 
   closeModal() {
-    const modal = new HSOverlay(document.querySelector('#scroll-inside-modal')!);
+    const modal = new HSOverlay(this.document.querySelector('#scroll-inside-modal')!);
     modal.close();
     setTimeout(() => {
       this._loadForm()
@@ -130,7 +130,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   closeDeleteModal() {
-    const modal = new HSOverlay(document.querySelector('#delete-modal')!);
+    const modal = new HSOverlay(this.document.querySelector('#delete-modal')!);
     modal.close();
   }
 

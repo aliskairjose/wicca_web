@@ -1,6 +1,7 @@
 <div class="w-full flex justify-end mb-6">
   <app-button text="Crear categoría" [outline]="true" (clickHandler)="add()" />
 </div>
+@if(categories()){
 <app-table-container
   [metadata]="metadata()!"
   (onChange)="onChangeTable($event)"
@@ -53,6 +54,7 @@
     </tbody>
   </table>
 </app-table-container>
+}
 
 <!-- Add modal -->
 <div

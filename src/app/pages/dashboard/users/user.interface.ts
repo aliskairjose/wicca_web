@@ -46,6 +46,8 @@ export interface AdvisorInterface {
   dniImage: string;
   dniID: string;
   dniType: string;
+  videoIntro: string;
+  videoIntroID: string;
 }
 
 export interface WalletInterface {

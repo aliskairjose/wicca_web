@@ -30,7 +30,7 @@ export class AdvisorComponent {
   months = MONTHS;
   statusEnum = StatusEnum;
   role = RoleEnum;
-  user = signal<UserInterface | undefined>(undefined)
+  user: UserInterface | undefined;
   timeAccumulatedMonthly: AccumulatedTimeInterfaceMonthInterface | undefined;
   #route = inject(ActivatedRoute);
   #store = inject(Store);
@@ -39,9 +39,9 @@ export class AdvisorComponent {
   timeLabel: string[] = [];
   timeAccumulated: number[] = [];
 
-  fullName = computed(() => `${this.user()?.name} ${this.user()?.lastName}`);
+  fullName = computed(() => `${this.user?.name} ${this.user?.lastName}`);
   statusClass = computed(() => {
-    const connectStatus = this.user()?.connectStatus;
+    const connectStatus = this.user?.connectStatus;
     return connectStatus ? ConnStatus[connectStatus] ?? '' : '';
   });
 
@@ -51,8 +51,8 @@ export class AdvisorComponent {
 
 
   get requestsStatus() {
-    const rejects = this.user()?.requestLogs.filter(logs => logs.status === 'Rechazado');
-    const accepts = this.user()?.requestLogs.filter(logs => logs.status === 'Aceptado');
+    const rejects = this.user?.requestLogs.filter(logs => logs.status === 'Rechazado');
+    const accepts = this.user?.requestLogs.filter(logs => logs.status === 'Aceptado');
     return {
       rejects: rejects!.length,
       accepts: accepts!.length,
@@ -68,14 +68,14 @@ export class AdvisorComponent {
   }
 
   get totalEarnings() {
-    return (this.user()?.wallet?.balance ?? 0) * 0.4;
+    return (this.user?.wallet?.balance ?? 0) * 0.4;
   }
 
   private async _getData() {
     const params: Params = await firstValueFrom(this.#route.params);
     await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
     await firstValueFrom(this.#store.dispatch(new UserAction.GetMonthlyTimeAccumulated(params['id'])));
-    this.user.set(this.#store.selectSnapshot(UserSelectors.selectedUser));
+    this.user = this.#store.selectSnapshot(UserSelectors.selectedUser);
     this.timeAccumulatedMonthly = this.#store.selectSnapshot(UserSelectors.monthlyTimeAccumulated);
     this._timeAccumulatedFormat();
   }

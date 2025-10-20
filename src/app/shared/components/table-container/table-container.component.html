@@ -1,4 +1,4 @@
-<div class="w-full overflow-x-auto py-6 px-4 card-bordered">
+<div class="w-full py-6 px-4 card-bordered">
   @if (metadata()) {
   <div
     class="flex gap-4 md:flex-row flex-col items-center justify-between mb-6"
@@ -27,7 +27,9 @@
     </div>
   </div>
   }
-  <ng-content></ng-content>
+  <div class="overflow-x-auto">
+    <ng-content></ng-content>
+  </div>
   @if(metadata()){
   <app-pagination
     [metadata]="metadata()!"
