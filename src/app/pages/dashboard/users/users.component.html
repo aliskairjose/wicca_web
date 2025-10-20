@@ -66,10 +66,6 @@
             type="button"
             class="btn btn-square btn-error btn-outline btn-sm"
             aria-label="Icon Button Trash"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-            aria-controls="delete-modal"
-            data-overlay="#delete-modal"
             (click)="openModal(user)"
           >
             <span class="icon-[tabler--trash]"></span>
@@ -190,7 +186,7 @@
           type="button"
           class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
           aria-label="Close"
-          data-overlay="#delete-modal"
+          (click)="closeModal('#delete-modal')"
         >
           <span class="icon-[tabler--x] size-4"></span>
         </button>
@@ -204,16 +200,11 @@
         <button
           type="button"
           class="btn btn-soft btn-outline btn-primary"
-          data-overlay="#delete-modal"
+          (click)="closeModal('#delete-modal')"
         >
           No
         </button>
-        <button
-          type="button"
-          class="btn btn-error btn-soft"
-          data-overlay="#delete-modal"
-          (click)="delete()"
-        >
+        <button type="button" class="btn btn-error btn-soft" (click)="delete()">
           Si, deseo {{ modalUser?.isActive ? "deshabilitarlo" : "habilitarlo" }}
         </button>
       </div>

@@ -1,8 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, Inject, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { UserInterface } from './user.interface';
 import { UserAction } from './store/user.actions';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { UserSelectors } from './store/user.selectors';
 import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,6 +15,7 @@ import { MetadataInterface } from '@shared/interfaces/response.interface';
 import { OPTION_DATA } from '@shared/components/select/select.component';
 import { CategoryAction } from '../categories/store/category.action';
 import { Helper } from '@shared/helpers';
+import { HSOverlay } from 'flyonui/flyonui';
 
 @Component({
   selector: 'app-users',
@@ -52,7 +53,7 @@ export class UsersComponent implements OnInit {
   ];
 
 
-  constructor() {
+  constructor(@Inject(DOCUMENT) private document: Document) {
     this.getData();
   }
 
@@ -95,11 +96,21 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  closeModal(type: string) {
+    const modal = new HSOverlay(this.document.querySelector(type)!);
+    modal.close();
+  }
+
   openModal(user: UserInterface) {
     this.modalUser = user;
+    setTimeout(() => {
+      const modal = new HSOverlay(this.document.querySelector('#delete-modal')!);
+      modal.open();
+    }, 100);
   }
 
   delete() {
+    this.closeModal('#delete-modal');
     this.changeUserStatus(this.modalUser!);
     this.modalUser = undefined;
   }
