@@ -15,32 +15,32 @@
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-body">
-      <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
-    </div>
-  </div>
+  <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
 </main>
 
 <ng-template #requestLogs>
-  <div class="grid xl:grid-cols-2 grid-cols-1 md:gap-3 gap-1">
-    <div>
-      <h5>Solicitudes</h5>
-      <app-circular-chart
-        type="donut"
-        [labels]="labels"
-        [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
-      />
+  <div class="grid xl:grid-cols-2 grid-cols-1 md:gap-3 gap-8">
+    <div class="card">
+      <div class="card-body">
+        <h5>Solicitudes</h5>
+        <app-circular-chart
+          type="donut"
+          [labels]="labels"
+          [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
+        />
+      </div>
     </div>
-    <div>
-      <h5>
-        Tiempo acumulado
-        <span class="text-sm"
-          >{{ months[timeAccumulatedMonthly!.month] }}
-          {{ timeAccumulatedMonthly!.year }}</span
-        >
-      </h5>
-      <app-circular-chart [labels]="timeLabel" [series]="timeAccumulated" />
+    <div class="card">
+      <div class="card-body">
+        <h5>
+          Tiempo acumulado
+          <span class="text-sm"
+            >{{ months[timeAccumulatedMonthly!.month] }}
+            {{ timeAccumulatedMonthly!.year }}</span
+          >
+        </h5>
+        <app-circular-chart [labels]="timeLabel" [series]="timeAccumulated" />
+      </div>
     </div>
   </div>
 </ng-template>
@@ -220,7 +220,7 @@
             </div>
           </li>
           }@empty {
-          <h6 class="text-center">¡No hay comentarios!</h6>
+          <h6 class="text-center text-lg">¡No hay comentarios!</h6>
           }
         </ul>
       </div>
@@ -246,7 +246,7 @@
             }}</small>
           </li>
           }@empty {
-          <h6 class="text-center">¡Haz tu primera consulta!</h6>
+          <h6 class="text-center text-lg">¡Haz tu primera consulta!</h6>
           }
         </ul>
       </div>
