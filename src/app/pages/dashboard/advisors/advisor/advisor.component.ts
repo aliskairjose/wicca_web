@@ -75,7 +75,7 @@ export class AdvisorComponent {
     const params: Params = await firstValueFrom(this.#route.params);
     await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
     await firstValueFrom(this.#store.dispatch(new UserAction.GetMonthlyTimeAccumulated(params['id'])));
-    this.user = this.#store.selectSnapshot(UserSelectors.selectedUser);
+    this.user = this.#store.selectSnapshot(UserSelectors.selectedAdvisor);
     this.timeAccumulatedMonthly = this.#store.selectSnapshot(UserSelectors.monthlyTimeAccumulated);
     this._timeAccumulatedFormat();
   }
