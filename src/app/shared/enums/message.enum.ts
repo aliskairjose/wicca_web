@@ -7,6 +7,7 @@ export enum MessageEnum {
   Disconnected = 'Desconectado',
   Connected = 'Conectado',
   Welcome = 'Bienvenido',
+  GoodBye = 'Hasta luego',
   Successful = 'Exitoso',
   Completed = 'Completado',
   Incompleted = 'Incompleto',
