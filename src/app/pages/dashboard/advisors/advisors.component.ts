@@ -99,7 +99,8 @@ export class AdvisorsComponent {
     const status = event.target.value;
     if (status !== user.status) {
       const _user: Partial<UserInterface> = {
-        status: status
+        status: status,
+        email: user.email
       };
       this.updateStatus(user._id, _user);
     }
