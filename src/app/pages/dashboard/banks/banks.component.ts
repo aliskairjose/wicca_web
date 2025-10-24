@@ -46,13 +46,6 @@ export class BanksComponent implements OnInit {
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.fileContent = reader.result; // File content is stored here
-      };
-
-      reader.readAsText(file); // Reads the file as text
 
       formData.set('file', file);
 
