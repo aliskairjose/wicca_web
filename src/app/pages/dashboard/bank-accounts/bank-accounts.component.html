@@ -1,0 +1,49 @@
+<div class="w-full flex justify-end mb-6 gap-6">
+  <button
+    type="button"
+    class="btn btn-primary btn-outline"
+    aria-haspopup="dialog"
+    aria-expanded="false"
+    aria-controls="newuser-modal"
+    data-overlay="#newuser-modal"
+  >
+    Agregar cuenta
+    <span class="icon-[tabler--cash-banknote] size-5"></span>
+  </button>
+  <button type="button" class="btn btn-primary btn-outline">
+    Cargar SCV
+    <span class="icon-[tabler--file-type-txt] size-5"></span>
+  </button>
+</div>
+
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Banco</th>
+        <th>Tipo de cuenta</th>
+        <th># de cuenta</th>
+        <th>Asesor</th>
+      </tr>
+    </thead>
+    @if (accounts.length > 0) {
+    <tbody>
+      @for (account of accounts; track $index) {
+      <tr class="hover">
+        <td>
+          {{ account.bank.name }}
+        </td>
+        <td>
+          {{ account.type }}
+        </td>
+        <td>{{ account.number }}</td>
+        <td>{{ account.user.name }} {{ account.user.lastName }}</td>
+      </tr>
+      }
+    </tbody>
+    }
+  </table>
+</app-table-container>

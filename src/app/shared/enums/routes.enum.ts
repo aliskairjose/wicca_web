@@ -18,5 +18,6 @@ export enum RoutesEnum {
   RequestLogs = 'request-logs',
   Payments = 'payments',
   Categories = 'categories',
-  Banks = 'banks'
+  Banks = 'banks',
+  BanksAccounts = 'bank-accounts'
 }

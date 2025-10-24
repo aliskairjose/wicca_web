@@ -128,6 +128,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: RoutesEnum.BanksAccounts,
+        title: 'Listado de cuentas',
+        loadComponent: () =>
+          import('./pages/dashboard/bank-accounts/bank-accounts.component').then(
+            (m) => m.BankAccountsComponent
+          ),
+      },
+      {
         path: RoutesEnum.RequestLogs,
         title: 'Histórico de solicitudes',
         loadComponent: () =>

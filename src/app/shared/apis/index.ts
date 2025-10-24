@@ -19,6 +19,7 @@ export enum Api {
   Payments = 'payments',
   Rooms = 'chat/rooms',
   Banks = 'bank',
+  BanksAccounts = 'bank-account',
   BankMasiveUpload = 'bank/masive-upload',
   Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards',

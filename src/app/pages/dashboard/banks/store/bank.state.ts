@@ -23,7 +23,7 @@ export class BankState {
   @Action(BankActions.List)
   bankList(
     ctx: StateContext<BankStateModel>,
-    { payload, pagination }: BankActions.List,) {
+    { payload, pagination }: BankActions.List) {
     payload ??= {};
     return this.#service
       .banks(payload, pagination)
