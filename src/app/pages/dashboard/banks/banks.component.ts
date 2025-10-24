@@ -39,7 +39,7 @@ export class BanksComponent implements OnInit {
     this.dispatch();
   }
 
-  onFileSelected(event: Event): void {
+  async onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const formData = new FormData();
 
@@ -56,8 +56,8 @@ export class BanksComponent implements OnInit {
 
       formData.set('file', file);
 
-      this.#store.dispatch(new BankActions.PostFile(formData));
-      this._getData();
+      await firstValueFrom(this.#store.dispatch(new BankActions.PostFile(formData)));
+      await this.dispatch();
     }
   }
 
