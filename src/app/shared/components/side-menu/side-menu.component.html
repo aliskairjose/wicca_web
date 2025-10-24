@@ -124,6 +124,17 @@
           Pagos
         </a>
       </li>
+      <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink="banks"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--building-bank] size-6"></span>
+          Bancos
+        </a>
+      </li>
     </ul>
     <button type="button" class="btn btn-error" (click)="openModal()">
       <span class="text-white">Cerrar sesión</span>
@@ -136,7 +147,8 @@
   id="logout-modal"
   class="overlay modal overlay-open:opacity-100 hidden modal-middle"
   role="dialog"
-  tabindex="-1">
+  tabindex="-1"
+>
   <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -145,7 +157,7 @@
           type="button"
           class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
           aria-label="Close"
-          (click)="modal.close() "
+          (click)="modal.close()"
         >
           <span class="icon-[tabler--x] size-4"></span>
         </button>
@@ -161,11 +173,7 @@
         >
           No
         </button>
-        <button
-          type="button"
-          class="btn btn-error btn-soft"
-          (click)="logOut()"
-        >
+        <button type="button" class="btn btn-error btn-soft" (click)="logOut()">
           Si, cerrar sesión
         </button>
       </div>

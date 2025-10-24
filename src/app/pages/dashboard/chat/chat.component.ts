@@ -59,9 +59,13 @@ export class ChatComponent {
 
   private async _getData() {
     this.#store.selectOnce(ChatSelectors.roomList).subscribe((data) => {
-      (!data) && this.dispatch();
-      this.rooms = data!.results;
-      this.metadata.set(data!.metadata);
+      if (!data) {
+        this.dispatch();
+      } else {
+        this.rooms = data!.results;
+        this.metadata.set(data!.metadata);
+
+      }
     });
   }
 

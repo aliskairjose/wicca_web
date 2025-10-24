@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { authGuard } from '@shared/guards';
 import { AppConfig } from '@shared/classes/app.config';
+import { BanksComponent } from './pages/dashboard/banks/banks.component';
 
 export const routes: Routes = [
   {
@@ -116,6 +117,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/dashboard/chat/chat.component').then(
             (m) => m.ChatComponent
+          ),
+      },
+      {
+        path: RoutesEnum.Banks,
+        title: 'Listado de bancos',
+        loadComponent: () =>
+          import('./pages/dashboard/banks/banks.component').then(
+            (m) => m.BanksComponent
           ),
       },
       {

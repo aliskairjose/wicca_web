@@ -18,6 +18,8 @@ export enum Api {
   UserSummary = 'dashboard/users/summary',
   Payments = 'payments',
   Rooms = 'chat/rooms',
+  Banks = 'bank',
+  BankMasiveUpload = 'bank/masive-upload',
   Messages = 'chat/messages',
   UsersTotals = 'users/dashboard-totals-cards',
   RequestLogs = 'request-logs/group-by/asesor',

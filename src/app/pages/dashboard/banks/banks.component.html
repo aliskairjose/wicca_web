@@ -1,0 +1,56 @@
+<!-- <div class="w-full flex justify-end mb-6">
+  <button type="button" class="btn btn-primary btn-outline">
+    Cargar SCV
+    <span class="icon-[tabler--file-type-txt] size-5"></span>
+  </button>
+</div>
+<input type="file" (change)="onFileSelected($event)" /> -->
+<div class="w-full flex justify-end mb-6">
+  <!-- <button (click)="fileInput.click()">Choose File</button> -->
+  <button
+    type="button"
+    class="btn btn-primary btn-outline"
+    (click)="fileInput.click()"
+  >
+    Cargar SCV
+    <span class="icon-[tabler--file-type-txt] size-5"></span>
+  </button>
+  <input
+    #fileInput
+    type="file"
+    style="display: none"
+    (change)="onFileSelected($event)"
+  />
+  <!-- <button (click)="onUpload()">Upload</button> -->
+</div>
+<app-table-container
+  [metadata]="metadata()!"
+  (onChange)="onChangeTable($event)"
+>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>País</th>
+        <!-- <th>IsActive</th> -->
+        <th></th>
+      </tr>
+    </thead>
+    @if(banks.length > 0) {
+    <tbody>
+      @for (bank of banks; track $index) {
+      <tr class="hover">
+        <td>
+          {{ bank.name }}
+        </td>
+        <td>
+          {{ bank.country }}
+        </td>
+        <!-- <td>{{ bank.isActive }}</td> -->
+        <td></td>
+      </tr>
+      }
+    </tbody>
+    }
+  </table>
+</app-table-container>
