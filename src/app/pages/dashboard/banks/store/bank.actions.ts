@@ -10,6 +10,13 @@ export namespace BankActions {
       readonly pagination: PaginationInterface,
     ) { }
   }
+  export class ListFull {
+    static readonly type = `${ACTION_SCOPE} List Full Bank`;
+    constructor(
+      readonly payload: ParamsInterface,
+      readonly pagination: PaginationInterface,
+    ) { }
+  }
 
   export class Get {
     static readonly type = `${ACTION_SCOPE} Get bank`;

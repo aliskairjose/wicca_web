@@ -8,4 +8,8 @@ export class BankSelectors {
     [BankSelectors.getSlices.banks],
     (banks) => banks
   )
+  static listFull = createSelector(
+    [BankSelectors.getSlices.banksFull],
+    (fullList) => fullList
+  )
 }

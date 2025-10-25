@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginationInterface, ParamsInterface, ResponseInterface } from '@shared/interfaces';
 import { Observable } from 'rxjs';
-import { BankAccountInterface } from '../bank-accounts/interfaces/bank-accounts.interface';
+import { BankAccountInterface } from './interfaces/bank-accounts.interface';
 import { AppConfig } from '@shared/classes/app.config';
 import { Api } from '@shared/apis';
 
@@ -22,5 +22,9 @@ export class BankAccountService {
     Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
     return this.http.get<ResponseInterface<BankAccountInterface>>(AppConfig.baseUrl(Api.BanksAccounts), { params });
 
+  }
+
+  masiveUpload(data: FormData): Observable<any> {
+    return this.http.post(AppConfig.baseUrl(Api.BankAccountMasiveUpload), data);
   }
 }

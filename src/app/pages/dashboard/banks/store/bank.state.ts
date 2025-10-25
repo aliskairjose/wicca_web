@@ -8,12 +8,14 @@ import { tap } from "rxjs";
 
 export interface BankStateModel {
   banks: ResponseInterface<BankInterface> | undefined;
+  banksFull: BankInterface[] | []
 }
 
 @State<BankStateModel>({
   name: 'banks',
   defaults: {
     banks: undefined,
+    banksFull: []
   }
 })
 @Injectable()
@@ -30,6 +32,21 @@ export class BankState {
       .pipe(
         tap(
           (banks: ResponseInterface<BankInterface>) => ctx.patchState({ banks })
+        )
+      );
+  }
+
+  @Action(BankActions.ListFull)
+  bankListFull(
+    ctx: StateContext<BankStateModel>,
+    { payload, pagination }: BankActions.ListFull) {
+    console.log('bankListFull Action');
+    payload ??= {};
+    return this.#service
+      .banks(payload, pagination)
+      .pipe(
+        tap(
+          (res: ResponseInterface<BankInterface>) => ctx.patchState({ banksFull: res.results })
         )
       );
   }

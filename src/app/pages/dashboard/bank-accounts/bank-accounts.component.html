@@ -4,8 +4,7 @@
     class="btn btn-primary btn-outline"
     aria-haspopup="dialog"
     aria-expanded="false"
-    aria-controls="newuser-modal"
-    data-overlay="#newuser-modal"
+    (click)="openModal()"
   >
     Agregar cuenta
     <span class="icon-[tabler--cash-banknote] size-5"></span>
@@ -47,3 +46,82 @@
     }
   </table>
 </app-table-container>
+
+<div
+  id="account-modal"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar cuenta bancaria</h5>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="w-full space-y-3 overflow-y-auto pb-3">
+            <div>
+              <label class="label label-text" for=""
+                >Seleccione banco {{ banks.length }}</label
+              >
+              <select
+                title="select"
+                data-select='{
+                "placeholder": "Seleccione su banco",
+                "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
+                "toggleClasses": "advance-select-toggle",
+                "hasSearch": true,
+                "dropdownScope": "window",
+                "dropdownClasses": "advance-select-menu max-h-52 pt-0 border border-gray-300 vertical-scrollbar rounded-scrollbar z-[80] w-full",
+                "optionClasses": "advance-select-option selected:active",
+                "optionTemplate": "<div class=\"flex justify-between items-center w-full\"><span data-title></span><span class=\"icon-[tabler--check] flex-shrink-0 size-4 text-primary hidden selected:block \"></span></div>",
+                "extraMarkup": "<span class=\"icon-[tabler--caret-up-down] flex-shrink-0 size-4 text-base-content absolute top-1/2 end-3 -translate-y-1/2 \"></span>"
+                }'
+                class="hidden"
+              >
+                <option value="">Seleccione</option>
+                @for (bank of banks; track $index) {
+                <option [value]="bank.name">{{ bank.name }}</option>
+
+                }
+              </select>
+            </div>
+          </div>
+          <app-input
+            [isSubmitted]="isSubmited()"
+            [control]="f['type']"
+            formControlName="type"
+            label="Tipo de cuenta"
+            type="text"
+          />
+          <app-input
+            [isSubmitted]="isSubmited()"
+            [control]="f['number']"
+            formControlName="number"
+            label="Número de cuenta"
+            type="text"
+          />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-error"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

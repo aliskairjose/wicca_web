@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
           if (typeof window != 'undefined') {
             window.HSStaticMethods.autoInit();
           }
-          // window.HSStaticMethods.autoInit();
         }, 100);
       }
     });

@@ -2,7 +2,7 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { ResponseInterface } from '../../../../shared/interfaces/response.interface';
 import { BankAccountInterface } from '../interfaces/bank-accounts.interface';
 import { inject, Injectable } from '@angular/core';
-import { BankAccountService } from '../../bankAccounts/bank-account.service';
+import { BankAccountService } from '../bank-account.service';
 import { BankAccountActions } from './bank-accounts.actions';
 import { tap } from 'rxjs';
 

@@ -18,6 +18,11 @@ export namespace BankAccountActions {
     constructor(readonly id: string) { }
   }
 
+  export class PostFile {
+    static readonly type = `${ACTION_SCOPE} Post file`;
+    constructor(readonly payload: FormData) { }
+  }
+
   export class Post {
     static readonly type = `${ACTION_SCOPE} Post Bank Account`;
     constructor(readonly payload: Omit<BankAccountInterface, '_id'>) { }

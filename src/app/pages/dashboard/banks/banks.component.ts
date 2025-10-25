@@ -26,8 +26,6 @@ export class BanksComponent implements OnInit {
 
   banks: BankInterface[] = [];
   metadata = signal<MetadataInterface | undefined>(undefined);
-  fileContent: string | ArrayBuffer | null = '';
-
 
   ngOnInit(): void {
     this._getData();

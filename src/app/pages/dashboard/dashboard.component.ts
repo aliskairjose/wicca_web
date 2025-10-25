@@ -1,14 +1,14 @@
-import { Component, ElementRef, inject, Renderer2, ViewChild } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, inject, } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { ButtonComponent, DashbarComponent } from '@shared/components';
-import { FooterComponent } from '@shared/components/footer/footer.component';
+import { DashbarComponent } from '@shared/components';
 import { MENU } from '@shared/constansts/menu.constant';
 import { AuthActions } from '../auth/store/auth.actions';
 import { SocketService, ToastService } from '@shared/services';
 import { AppConfig } from '@shared/classes/app.config';
 import { DashboardFooterComponent } from "@shared/components/dashboard-footer/dashboard-footer.component";
 import { SideMenuComponent } from '@shared/components/side-menu/side-menu.component';
+import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +20,11 @@ import { SideMenuComponent } from '@shared/components/side-menu/side-menu.compon
 export class DashboardComponent {
 
   appName = AppConfig.APP_NAME;
+  pagination: PaginationInterface = {
+    page: 1,
+    limit: 0
+  };
+  queryParams: ParamsInterface = {};
   menu = MENU;
   #store = inject(Store);
   #router = inject(Router);
