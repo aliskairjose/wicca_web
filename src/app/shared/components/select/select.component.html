@@ -10,7 +10,7 @@
     [class.is-valid]="control().valid && control().dirty"
     (change)="onValueChange($event.target)"
   >
-    <!-- <option value="">{{ placeholder() }}</option> -->
+    <option value="">Seleccione</option>
     @for (item of data(); track $index) {
     <option
       [value]="item.val"

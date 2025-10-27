@@ -28,7 +28,10 @@ export class BanksComponent implements OnInit {
   metadata = signal<MetadataInterface | undefined>(undefined);
 
   ngOnInit(): void {
-    this._getData();
+    const res = this.#store.selectSnapshot(BankSelectors.list);
+    (res)
+      ? this.setData(res)
+      : this.dispatch();
   }
 
   onChangeTable(e: any): void {
@@ -52,18 +55,15 @@ export class BanksComponent implements OnInit {
     }
   }
 
-  private _getData(): void {
-    this.#store.selectOnce(BankSelectors.list).subscribe(data => {
-      if (!data) { this.dispatch() } else {
-        this.banks = data!.results;
-        this.metadata.set(data!.metadata);
-      };
-
-    });
+  setData(res: any): void {
+    this.banks = res!.results;
+    this.metadata.set(res!.metadata);
   }
 
-  private async dispatch() {
-    await firstValueFrom(this.#store.dispatch(new BankActions.List(this.queryParams, this.pagination)));
-    this._getData();
+  private dispatch() {
+    this.#store.dispatch(new BankActions.List(this.queryParams, this.pagination)).subscribe(() => {
+      const res = this.#store.selectSnapshot(BankSelectors.list);
+      this.setData(res);
+    });
   }
 }

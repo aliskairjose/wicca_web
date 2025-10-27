@@ -6,5 +6,5 @@ export interface BankAccountInterface {
   type: string;
   number: string;
   bank: BankInterface;
-  user: UserInterface;
+  user: Pick<UserInterface, "name" | "lastName" | "avatar">;
 }

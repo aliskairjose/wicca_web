@@ -8,6 +8,7 @@ import { SocketService, ToastService } from '@shared/services';
 import { AppConfig } from '@shared/classes/app.config';
 import { DashboardFooterComponent } from "@shared/components/dashboard-footer/dashboard-footer.component";
 import { SideMenuComponent } from '@shared/components/side-menu/side-menu.component';
+import { BankActions } from './banks/store/bank.actions';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 
 @Component({
@@ -30,6 +31,11 @@ export class DashboardComponent {
   #router = inject(Router);
   #notify = inject(ToastService)
   #socketService = inject(SocketService);
+
+
+  // constructor() {
+  //   this.#store.dispatch(new BankActions.ListFull(this.queryParams, this.pagination));
+  // }
 
   signout(): void {
     this.#store.dispatch(new AuthActions.Logout()).subscribe(() => {

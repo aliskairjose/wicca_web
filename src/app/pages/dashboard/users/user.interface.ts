@@ -2,6 +2,7 @@ import { RoleEnum, StatusEnum } from '@shared/enums';
 import { ReviewInterface } from '@shared/interfaces';
 import { ConnectStatusType } from '@shared/types';
 import { RoomInterface } from '../chat/interfaces/room.interface';
+import { BankAccountInterface } from '../bank-accounts/interfaces/bank-accounts.interface';
 
 export interface UserInterface {
   _id: string;
@@ -27,7 +28,8 @@ export interface UserInterface {
   reviews?: ReviewInterface[];
   rate?: RateInterface;
   advisor?: AdvisorInterface;
-  requestLogs: RequestLogs[]
+  requestLogs: RequestLogs[];
+  bankAccount?: BankAccountInterface;
 }
 
 interface RequestLogs {

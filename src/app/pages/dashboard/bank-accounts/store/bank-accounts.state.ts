@@ -36,4 +36,9 @@ export class BankAccountState {
       );
   }
 
+  @Action(BankAccountActions.Post)
+  create(ctx: StateContext<BankAccountStateModel>,
+    { payload, }: BankAccountActions.Post) {
+    return this.#service.create(payload);
+  }
 }

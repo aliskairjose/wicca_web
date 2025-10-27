@@ -27,4 +27,8 @@ export class BankAccountService {
   masiveUpload(data: FormData): Observable<any> {
     return this.http.post(AppConfig.baseUrl(Api.BankAccountMasiveUpload), data);
   }
+
+  create(body: Omit<BankAccountInterface, '_id'>): Observable<BankAccountInterface> {
+    return this.http.post<BankAccountInterface>(AppConfig.baseUrl(Api.BanksAccounts), body);
+  }
 }

@@ -2,27 +2,32 @@ import { Component, Inject, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { BankAccountInterface } from './interfaces/bank-accounts.interface';
-import { MetadataInterface } from '@shared/interfaces/response.interface';
+import { MetadataInterface, ResponseInterface } from '@shared/interfaces/response.interface';
 import { BankAccountSelectors } from './store/bank-accounts.selectors';
 import { BankAccountActions } from './store/bank-accounts.actions';
 import { firstValueFrom } from 'rxjs';
-import { InputComponent, TableContainerComponent } from '@shared/components';
+import { InputComponent, SelectComponent, TableContainerComponent } from '@shared/components';
 import { HSOverlay } from 'flyonui/flyonui';
 import { DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BankInterface } from '../banks/interfaces/bank.interface';
 import { BankSelectors } from '../banks/store/bank.selctors';
 import { BankActions } from '../banks/store/bank.actions';
+import { UserInterface } from '../users/user.interface';
+import { UserService } from '../users/services/user.service';
+import { RoleEnum } from '@shared/enums';
+import { OPTION_DATA } from '@shared/components/select/select.component';
 
 @Component({
   selector: 'app-bank-accounts',
   standalone: true,
-  imports: [TableContainerComponent, ReactiveFormsModule, InputComponent],
+  imports: [TableContainerComponent, ReactiveFormsModule, InputComponent, SelectComponent],
   templateUrl: './bank-accounts.component.html',
   styleUrl: './bank-accounts.component.scss'
 })
 export class BankAccountsComponent implements OnInit {
   #store = inject(Store);
+  #userService = inject(UserService);
+
   #fb = inject(FormBuilder);
   form!: FormGroup;
   pagination: PaginationInterface = {
@@ -32,14 +37,26 @@ export class BankAccountsComponent implements OnInit {
   queryParams: ParamsInterface = {};
 
   banks = this.#store.selectSnapshot(BankSelectors.listFull);
+  snapShot: ResponseInterface<BankAccountInterface> | undefined = this.#store.selectSnapshot(BankAccountSelectors.list);
   accounts: BankAccountInterface[] = [];
   metadata = signal<MetadataInterface | undefined>(undefined);
   isSubmited = signal(false);
-
+  advisors: OPTION_DATA[] = [];
+  accountType: OPTION_DATA[] = [
+    { val: 'Ahorro', title: 'Ahorro' },
+    { val: 'Corriente', title: 'Corriente' },
+  ]
 
   constructor(
     @Inject(DOCUMENT) private document: Document) {
-    (this.banks.length === 0) && this._refreshBankList();
+    if (this.banks.length === 0) {
+      this._refreshBankList();
+    }
+    (this.snapShot)
+      ? this._setData()
+      : this._dispatch();
+
+    this._loadUsers()
   }
 
   get f() {
@@ -47,15 +64,13 @@ export class BankAccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.loadForm();
-    this._getData();
   }
 
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();
-    this.dispatch();
+    this._dispatch();
   }
 
   openModal(): void {
@@ -68,6 +83,17 @@ export class BankAccountsComponent implements OnInit {
     modal.close();
   }
 
+  onSubmit(): void {
+    this.closeModal();
+    this.isSubmited.set(true);
+    this.#store.dispatch(new BankAccountActions.Post(this.form.value)).subscribe(() => this._dispatch());
+    this._loadUsers();
+  }
+
+  onBankSelect({ value }: any): void {
+    this.form.patchValue({ bank: value });
+  }
+
   async onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const formData = new FormData();
@@ -78,9 +104,33 @@ export class BankAccountsComponent implements OnInit {
 
       formData.set('file', file);
 
-      await firstValueFrom(this.#store.dispatch(new BankAccountActions.PostFile(formData)));
-      await this.dispatch();
+      this.#store.dispatch(new BankAccountActions.PostFile(formData)).subscribe(() => this._dispatch());
+
     }
+  }
+
+  private _loadUsers(): void {
+    this.advisors = [];
+    const query = { role: RoleEnum.Advisor, isActive: true, bankAccount: false };
+    const pagination = { limit: 0, page: 1 };
+
+    this.#userService.list(query, pagination).subscribe(res => {
+      res.results.forEach((user: UserInterface) => {
+        this.advisors.push({ val: user._id, title: `${user.name} ${user.lastName}` });
+      })
+    });
+  }
+
+  private _setData(): void {
+    this.accounts = this.snapShot?.results!;
+    this.metadata.set(this.snapShot?.metadata);
+  }
+
+  private _dispatch(): void {
+    this.#store.dispatch(new BankAccountActions.List(this.queryParams, this.pagination)).subscribe(() => {
+      this.snapShot = this.#store.selectSnapshot(BankAccountSelectors.list);
+      this._setData();
+    });
   }
 
   private _refreshBankList(): void {
@@ -94,22 +144,7 @@ export class BankAccountsComponent implements OnInit {
       type: ['', [Validators.required]],
       number: ['', [Validators.required]],
       bank: ['', [Validators.required]],
+      user: ['', [Validators.required]]
     });
   }
-
-  private _getData(): void {
-    this.#store.selectOnce(BankAccountSelectors.list).subscribe(data => {
-      if (!data) { this.dispatch() } else {
-        this.accounts = data!.results;
-        this.metadata.set(data!.metadata);
-      };
-
-    });
-  }
-
-  private async dispatch() {
-    await firstValueFrom(this.#store.dispatch(new BankAccountActions.List(this.queryParams, this.pagination)));
-    this._getData();
-  }
-
 }
