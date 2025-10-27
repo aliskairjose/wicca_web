@@ -29,7 +29,6 @@
         <th>Asesor</th>
       </tr>
     </thead>
-    @if (accounts.length > 0) {
     <tbody>
       @for (account of accounts; track $index) {
       <tr class="hover">
@@ -56,7 +55,6 @@
       </tr>
       }
     </tbody>
-    }
   </table>
 </app-table-container>
 
