@@ -24,7 +24,4 @@ export class BanksService {
 
   }
 
-  masiveUpload(data: FormData): Observable<any> {
-    return this.http.post(AppConfig.baseUrl(Api.BankMasiveUpload), data);
-  }
 }

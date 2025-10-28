@@ -18,6 +18,7 @@ export enum Api {
   UserSummary = 'dashboard/users/summary',
   Payments = 'payments',
   Rooms = 'chat/rooms',
+  CategoryMasiveUpload = 'categories/masive-upload',
   Banks = 'bank',
   BanksAccounts = 'bank-account',
   BankAccountMasiveUpload = 'bank-account/masive-upload',

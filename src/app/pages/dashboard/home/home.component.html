@@ -78,13 +78,10 @@
 <ng-template #section2>
   <div class="grid md:grid-cols-2 grid-cols-1 gap-2 bg-gray-50 p-2">
     <div class="card-body">
-      @if(series.length > 0) {
       <h6 class="title">Solicitudes de servicios {{ currentYear }}</h6>
       <app-circular-chart [series]="series" [labels]="labels" />
-      }
     </div>
     <div class="grid xl:grid-cols-2 grid-cols-1 gap-2">
-      <!-- <ng-container [ngTemplateOutlet]="topAsesors"></ng-container> -->
       <ng-container [ngTemplateOutlet]="nominated"></ng-container>
       <ng-container [ngTemplateOutlet]="newRegistrations"></ng-container>
     </div>
@@ -93,14 +90,12 @@
 
 <ng-template #section3>
   <div class="xl:flex xl:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
-    @if (summaryMonthly.length > 0) {
     <div class="card xl:w-full border bordered">
       <div class="card-body">
         <h6 class="title">Resumen de solicitudes {{ currentYear }}</h6>
         <app-column-chart [series]="summaryMonthly" title="solicitudes" />
       </div>
     </div>
-    }
   </div>
 </ng-template>
 
@@ -131,14 +126,12 @@
 
 <ng-template #section5>
   <div class="xl:flex xl:gap-x-4 gap-x-2 grid grid-cols-1 gap-y-2">
-    @if (accumulatedTime.length > 0) {
     <div class="card xl:w-full border bordered">
       <div class="card-body">
         <h6 class="title">Tiempo acumulado {{ currentYear }}</h6>
         <app-column-chart [series]="accumulatedTime" title="segundos" />
       </div>
     </div>
-    }
   </div>
 </ng-template>
 

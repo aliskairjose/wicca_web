@@ -1,4 +1,18 @@
-<div class="w-full flex justify-end mb-6">
+<div class="w-full flex justify-end mb-6 gap-6">
+  <button
+    type="button"
+    class="btn btn-primary btn-outline"
+    (click)="fileInput.click()"
+  >
+    Cargar SCV
+    <span class="icon-[tabler--file-type-txt] size-5"></span>
+  </button>
+  <input
+    #fileInput
+    type="file"
+    style="display: none"
+    (change)="onFileSelected($event)"
+  />
   <app-button text="Crear categoría" [outline]="true" (clickHandler)="add()" />
 </div>
 @if(categories()){

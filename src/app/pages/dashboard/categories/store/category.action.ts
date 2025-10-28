@@ -32,4 +32,8 @@ export namespace CategoryAction {
     static readonly type = `${ACTION_SCOPE} Delete category`;
     constructor(readonly id: string) { }
   }
+  export class PostFile {
+    static readonly type = `${ACTION_SCOPE} Post file`;
+    constructor(readonly payload: FormData) { }
+  }
 }

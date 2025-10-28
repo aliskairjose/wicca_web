@@ -5,6 +5,8 @@ import { inject, Injectable } from "@angular/core";
 import { CategoryAction } from "./category.action";
 import { tap } from "rxjs";
 import { CategoriesService } from "../categories.service";
+import { CommonService } from "@shared/services/common.service";
+import { Api } from "@shared/apis";
 
 export interface CategoryStateModel {
   categories: ResponseInterface<CategoryInterface> | undefined;
@@ -21,6 +23,7 @@ export interface CategoryStateModel {
 @Injectable()
 export class CategoryState {
   #service = inject(CategoriesService);
+  #commonService = inject(CommonService);
 
   @Action(CategoryAction.Get)
   get(ctx: StateContext<CategoryStateModel>, { id }: CategoryAction.Get) {
@@ -77,5 +80,10 @@ export class CategoryState {
   delete(ctx: StateContext<CategoryStateModel>, { id }: CategoryAction.Delete) {
     let state = ctx.getState();
     return this.#service.delete(id);
+  }
+
+  @Action(CategoryAction.PostFile)
+  masiveUpload(ctx: StateContext<CategoryStateModel>, { payload }: CategoryAction.PostFile) {
+    return this.#commonService.masiveUpload(payload, Api.CategoryMasiveUpload);
   }
 }

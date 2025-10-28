@@ -47,6 +47,21 @@ export class CategoriesComponent implements OnInit {
     return this.form.controls;
   }
 
+  async onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const formData = new FormData();
+
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      formData.set('file', file);
+
+      await firstValueFrom(this.#store.dispatch(new CategoryAction.PostFile(formData)));
+      await this.dispatch();
+    }
+  }
+
   onChangeTable(e: any): void {
     this.queryParams['search'] = e.term;
     this.pagination = e.pagination();

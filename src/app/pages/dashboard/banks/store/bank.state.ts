@@ -5,6 +5,8 @@ import { inject, Injectable } from "@angular/core";
 import { BanksService } from "../banks.service";
 import { BankActions } from "./bank.actions";
 import { tap } from "rxjs";
+import { CommonService } from "@shared/services/common.service";
+import { Api } from "@shared/apis";
 
 export interface BankStateModel {
   banks: ResponseInterface<BankInterface> | undefined;
@@ -21,6 +23,7 @@ export interface BankStateModel {
 @Injectable()
 export class BankState {
   #service = inject(BanksService);
+  #commonService = inject(CommonService);
 
   @Action(BankActions.List)
   bankList(
@@ -54,6 +57,6 @@ export class BankState {
 
   @Action(BankActions.PostFile)
   masiveUpload(ctx: StateContext<BankStateModel>, { payload }: BankActions.PostFile) {
-    return this.#service.masiveUpload(payload);
+    return this.#commonService.masiveUpload(payload, Api.BankMasiveUpload);
   }
 }
