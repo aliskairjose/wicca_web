@@ -1,7 +1,7 @@
 <div class="w-full flex justify-end mb-6">
   <button
     type="button"
-    class="btn btn-primary btn-outline"
+    class="btn btn-primary btn-soft"
     (click)="fileInput.click()"
   >
     Cargar SCV
@@ -10,10 +10,10 @@
   <input
     #fileInput
     type="file"
-    style="display: none"
+    class="hidden"
+    accept=".csv"
     (change)="onFileSelected($event)"
   />
-  <!-- <button (click)="onUpload()">Upload</button> -->
 </div>
 <app-table-container
   [metadata]="metadata()!"

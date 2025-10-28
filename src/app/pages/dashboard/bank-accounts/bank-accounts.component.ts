@@ -6,7 +6,7 @@ import { MetadataInterface, ResponseInterface } from '@shared/interfaces/respons
 import { BankAccountSelectors } from './store/bank-accounts.selectors';
 import { BankAccountActions } from './store/bank-accounts.actions';
 import { firstValueFrom } from 'rxjs';
-import { InputComponent, SelectComponent, TableContainerComponent } from '@shared/components';
+import { ButtonComponent, InputComponent, SelectComponent, TableContainerComponent } from '@shared/components';
 import { HSOverlay } from 'flyonui/flyonui';
 import { DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,7 +20,7 @@ import { OPTION_DATA } from '@shared/components/select/select.component';
 @Component({
   selector: 'app-bank-accounts',
   standalone: true,
-  imports: [TableContainerComponent, ReactiveFormsModule, InputComponent, SelectComponent],
+  imports: [TableContainerComponent, ReactiveFormsModule, InputComponent, SelectComponent, ButtonComponent],
   templateUrl: './bank-accounts.component.html',
   styleUrl: './bank-accounts.component.scss'
 })

@@ -1,7 +1,13 @@
 <div class="w-full flex justify-end mb-6 gap-6">
+  <app-button
+    text="Crear categoría"
+    [outline]="false"
+    (clickHandler)="add()"
+    [theme]="'primary'"
+  />
   <button
     type="button"
-    class="btn btn-primary btn-outline"
+    class="btn btn-primary btn-soft"
     (click)="fileInput.click()"
   >
     Cargar SCV
@@ -10,10 +16,10 @@
   <input
     #fileInput
     type="file"
-    style="display: none"
+    accept=".csv"
+    class="hidden"
     (change)="onFileSelected($event)"
   />
-  <app-button text="Crear categoría" [outline]="true" (clickHandler)="add()" />
 </div>
 @if(categories()){
 <app-table-container
@@ -114,16 +120,12 @@
       <div class="modal-footer pt-2">
         <button
           type="button"
-          class="btn btn-outline btn-error"
+          class="btn btn-soft btn-error"
           (click)="closeModal()"
         >
           Cancelar
         </button>
-        <button
-          type="button"
-          class="btn btn-soft btn-primary"
-          (click)="onSubmit()"
-        >
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">
           {{ isEdit ? "Actualizar" : "Crear" }}
         </button>
       </div>

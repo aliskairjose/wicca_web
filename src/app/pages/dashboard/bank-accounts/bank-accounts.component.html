@@ -1,15 +1,11 @@
 <div class="w-full flex justify-end mb-6 gap-6">
-  <button
-    type="button"
-    class="btn btn-primary btn-outline"
-    aria-haspopup="dialog"
-    aria-expanded="false"
-    (click)="openModal()"
-  >
-    Agregar cuenta
-    <span class="icon-[tabler--cash-banknote] size-5"></span>
-  </button>
-  <button type="button" class="btn btn-primary btn-outline">
+  <app-button
+    text="Crear cuenta"
+    [outline]="false"
+    (clickHandler)="openModal()"
+    [theme]="'primary'"
+  />
+  <button type="button" class="btn btn-primary btn-soft">
     Cargar SCV
     <span class="icon-[tabler--file-type-txt] size-5"></span>
   </button>
@@ -60,7 +56,7 @@
 
 <div
   id="account-modal"
-  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle --prevent-on-load-init [--overlay-backdrop:static]"
   role="dialog"
   tabindex="-1"
 >
