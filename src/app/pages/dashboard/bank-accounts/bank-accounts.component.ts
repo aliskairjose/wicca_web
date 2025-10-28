@@ -49,6 +49,7 @@ export class BankAccountsComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) private document: Document) {
+    console.log('Constructor: ', this.banks);
     if (this.banks.length === 0) {
       this._refreshBankList();
     }
@@ -136,7 +137,8 @@ export class BankAccountsComponent implements OnInit {
   private _refreshBankList(): void {
     this.#store.dispatch(new BankActions.ListFull({}, { limit: 0, page: 1 })).subscribe(() => {
       this.banks = this.#store.selectSnapshot(BankSelectors.listFull);
-    })
+      console.log('_refreshBankList: ', this.banks);
+    });
   }
 
   private loadForm(): void {
