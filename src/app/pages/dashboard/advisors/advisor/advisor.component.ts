@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
 import { RoleEnum, StatusEnum } from '@shared/enums';
-import { CircularChartComponent, RateStatsComponent } from '@shared/components';
+import { AvatarComponent, CircularChartComponent, RateStatsComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 import { UserInterface } from '../../users/user.interface';
 import { UserSelectors } from '../../users/store/user.selectors';
@@ -24,7 +24,7 @@ const ConnStatus: { [key: string]: string } = {
 @Component({
   selector: 'app-advisor',
   standalone: true,
-  imports: [CommonModule, CircularChartComponent, RateStatsComponent],
+  imports: [CommonModule, CircularChartComponent, RateStatsComponent, AvatarComponent],
   templateUrl: './advisor.component.html',
   styleUrl: './advisor.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -85,6 +85,7 @@ export class AdvisorComponent {
     ]).subscribe(() => {
       this.user = this.#store.selectSnapshot(UserSelectors.selectedAdvisor);
       this.timeAccumulatedMonthly = this.#store.selectSnapshot(UserSelectors.monthlyTimeAccumulated);
+      this.reviews = this.#store.selectSnapshot(CommonSelectors.reviews);
       this._timeAccumulatedFormat();
     });
 
