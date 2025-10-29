@@ -14,6 +14,7 @@ export enum Api {
   Menu = 'web-menu',
   Advisor = 'advisor',
   Users = 'users',
+  Reviews = 'review',
   UpdateAdvisorSatus = 'users/advisor/status',
   UserSummary = 'dashboard/users/summary',
   Payments = 'payments',

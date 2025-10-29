@@ -36,6 +36,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BankState } from './pages/dashboard/banks/store/bank.state';
 import { BankAccountState } from './pages/dashboard/bank-accounts/store/bank-accounts.state';
+import { CommonState } from '@shared/store/common.state';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -51,7 +52,18 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(),
     provideStore(
-      [AuthState, UsersState, HomeState, ChatState, RequestLogsState, PaymentState, CategoryState, BankState, BankAccountState],
+      [
+        AuthState,
+        UsersState,
+        HomeState,
+        ChatState,
+        RequestLogsState,
+        PaymentState,
+        CategoryState,
+        BankState,
+        CommonState,
+        BankAccountState
+      ],
       {
         developmentMode: !environment.production,
       },
