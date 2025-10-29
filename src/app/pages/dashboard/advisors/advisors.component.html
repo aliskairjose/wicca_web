@@ -65,14 +65,14 @@
         </td>
         <td>
           <div class="flex items-center gap-1">
-            {{ user.rate?.average }}
+            {{ user!.rateAvg }}
             <span
               class="icon-[tabler--star-filled] size-5 text-yellow-300"
             ></span>
           </div>
         </td>
         <td>
-          {{ user.wallet?.balance || 0 | currency }}
+          {{ user?.wallet?.balance || 0 | currency }}
         </td>
         <td>
           @if (user.wallet) {

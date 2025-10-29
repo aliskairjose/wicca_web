@@ -1,0 +1,19 @@
+<div class="w-full mb-2">
+  <div class="mb-1 flex items-end justify-between">
+    <p class="text-base-content text-xs font-medium">{{ title() }}</p>
+    <span class="text-base-content text-xs font-light">{{ value() }}</span>
+  </div>
+  <div
+    class="progress bg-gray-200 h-2"
+    role="progressbar"
+    [attr.aria-label]="percent() + '% Progressbar'"
+    [attr.aria-valuenow]="percent()"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <div
+      class="progress-bar progress-secondary"
+      [ngStyle]="{ width: percent() + '%' }"
+    ></div>
+  </div>
+</div>

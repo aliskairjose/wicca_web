@@ -1,0 +1,15 @@
+<div class="flex flex-row gap-6 items-center w-full">
+  <div class="text-center">
+    <h1 class="px-8 text-secondary">{{ stats().average }}</h1>
+    <p>{{ stats().reviews }} votos</p>
+  </div>
+  <div class="flex-1">
+    @for (item of starsCount() | keyvalue; track $index) {
+    <app-progress-bar
+      [title]="item.key"
+      [value]="item.value"
+      [percent]="getPercents(item.value)"
+    />
+    }
+  </div>
+</div>

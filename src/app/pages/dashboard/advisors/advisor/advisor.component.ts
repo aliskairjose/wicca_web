@@ -3,15 +3,16 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { firstValueFrom } from 'rxjs';
 import { RoleEnum, StatusEnum } from '@shared/enums';
-import { IconComponent, AvatarComponent, CircularChartComponent } from '@shared/components';
+import { IconComponent, AvatarComponent, CircularChartComponent, ProgressBarComponent, RateStatsComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
 import { UserInterface } from '../../users/user.interface';
 import { UserSelectors } from '../../users/store/user.selectors';
 import { UserAction } from '../../users/store/user.actions';
 import { AccumulatedTimeInterfaceMonthInterface } from '../interfaces/accumulated-time-month.interface';
 import { MONTHS } from '@shared/constansts';
+import { RequestLogStatussEnum } from '../../request-logs/enums/request-logs.enum';
 
-const ConnStatus = {
+const ConnStatus: any = {
   Online: 'online-top',
   Offline: 'busy-top',
   Busy: 'away-top',
@@ -21,7 +22,7 @@ const ConnStatus = {
 @Component({
   selector: 'app-advisor',
   standalone: true,
-  imports: [CommonModule, IconComponent, AvatarComponent, CircularChartComponent],
+  imports: [CommonModule, IconComponent, AvatarComponent, CircularChartComponent, RateStatsComponent],
   templateUrl: './advisor.component.html',
   styleUrl: './advisor.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -41,23 +42,31 @@ export class AdvisorComponent {
 
   fullName = computed(() => `${this.user?.name} ${this.user?.lastName}`);
   statusClass = computed(() => {
-    const connectStatus = this.user?.connectStatus;
-    return connectStatus ? ConnStatus[connectStatus] ?? '' : '';
+    const connectStatus = this.user?.connectStatus ?? 'away-top';
+    return ConnStatus[connectStatus];
   });
 
   constructor() {
     this._getData();
   }
 
+  totalEarnings = computed(() => (this.user?.wallet?.balance ?? 0) * 0.4);
 
-  get requestsStatus() {
-    const rejects = this.user?.requestLogs.filter(logs => logs.status === 'Rechazado');
-    const accepts = this.user?.requestLogs.filter(logs => logs.status === 'Aceptado');
-    return {
-      rejects: rejects!.length,
-      accepts: accepts!.length,
-    }
-  }
+  // rateAvg = computed((): number => {
+  //   const reviews = this.user!.reviews!;
+  //   if (reviews.length === 0) return 0;
+  //   const total = reviews.reduce((acc, r) => acc + r.rate, 0);
+  //   return total / reviews.length;
+  // });
+
+  // get requestsStatus() {
+  //   const rejects = this.user?.requestLogs.filter(logs => logs.status === RequestLogStatussEnum.RECHAZADO);
+  //   const accepts = this.user?.requestLogs.filter(logs => logs.status === RequestLogStatussEnum.APROBADO);
+  //   return {
+  //     rejects: rejects!.length,
+  //     accepts: accepts!.length,
+  //   }
+  // }
 
   private _timeAccumulatedFormat() {
     this.timeAccumulatedMonthly?.types.forEach(t => {
@@ -65,10 +74,6 @@ export class AdvisorComponent {
       this.timeAccumulated.push(t.totalTimeInSeconds);
     });
 
-  }
-
-  get totalEarnings() {
-    return (this.user?.wallet?.balance ?? 0) * 0.4;
   }
 
   private async _getData() {

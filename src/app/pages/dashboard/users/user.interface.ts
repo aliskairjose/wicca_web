@@ -22,14 +22,11 @@ export interface UserInterface {
   lastConnect: Date;
   createdAt: Date;
   updatedAt: Date;
-  wallet?: WalletInterface;
-  rooms: RoomInterface[];
-  payments?: any;
-  reviews?: ReviewInterface[];
-  rate?: RateInterface;
+  wallet: WalletInterface;
+  rateAvg?: number; // para el listado de asesores
   advisor?: AdvisorInterface;
-  requestLogs: RequestLogs[];
   bankAccount?: BankAccountInterface;
+  rateStats?: RateStatsInterface; //Para el detalle de asesor
 }
 
 interface RequestLogs {
@@ -65,12 +62,12 @@ export interface TotalUsersInterface {
   totalNewUsers: number;
 }
 
-export interface RateInterface {
+export interface RateStatsInterface {
   average: number;
   fiveStars: number;
   fourStars: number;
   oneStars: number;
-  reviews: ReviewInterface[];
+  reviews: number;
   threeStars: number;
   twoStars: number;
 }

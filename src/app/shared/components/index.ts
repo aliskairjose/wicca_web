@@ -1,7 +1,8 @@
-import { ChatBurbleComponent } from './chat-burble/chat-burble.component';
-import { TextareaComponent } from './textarea/textarea.component';
-export { TableContainerComponent } from './table-container/table-container.component';
+export { RateStatsComponent } from './rate-stats/rate-stats.component';
 
+export { ChatBurbleComponent } from './chat-burble/chat-burble.component';
+export { TextareaComponent } from './textarea/textarea.component';
+export { TableContainerComponent } from './table-container/table-container.component';
 export { IconComponent } from './icon/icon.component';
 export { PaginationComponent } from './pagination/pagination.component';
 export { DashbarComponent } from "./dashbar/dashbar.component";
@@ -12,9 +13,8 @@ export { InputComponent } from "./input/input.component";
 export { AvatarComponent } from "./avatar/avatar.component";
 export { ButtonComponent } from "./button/button.component";
 export { SelectComponent } from "./select/select.component";
-export { ChatBurbleComponent } from "./chat-burble/chat-burble.component";
-export { TextareaComponent } from "./textarea/textarea.component";
 export { FooterComponent } from "./footer/footer.component";
-import { DashboardFooterComponent } from './dashboard-footer/dashboard-footer.component';
-import { SideMenuComponent } from './side-menu/side-menu.component';
+export { DashboardFooterComponent } from './dashboard-footer/dashboard-footer.component';
+export { SideMenuComponent } from './side-menu/side-menu.component';
+export { ProgressBarComponent } from './progress-bar/progress-bar.component';
 export * from "./charts/index";
