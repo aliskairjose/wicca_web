@@ -5,9 +5,9 @@ import { ConnectStatusType } from '@shared/types';
 
 const ConnStatus = {
   Online: 'online-top', // Verde
-  Offline: 'busy-top', // Rojo cambia de offline a busy por el color
-  Busy: 'away-top', // Amarillo busy por away por el color
-  Away: 'offline-top', // blanco cambia de away a offline por el color
+  Offline: 'offline-top', // Rojo cambia de offline a busy por el color
+  Busy: 'busy-top', // Amarillo busy por away por el color
+  Away: 'away-top', // blanco cambia de away a offline por el color
 };
 @Component({
   selector: 'app-avatar',

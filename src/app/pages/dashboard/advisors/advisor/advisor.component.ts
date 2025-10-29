@@ -16,9 +16,9 @@ import { CommonSelectors } from '@shared/store/common.selectors';
 
 const ConnStatus: { [key: string]: string } = {
   Online: 'online-top',
-  Offline: 'busy-top',
-  Busy: 'away-top',
-  Away: 'offline-top',
+  Offline: 'offline-top',
+  Busy: 'busy-top',
+  Away: 'away-top',
 };
 
 @Component({
@@ -47,7 +47,7 @@ export class AdvisorComponent {
   fullName = computed(() => `${this.user?.name} ${this.user?.lastName}`);
 
   statusClass = computed(() => {
-    const connectStatus = this.user?.connectStatus ?? 'away-top';
+    const connectStatus = this.user!.connectStatus;
     return ConnStatus[connectStatus];
   });
 
@@ -88,13 +88,5 @@ export class AdvisorComponent {
       this._timeAccumulatedFormat();
     });
 
-    /**
-      await firstValueFrom(this.#store.dispatch(new UserAction.Get(params['id'])));
-      await firstValueFrom(this.#store.dispatch(new UserAction.GetMonthlyTimeAccumulated(params['id'])));
-
-      this.user = this.#store.selectSnapshot(UserSelectors.selectedAdvisor);
-      this.timeAccumulatedMonthly = this.#store.selectSnapshot(UserSelectors.monthlyTimeAccumulated);
-      this._timeAccumulatedFormat();
-    **/
   }
 }
