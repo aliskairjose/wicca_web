@@ -8,6 +8,9 @@ import { firstValueFrom } from 'rxjs';
 import { RoleEnum } from '@shared/enums';
 import { IconComponent, AvatarComponent } from '@shared/components';
 import { CommonModule } from '@angular/common';
+import { ResponseInterface, ReviewInterface } from '@shared/interfaces';
+import { CommonSelectors } from '@shared/store/common.selectors';
+import { CommonAction } from '@shared/store/common.actions';
 
 const ConnStatus = {
   Online: 'online-top',
@@ -33,15 +36,26 @@ export class UserComponent implements OnInit {
   labels = ['Aceptados', 'Rechazados'];
 
   fullName = computed(() => `${this.user?.name} ${this.user?.lastName}`);
-  statusClass = computed(() => `${ConnStatus[this.user!.connectStatus]}`)
+  statusClass = computed(() => `${ConnStatus[this.user!.connectStatus]}`);
+  reviews: ResponseInterface<ReviewInterface> | undefined = this.#store.selectSnapshot(CommonSelectors.reviews);
+
 
   async ngOnInit() {
-    const { id } = await firstValueFrom(this.#route.params);
-    await firstValueFrom(this.#store.dispatch(new UserAction.Get(id)));
-    this.user = this.#store.selectSnapshot(UserSelectors.selectedUser);
+    this._getData();
   }
 
   get totalEarnings() {
     return (this.user?.wallet?.balance ?? 0) * 0.4;
+  }
+
+  private async _getData() {
+    const params: Params = await firstValueFrom(this.#route.params);
+    this.#store.dispatch([
+      new UserAction.Get(params['id']),
+      new CommonAction.GetReviews({ reviewedBy: params['id'] }, { limit: 0, page: 1 })
+    ]).subscribe(() => {
+      this.user = this.#store.selectSnapshot(UserSelectors.selectedUser);
+      this.reviews = this.#store.selectSnapshot(CommonSelectors.reviews);
+    });
   }
 }
