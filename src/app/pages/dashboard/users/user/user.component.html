@@ -81,7 +81,7 @@
       <div class="flex justify-between items-center">
         <span class="text-secondary">Saldo disponible</span>
         <span class="text-primary font-semibold">
-          {{ user.wallet?.balance | currency }}
+          {{ user.wallet!.balance | currency }}
         </span>
       </div>
     </div>

@@ -100,7 +100,9 @@ export class AdvisorsComponent {
     if (status !== user.status) {
       const _user: Partial<UserInterface> = {
         status: status,
-        email: user.email
+        email: user.email,
+        name: user.name,
+        lastName: user.lastName,
       };
       this.updateStatus(user._id, _user);
     }
@@ -198,7 +200,7 @@ export class AdvisorsComponent {
   private changeUserStatus(user: UserInterface): void {
     const _user: Partial<UserInterface> = {
       isActive: !user.isActive,
-      connectStatus: user.isActive ? ConnectStatusEnum.Away : ConnectStatusEnum.Offline
+      connectStatus: user.isActive ? ConnectStatusEnum.Away : ConnectStatusEnum.Offline,
     };
 
     this.update(user._id, _user);

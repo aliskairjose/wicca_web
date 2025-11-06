@@ -21,7 +21,7 @@ const ConnStatus = {
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule, IconComponent, AvatarComponent],
+  imports: [CommonModule, AvatarComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
