@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
-import { RoleEnum, RoutesEnum } from '@shared/enums';
+import { RoutesEnum } from '@shared/enums';
 import { authGuard } from '@shared/guards';
 import { AppConfig } from '@shared/classes/app.config';
-import { BanksComponent } from './pages/dashboard/banks/banks.component';
 
 export const routes: Routes = [
   {

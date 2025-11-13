@@ -1,4 +1,4 @@
-<span class="badge" #badge>
+<span [class]="'badge icon-[tabler--' + icon() + ']'" #badge>
   @if (shape() && icon()) {
   <span #iconSpan></span>
   }@else { @if (avatar() && size()==='lg') {

@@ -3,9 +3,9 @@ import { Store } from '@ngxs/store';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PaginationInterface, ParamsInterface, ReviewInterface } from '@shared/interfaces';
+import { PaginationInterface, ParamsInterface } from '@shared/interfaces';
 import { ConnectStatusEnum, LanguageEnum, RoleEnum, RoutesEnum, StatusEnum } from '@shared/enums';
-import { AvatarComponent, ButtonComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
+import { AvatarComponent, InputComponent, SelectComponent, TableContainerComponent, TextareaComponent } from '@shared/components';
 import { StatusDirective } from '@shared/directives';
 import { Router, RouterLink } from '@angular/router';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
@@ -23,7 +23,7 @@ import { HSOverlay } from 'flyonui/flyonui';
 @Component({
   selector: 'app-advisors',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent, ButtonComponent, AvatarComponent],
+  imports: [CommonModule, ReactiveFormsModule, StatusDirective, RouterLink, AvatarComponent, TableContainerComponent, InputComponent, SelectComponent, TextareaComponent, AvatarComponent],
   templateUrl: './advisors.component.html',
   styleUrl: './advisors.component.scss'
 })

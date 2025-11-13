@@ -1,9 +1,13 @@
-@defer () { @if (isVerified()) {
+@defer (on viewport) { @if (isVerified()) {
 <ng-container [ngTemplateOutlet]="verified"></ng-container>
 }@else {
 <ng-container [ngTemplateOutlet]="error"></ng-container>
 
-} }
+} }@loading {
+<img alt="loading..." src="loading.gif" />
+} @placeholder {
+<p>Placeholder content</p>
+}
 
 <ng-template #verified>
   <div class="orbe-container h-screen flex items-center justify-center">

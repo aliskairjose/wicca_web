@@ -10,7 +10,7 @@ import { THEME } from './icon.type';
 })
 export class IconComponent implements AfterViewInit {
   icon = input.required<string>()
-  size = input<string>('');
+  size = input<string>();
   theme = input<THEME>()
 
   #renderer = inject(Renderer2);

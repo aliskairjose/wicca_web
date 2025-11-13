@@ -25,8 +25,8 @@ export class BadgeComponent implements AfterViewInit {
     this.#renderer.addClass(this.badge.nativeElement, `badge-${this.theme()}`);
     (this.size() && !this.shape()) && this.#renderer.addClass(this.badge.nativeElement, `${this.size()}`);
     (this.shape()) && this.#renderer.addClass(this.badge.nativeElement, this.shape()!);
-    (this.icon()) && this.#renderer.addClass(this.iconSpan.nativeElement, `icon-[tabler--${this.icon()}]`);
     (this.outline()) && this.#renderer.addClass(this.badge.nativeElement, `badge-outline`);
+    // (this.icon()) && this.#renderer.addClass(this.iconSpan.nativeElement, `icon-[tabler--${this.icon()}]`);
   }
 
 }
