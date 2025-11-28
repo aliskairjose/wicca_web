@@ -95,11 +95,19 @@ export const routes: Routes = [
           ),
       },
       {
-        path: RoutesEnum.Payments,
-        title: 'Listado de pagos',
+        path: RoutesEnum.Transactions,
+        title: 'Transacciones',
         loadComponent: () =>
           import('./pages/dashboard/payments/payments.component').then(
             (m) => m.PaymentsComponent
+          ),
+      },
+      {
+        path: RoutesEnum.AdvisorsPays,
+        title: 'Transacciones',
+        loadComponent: () =>
+          import('./pages/dashboard/advisor-pays/advisor-pays.component').then(
+            (m) => m.AdvisorPaysComponent
           ),
       },
       {

@@ -10,6 +10,7 @@ export enum RoutesEnum {
   AdvisorPolicy = 'advisor-policy',
   Users = 'users',
   Advisors = 'advisors',
+  AdvisorsPays = 'advisors-pays',
   Advisor = 'advisor',
   User = 'user',
   Details = 'details',
@@ -17,6 +18,7 @@ export enum RoutesEnum {
   Chats = 'chats',
   RequestLogs = 'request-logs',
   Payments = 'payments',
+  Transactions = 'transactions',
   Categories = 'categories',
   Banks = 'banks',
   BanksAccounts = 'bank-accounts'
