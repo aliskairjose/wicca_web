@@ -1,26 +1,18 @@
 <div class="w-full">
-  <label class="label label-text">{{ label() }}</label>
-  <select
-    class="select"
-    aria-label="select"
-    [class.is-invalid]="
+  <div class="flex" [class.gap-x-2]="isInline()" [class.flex-col]="!isInline()" [class.items-center]="isInline()" >
+    <label class="label label-text">{{ label() }}</label>
+    <select class="select" aria-label="select" [class.is-invalid]="
       (control().invalid && control().dirty) ||
       (control().invalid && isSubmitted())
-    "
-    [class.is-valid]="control().valid && control().dirty"
-    (change)="onValueChange($event.target)"
-  >
-    <option value="">Seleccione</option>
-    @for (item of data(); track $index) {
-    <option
-      [value]="item.val"
-      [ngValue]="item"
-      [selected]="defaultValue() === item.val"
-    >
-      {{ item.title }}
-    </option>
-    }
-  </select>
+    " [class.is-valid]="control().valid && control().dirty" (change)="onValueChange($event.target)">
+      <option value="">Seleccione</option>
+      @for (item of data(); track $index) {
+      <option [value]="item.val" [ngValue]="item" [selected]="defaultValue() === item.val">
+        {{ item.title }}
+      </option>
+      }
+    </select>
+  </div>
   <span class="label">
     @if ( (control().invalid && control().dirty) || control().invalid &&
     isSubmitted() ) {

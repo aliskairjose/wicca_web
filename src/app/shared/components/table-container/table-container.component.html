@@ -4,7 +4,6 @@
     class="flex gap-4 md:flex-row flex-col items-center justify-between mb-6"
   >
     <div class="flex gap-2 items-center">
-      <span class="text-sm">Filtrar:</span>
       <div class="w-full">
         <form [formGroup]="form">
           <app-input
@@ -15,7 +14,8 @@
         </form>
       </div>
     </div>
-
+    <ng-content select="[filter]"/>
+    
     <div class="flex items-center gap-2">
       <span class="text-sm">Item por página</span>
       <app-select
@@ -28,7 +28,7 @@
   </div>
   }
   <div class="overflow-x-auto">
-    <ng-content></ng-content>
+    <ng-content/>
   </div>
   @if(metadata()){
   <app-pagination

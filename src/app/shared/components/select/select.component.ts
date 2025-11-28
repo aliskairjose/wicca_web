@@ -39,6 +39,7 @@ export class SelectComponent implements Validator, ControlValueAccessor, OnChang
   value = '';
   label = input<string>('');
   defaultValue = input<string | number>();
+  isInline = input<boolean>(false);
 
   #onChange: any = () => { };
   #onTouched: any = () => { };

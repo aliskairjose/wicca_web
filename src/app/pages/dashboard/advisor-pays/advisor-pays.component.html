@@ -1,4 +1,25 @@
 <app-table-container [metadata]="metadata()!" (onChange)="onChangeTable($event)">
+	<div filter class="flex flex-row gap-4 flex-1" >
+		<app-select
+			[placeholder]="'Filtrar por mes'"
+			[class]="'min-w-40'"
+			[data]="months"
+			[label]="'Mes'"
+			[defaultValue]="selectedMonth"
+			[isInline]="true"
+			(changeHandler)="onChangeMonth($event)"
+		/>
+		<app-select
+			[placeholder]="'Filtrar por país'"
+			[class]="'min-w-40'"
+			[data]="years"
+			[label]="'Año'"
+			[defaultValue]="selectedYear"
+			[isInline]="true"
+			(changeHandler)="onChangeYear($event)"
+		/>
+		<button class="btn btn-primary" (click)="find()">Buscar</button>
+	</div>
 	<table class="table">
 		<thead>
 			<tr>
@@ -10,6 +31,7 @@
 				<th>Cuenta</th>
 				<th>País</th>
 				<th>Balance</th>
+				<th>Fecha</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,7 +47,7 @@
 					<td>{{advisor.bankAccountNumber}}</td>
 					<td>{{advisor.bankCountry}}</td>
 					<td>{{advisor.balance | currency}}</td>
-					
+					<td>{{advisor.createdAt | date}}</td>
 				</tr>
 			}
 		</tbody>
