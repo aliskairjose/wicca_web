@@ -8,11 +8,12 @@ import {
 import { AdvisorPaysInterface } from './interfaces/advisor-pays.interface';
 import { AvatarComponent, TableContainerComponent } from '@shared/components';
 import { MetadataInterface } from '@shared/interfaces/response.interface';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-advisor-pays',
   standalone: true,
-  imports: [TableContainerComponent, AvatarComponent],
+  imports: [TableContainerComponent, AvatarComponent, CurrencyPipe],
   templateUrl: './advisor-pays.component.html',
   styleUrl: './advisor-pays.component.scss',
 })

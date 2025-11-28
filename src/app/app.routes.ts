@@ -104,7 +104,7 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.AdvisorsPays,
-        title: 'Transacciones',
+        title: 'Pago a asesores',
         loadComponent: () =>
           import('./pages/dashboard/advisor-pays/advisor-pays.component').then(
             (m) => m.AdvisorPaysComponent

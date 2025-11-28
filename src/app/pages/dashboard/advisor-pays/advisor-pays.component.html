@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th>Asesor</th>
+				<th>Nombre</th>
 				<th>Email</th>
 				<th>Banco</th>
 				<th>Tipo Cuenta</th>
@@ -24,7 +24,7 @@
 					<td>{{advisor.bankAccountType}}</td>
 					<td>{{advisor.bankAccountNumber}}</td>
 					<td>{{advisor.bankCountry}}</td>
-					<td>{{advisor.balance}}</td>
+					<td>{{advisor.balance | currency}}</td>
 					
 				</tr>
 			}
