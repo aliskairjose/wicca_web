@@ -1,1 +1,33 @@
-<p>advisor-pays works!</p>
+<app-table-container [metadata]="metadata()!" (onChange)="onChangeTable($event)">
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Asesor</th>
+				<th>Email</th>
+				<th>Banco</th>
+				<th>Tipo Cuenta</th>
+				<th>Cuenta</th>
+				<th>País</th>
+				<th>Balance</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (advisor of data; track $index) {
+				<tr>
+					<td>
+						<app-avatar [src]="advisor.avatar" />
+					</td>
+					<td>{{advisor.fullName}}</td>
+					<td>{{advisor.email}}</td>
+					<td>{{advisor.bankName}}</td>
+					<td>{{advisor.bankAccountType}}</td>
+					<td>{{advisor.bankAccountNumber}}</td>
+					<td>{{advisor.bankCountry}}</td>
+					<td>{{advisor.balance}}</td>
+					
+				</tr>
+			}
+		</tbody>
+	</table>
+</app-table-container>

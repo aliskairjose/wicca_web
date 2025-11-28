@@ -18,6 +18,7 @@ export enum Api {
   UpdateAdvisorSatus = 'users/advisor/status',
   UserSummary = 'dashboard/users/summary',
   Payments = 'payments',
+  AdvisorPays = 'advisor-payments',
   Rooms = 'chat/rooms',
   CategoryMasiveUpload = 'categories/masive-upload',
   Banks = 'bank',
