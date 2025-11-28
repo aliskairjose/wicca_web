@@ -5,7 +5,6 @@ import { BankAccountInterface } from './interfaces/bank-accounts.interface';
 import { MetadataInterface, ResponseInterface } from '@shared/interfaces/response.interface';
 import { BankAccountSelectors } from './store/bank-accounts.selectors';
 import { BankAccountActions } from './store/bank-accounts.actions';
-import { firstValueFrom } from 'rxjs';
 import { ButtonComponent, InputComponent, SelectComponent, TableContainerComponent } from '@shared/components';
 import { HSOverlay } from 'flyonui/flyonui';
 import { DOCUMENT } from '@angular/common';
