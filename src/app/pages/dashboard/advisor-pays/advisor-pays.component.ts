@@ -62,6 +62,10 @@ export class AdvisorPaysComponent implements OnInit {
       val: 2024,
       title: '2024',
     },
+    {
+      val: 2025,
+      title: '2025',
+    },
   ];
 
   data: AdvisorPaysInterface[] = [];

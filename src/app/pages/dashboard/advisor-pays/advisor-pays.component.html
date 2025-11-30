@@ -1,10 +1,13 @@
 <app-table-container [metadata]="metadata()!" (onChange)="onChangeTable($event)">
-	<div filter class="flex flex-col items-center md:gap-0 gap-y-2 md:flex-row justify-around flex-1">
+	<div filter class="flex flex-1 flex-col md:flex-row justify-around items-center md:gap-0 gap-y-2 ">
+		
 		<app-select [placeholder]="'Filtrar por mes'" [class]="'min-w-40'" [data]="months" [label]="'Mes'"
 			[defaultValue]="selectedMonth" [isInline]="true" (changeHandler)="onChangeMonth($event)" />
+
 		<app-select [placeholder]="'Filtrar por país'" [class]="'min-w-40'" [data]="years" [label]="'Año'"
 			[defaultValue]="selectedYear" [isInline]="true" (changeHandler)="onChangeYear($event)" />
 		<button class="btn btn-primary" (click)="find()">Buscar</button>
+
 		<button class="btn btn-square btn-info btn-outline" aria-label="Icon Button" (click)="download()">
 			<span class="icon-[tabler--file-download]  size-5"></span>
 		</button>
