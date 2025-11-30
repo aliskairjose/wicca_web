@@ -21,4 +21,10 @@ export class AdvisorPaysService {
     Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
     return this.http.get<ResponseInterface<AdvisorPaysInterface>>(AppConfig.baseUrl(Api.AdvisorPays), {params});
   }
+
+  downloadReport(httpParams: ParamsInterface): Observable<Blob> {
+    let params = new HttpParams();
+    Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
+    return this.http.get<Blob>(`${AppConfig.baseUrl(Api.AdvisorPaysReport)}`, { params, responseType: 'blob' as 'json' });
+  }
 }

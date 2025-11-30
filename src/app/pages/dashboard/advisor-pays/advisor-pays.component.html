@@ -1,24 +1,15 @@
 <app-table-container [metadata]="metadata()!" (onChange)="onChangeTable($event)">
-	<div filter class="flex flex-row gap-4 flex-1" >
-		<app-select
-			[placeholder]="'Filtrar por mes'"
-			[class]="'min-w-40'"
-			[data]="months"
-			[label]="'Mes'"
-			[defaultValue]="selectedMonth"
-			[isInline]="true"
-			(changeHandler)="onChangeMonth($event)"
-		/>
-		<app-select
-			[placeholder]="'Filtrar por país'"
-			[class]="'min-w-40'"
-			[data]="years"
-			[label]="'Año'"
-			[defaultValue]="selectedYear"
-			[isInline]="true"
-			(changeHandler)="onChangeYear($event)"
-		/>
+	<div filter class="flex flex-row gap-4 flex-1">
+		<app-select [placeholder]="'Filtrar por mes'" [class]="'min-w-40'" [data]="months" [label]="'Mes'"
+			[defaultValue]="selectedMonth" [isInline]="true" (changeHandler)="onChangeMonth($event)" />
+		<app-select [placeholder]="'Filtrar por país'" [class]="'min-w-40'" [data]="years" [label]="'Año'"
+			[defaultValue]="selectedYear" [isInline]="true" (changeHandler)="onChangeYear($event)" />
 		<button class="btn btn-primary" (click)="find()">Buscar</button>
+		<button class="btn btn-square btn-info btn-outline" aria-label="Icon Button" (click)="download()">
+			<span class="icon-[tabler--file-download]  size-5"></span>
+		</button>
+
+
 	</div>
 	<table class="table">
 		<thead>
@@ -36,19 +27,19 @@
 		</thead>
 		<tbody>
 			@for (advisor of data; track $index) {
-				<tr>
-					<td>
-						<app-avatar [src]="advisor.avatar" />
-					</td>
-					<td>{{advisor.fullName}}</td>
-					<td>{{advisor.email}}</td>
-					<td>{{advisor.bankName}}</td>
-					<td>{{advisor.bankAccountType}}</td>
-					<td>{{advisor.bankAccountNumber}}</td>
-					<td>{{advisor.bankCountry}}</td>
-					<td>{{advisor.balance | currency}}</td>
-					<td>{{advisor.createdAt | date}}</td>
-				</tr>
+			<tr>
+				<td>
+					<app-avatar [src]="advisor.avatar" />
+				</td>
+				<td>{{advisor.fullName}}</td>
+				<td>{{advisor.email}}</td>
+				<td>{{advisor.bankName}}</td>
+				<td>{{advisor.bankAccountType}}</td>
+				<td>{{advisor.bankAccountNumber}}</td>
+				<td>{{advisor.bankCountry}}</td>
+				<td>{{advisor.balance | currency}}</td>
+				<td>{{advisor.createdAt | date}}</td>
+			</tr>
 			}
 		</tbody>
 	</table>

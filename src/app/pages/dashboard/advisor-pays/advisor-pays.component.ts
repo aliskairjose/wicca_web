@@ -91,6 +91,21 @@ export class AdvisorPaysComponent implements OnInit {
     this._loadData();
   }
 
+  download(): void {  
+    this.#service.downloadReport(this.params).subscribe({
+      next: (response: Blob) => {
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement('a');  
+        a.href = url;
+        a.download = `informe_pagos_asesores_${this.params['year']}_${this.params['month']}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+    });
+  } 
+
   private _loadData(): void {
     this.#service.getList(this.params, this.pagination).subscribe({
       next: (response: ResponseInterface<AdvisorPaysInterface>) => {
