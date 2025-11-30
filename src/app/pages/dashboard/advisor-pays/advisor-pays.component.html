@@ -1,5 +1,5 @@
 <app-table-container [metadata]="metadata()!" (onChange)="onChangeTable($event)">
-	<div filter class="flex flex-row gap-4 flex-1">
+	<div filter class="flex flex-col items-center md:gap-0 gap-y-2 md:flex-row justify-around flex-1">
 		<app-select [placeholder]="'Filtrar por mes'" [class]="'min-w-40'" [data]="months" [label]="'Mes'"
 			[defaultValue]="selectedMonth" [isInline]="true" (changeHandler)="onChangeMonth($event)" />
 		<app-select [placeholder]="'Filtrar por país'" [class]="'min-w-40'" [data]="years" [label]="'Año'"
