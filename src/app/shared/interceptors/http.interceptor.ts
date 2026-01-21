@@ -36,7 +36,7 @@ export const httpInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
           // Specific handling for unauthorized errors
           console.error('Unauthorized request:', error);
           toast.show(error.error.message, ToastTypeEnum.Error);
-          router.navigate([RoutesEnum.Login]);
+          router.navigate([`auth/${RoutesEnum.Login}`]);
           // You might trigger a re-authentication flow or redirect the user here
         } else {
           // Handle other HTTP error codes

@@ -37,7 +37,7 @@ export const routes: Routes = [
     children: [
       {
         path: RoutesEnum.Home,
-        title: 'Home',
+        title: 'OrbeApp',
         loadComponent: () =>
           import('./pages/landing/home/home.component').then(
             (m) => m.HomeComponent
