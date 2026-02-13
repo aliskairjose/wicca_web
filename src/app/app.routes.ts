@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { RoutesEnum } from '@shared/enums';
+import { RoutesEnum, RoutesTitlesEnum } from '@shared/enums';
 import { authGuard } from '@shared/guards';
 import { AppConfig } from '@shared/classes/app.config';
 
@@ -11,7 +11,7 @@ export const routes: Routes = [
     children: [
       {
         path: RoutesEnum.Login,
-        title: 'Login',
+        title: RoutesTitlesEnum.Login,
         loadComponent: () =>
           import('./pages/auth/login/login.component').then(
             (m) => m.LoginComponent
@@ -19,10 +19,18 @@ export const routes: Routes = [
       },
       {
         path: `${RoutesEnum.VerifyEmail}/:id`,
-        title: 'Verify Account',
+        title: RoutesTitlesEnum.VerifyAccount,
         loadComponent: () =>
           import('./pages/auth/verify-account/verify-account.component').then(
             (m) => m.VerifyAccountComponent
+          ),
+      },
+      {
+        path: '**',
+        title: RoutesTitlesEnum.PageNotFound,
+        loadComponent: () =>
+          import('./pages/not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
           ),
       },
     ]
@@ -37,15 +45,15 @@ export const routes: Routes = [
     children: [
       {
         path: RoutesEnum.Home,
-        title: 'OrbeApp',
+        title: RoutesTitlesEnum.Home,
         loadComponent: () =>
           import('./pages/landing/home/home.component').then(
             (m) => m.HomeComponent
           ),
       },
       {
-        path: RoutesEnum.AbuotUs,
-        title: 'Quienes somos',
+        path: RoutesEnum.AboutUs,
+        title: RoutesTitlesEnum.AboutUs,
         loadComponent: () =>
           import('./pages/landing/about-us/about-us.component').then(
             (m) => m.AboutUsComponent
@@ -53,17 +61,25 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.AdvisorPolicy,
-        title: 'Políticas de expertos',
+        title: RoutesTitlesEnum.AdvisorPolicy,
         loadComponent: () =>
           import('./pages/landing/advisor-policy/advisor-policy.component').then(
             (m) => m.AdvisorPolicyComponent
+          ),
+      },
+      {
+        path: '**',
+        title: RoutesTitlesEnum.PageNotFound,
+        loadComponent: () =>
+          import('./pages/not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
           ),
       },
     ],
   },
   {
     path: RoutesEnum.Dashboard,
-    title: 'Dashboard',
+    title: RoutesTitlesEnum.Dashboard,
     canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/dashboard/dashboard.component').then(
@@ -72,7 +88,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        title: 'Dashboard',
+        title: RoutesTitlesEnum.Dashboard,
         loadComponent: () =>
           import('./pages/dashboard/home/home.component').then(
             (m) => m.HomeComponent
@@ -80,23 +96,39 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.Users,
-        title: 'Listado de usuarios',
+        title: RoutesTitlesEnum.Users,
         loadComponent: () =>
           import('./pages/dashboard/users/users.component').then(
             (m) => m.UsersComponent
           ),
       },
       {
+        path: `${RoutesEnum.Users}/${RoutesEnum.User}/:id`,
+        title: RoutesTitlesEnum.Users,
+        loadComponent: () =>
+          import('./pages/dashboard/users/user/user.component').then(
+            (m) => m.UserComponent
+          ),
+      },
+      {
         path: RoutesEnum.Advisors,
-        title: 'Listado de asesores',
+        title: RoutesTitlesEnum.Advisors,
         loadComponent: () =>
           import('./pages/dashboard/advisors/advisors.component').then(
             (m) => m.AdvisorsComponent
           ),
       },
       {
+        path: `${RoutesEnum.Advisors}/${RoutesEnum.User}/:id`,
+        title: RoutesTitlesEnum.User,
+        loadComponent: () =>
+          import('./pages/dashboard/advisors/advisor/advisor.component').then(
+            (m) => m.AdvisorComponent
+          ),
+      },
+      {
         path: RoutesEnum.Payments,
-        title: 'Listado de pagos',
+        title: RoutesTitlesEnum.Payments,
         loadComponent: () =>
           import('./pages/dashboard/payments/payments.component').then(
             (m) => m.PaymentsComponent
@@ -104,7 +136,7 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.Categories,
-        title: 'Listado de categorías',
+        title: RoutesTitlesEnum.Categories,
         loadComponent: () =>
           import('./pages/dashboard/categories/categories.component').then(
             (m) => m.CategoriesComponent
@@ -112,7 +144,7 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.Chats,
-        title: 'Listado de chats',
+        title: RoutesTitlesEnum.Chats,
         loadComponent: () =>
           import('./pages/dashboard/chat/chat.component').then(
             (m) => m.ChatComponent
@@ -120,7 +152,7 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.Banks,
-        title: 'Listado de bancos',
+        title: RoutesTitlesEnum.Banks,
         loadComponent: () =>
           import('./pages/dashboard/banks/banks.component').then(
             (m) => m.BanksComponent
@@ -128,7 +160,7 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.BanksAccounts,
-        title: 'Listado de cuentas',
+        title: RoutesTitlesEnum.BanksAccounts,
         loadComponent: () =>
           import('./pages/dashboard/bank-accounts/bank-accounts.component').then(
             (m) => m.BankAccountsComponent
@@ -136,26 +168,18 @@ export const routes: Routes = [
       },
       {
         path: RoutesEnum.RequestLogs,
-        title: 'Histórico de solicitudes',
+        title: RoutesTitlesEnum.RequestLogs,
         loadComponent: () =>
           import('./pages/dashboard/request-logs/request-logs.component').then(
             (m) => m.RequestLogsComponent
           ),
       },
       {
-        path: `${RoutesEnum.Users}/${RoutesEnum.User}/:id`,
-        title: 'Detalle de usuario',
+        path: '**',
+        title: RoutesTitlesEnum.PageNotFound,
         loadComponent: () =>
-          import('./pages/dashboard/users/user/user.component').then(
-            (m) => m.UserComponent
-          ),
-      },
-      {
-        path: `${RoutesEnum.Advisors}/${RoutesEnum.User}/:id`,
-        title: 'Detalle de usuario',
-        loadComponent: () =>
-          import('./pages/dashboard/advisors/advisor/advisor.component').then(
-            (m) => m.AdvisorComponent
+          import('./pages/not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
           ),
       },
     ],

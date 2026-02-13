@@ -6,7 +6,7 @@ export enum RoutesEnum {
   Dashboard = 'dashboard',
   Landing = '',
   Home = '',
-  AbuotUs = 'about-us',
+  AboutUs = 'about-us',
   AdvisorPolicy = 'advisor-policy',
   Users = 'users',
   Advisors = 'advisors',
@@ -20,4 +20,24 @@ export enum RoutesEnum {
   Categories = 'categories',
   Banks = 'banks',
   BanksAccounts = 'bank-accounts'
+}
+
+export enum RoutesTitlesEnum {
+  Home = 'OrbeApp',
+  AboutUs = 'Quienes somos',
+  AdvisorPolicy = 'Política de asesores',
+  Login = 'Iniciar sesión',
+  VerifyAccount = 'Verificar cuenta',
+  Register = 'Crear cuenta',
+  Dashboard = 'Dashboard',
+  Users = 'Usuarios',
+  User = 'Usuario',
+  Advisors = 'Asesores',
+  Chats = 'Chats',
+  RequestLogs = 'Histórico de solicitudes',
+  Payments = 'Pagos',
+  Categories = 'Categorías',
+  Banks = 'Bancos',
+  BanksAccounts = 'Cuentas bancarias',
+  PageNotFound = 'Página no encontrada'
 }

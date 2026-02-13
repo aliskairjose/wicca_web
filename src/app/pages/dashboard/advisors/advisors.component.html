@@ -9,117 +9,117 @@
   </button>
 </div>
 
-@if(users()){
-<app-table-container
-  [metadata]="metadata()!"
-  (onChange)="onChangeTable($event)"
->
-  <table class="table overflow-x-auto">
-    <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Email</th>
-        <th>Status</th>
-        <th>Activo</th>
-        <th>Rate</th>
-        <th>Balance</th>
-        <th>Disponible (40%)</th>
-        <th>Usuario desde</th>
-        <th>Última conexión</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (user of users(); track $index) {
-      <tr class="hover">
-        <td class="text-nowrap">
-          <div class="flex">
-            <app-avatar [src]="user.avatar" [status]="user.connectStatus" />
-            <div class="flex flex-col ms-1.5">
-              <span class="font-medium"
-                >{{ user.name }} {{ user.lastName }}</span
+@if (users()) {
+  <app-table-container
+    [metadata]="metadata()!"
+    (onChange)="onChangeTable($event)"
+  >
+    <table class="table overflow-x-auto">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Activo</th>
+          <th>Rate</th>
+          <th>Balance</th>
+          <th>Disponible (40%)</th>
+          <th>Usuario desde</th>
+          <th>Última conexión</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track $index) {
+          <tr class="hover">
+            <td class="text-nowrap">
+              <div class="flex">
+                <app-avatar [src]="user.avatar" [status]="user.connectStatus" />
+                <div class="flex flex-col ms-1.5">
+                  <span class="font-medium"
+                    >{{ user.name }} {{ user.lastName }}</span
+                  >
+                  <span class="text-xs text-secondary tracking-wider">{{
+                    user.phone
+                  }}</span>
+                </div>
+              </div>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>
+              <select
+                [disabled]="user.status === statusEnum.APPROVED"
+                class="select select-xs max-w-sm w-auto"
+                aria-label="select"
+                (change)="changeStatus($event, user)"
               >
-              <span class="text-xs text-secondary tracking-wider">{{
-                user.phone
-              }}</span>
-            </div>
-          </div>
-        </td>
-        <td>{{ user.email }}</td>
-        <td>
-          <select
-            [disabled]="user.status === statusEnum.APPROVED"
-            class="select select-xs max-w-sm w-auto"
-            aria-label="select"
-            (change)="changeStatus($event, user)"
-          >
-            @for (s of status; track $index) {
-            <option [selected]="s.val === user.status" [value]="s.val">
-              {{ s.title }}
-            </option>
-            }
-          </select>
-        </td>
-        <td>
-          <span [appStatus]="user.isActive" class="w-full"></span>
-        </td>
-        <td>
-          <div class="flex items-center gap-1">
-            {{ user!.rateAvg }}
-            <span
-              class="icon-[tabler--star-filled] size-5 text-yellow-300"
-            ></span>
-          </div>
-        </td>
-        <td>
-          {{ user?.wallet?.balance || 0 | currency }}
-        </td>
-        <td>
-          @if (user.wallet) {
-          {{ user.wallet.balance * 0.4 | currency }}
-          }@else {
-          {{ 0 | currency }}
-          }
-        </td>
-        <td class="text-nowrap text-center">
-          {{ user.createdAt | date : "MMM d, y" }}
-        </td>
-        <td class="text-nowrap text-center">
-          {{ user.lastConnect | date : "MMM d, y, h:mm a" }}
-        </td>
-        <td class="space-x-3">
-          @if(user.status === statusEnum.APPROVED) {
-          <button
-            class="btn btn-square btn-primary btn-outline btn-sm"
-            aria-label="Icon Button EYE"
-            [routerLink]="[routeEnum.User, user._id]"
-          >
-            <span class="icon-[tabler--eye]"></span>
-          </button>
-          }@else {
-          <button
-            class="btn btn-square btn-primary btn-outline btn-sm"
-            aria-label="Icon Button EYE"
-            aria-expanded="false"
-            (click)="openModal('#nominated-modal', user)"
-          >
-            <span class="icon-[tabler--eye]"></span>
-          </button>
-          }
+                @for (s of status; track $index) {
+                  <option [selected]="s.val === user.status" [value]="s.val">
+                    {{ s.title }}
+                  </option>
+                }
+              </select>
+            </td>
+            <td>
+              <span [appStatus]="user.isActive" class="w-full"></span>
+            </td>
+            <td>
+              <div class="flex items-center gap-1">
+                {{ user!.rateAvg }}
+                <span
+                  class="icon-[tabler--star-filled] size-5 text-yellow-300"
+                ></span>
+              </div>
+            </td>
+            <td>
+              {{ user?.wallet?.balance || 0 | currency }}
+            </td>
+            <td>
+              @if (user.wallet) {
+                {{ user.wallet.balance * 0.4 | currency }}
+              } @else {
+                {{ 0 | currency }}
+              }
+            </td>
+            <td class="text-nowrap text-center">
+              {{ user.createdAt | date: "MMM d, y" }}
+            </td>
+            <td class="text-nowrap text-center">
+              {{ user.lastConnect | date: "MMM d, y, h:mm a" }}
+            </td>
+            <td class="space-x-3">
+              @if (user.status === statusEnum.APPROVED) {
+                <button
+                  class="btn btn-square btn-primary btn-outline btn-sm"
+                  aria-label="Icon Button EYE"
+                  [routerLink]="[routeEnum.User, user._id]"
+                >
+                  <span class="icon-[tabler--eye]"></span>
+                </button>
+              } @else {
+                <button
+                  class="btn btn-square btn-primary btn-outline btn-sm"
+                  aria-label="Icon Button EYE"
+                  aria-expanded="false"
+                  (click)="openModal('#nominated-modal', user)"
+                >
+                  <span class="icon-[tabler--eye]"></span>
+                </button>
+              }
 
-          <button
-            class="btn btn-square btn-error btn-outline btn-sm"
-            aria-label="Icon Button Trash"
-            (click)="openModal('#delete-modal', user)"
-          >
-            <span class="icon-[tabler--trash]"></span>
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-</app-table-container>
+              <button
+                class="btn btn-square btn-error btn-outline btn-sm"
+                aria-label="Icon Button Trash"
+                (click)="openModal('#delete-modal', user)"
+              >
+                <span class="icon-[tabler--trash]"></span>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </app-table-container>
 }
 <!-- NEW USER MODAL -->
 <div
@@ -342,106 +342,105 @@
 </div>
 
 <!-- Advisor Nominated Modal -->
-@if(modalUser){
-<div
-  id="nominated-modal"
-  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
-  role="dialog"
-  tabindex="-1"
->
-  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">
-          {{ modalUser.name }} {{ modalUser.lastName }}
-          <p class="text-lg text-gray-600">
-            Alias: {{ modalUser.advisor?.alias }}
-          </p>
-        </h3>
-        <button
-          type="button"
-          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
-          aria-label="Close"
-          (click)="closeModal('#nominated-modal')"
-        >
-          <span class="icon-[tabler--x] size-4"></span>
-        </button>
-      </div>
-      <div class="modal-body space-y-2">
-        <div class="flex lg:flex-row flex-col gap-6 items-center">
-          <app-avatar [src]="modalUser.avatar" size="xl" />
-          <div
-            class="grid grid-cols-2 gap-2 text-sm text-gray-600 lg:flex-1 w-full"
+@if (modalUser) {
+  <div
+    id="nominated-modal"
+    class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+    role="dialog"
+    tabindex="-1"
+  >
+    <div class="modal-dialog overlay-open:opacity-100 modal-dialog-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            {{ modalUser.name }} {{ modalUser.lastName }}
+            <p class="text-lg text-gray-600">
+              Alias: {{ modalUser.advisor?.alias }}
+            </p>
+          </h3>
+          <button
+            type="button"
+            class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+            aria-label="Close"
+            (click)="closeModal('#nominated-modal')"
           >
-            <div>
-              <p class="flex flex-row items-center gap-2">
-                <span class="icon-[tabler--phone]"></span>
-                {{ modalUser.phone }}
-              </p>
-              <p class="flex flex-row items-center gap-2">
-                <span class="icon-[tabler--map]"></span>
-                {{ modalUser.country }}
-              </p>
-              <p class="flex flex-row items-center gap-2">
-                <span class="icon-[tabler--mail]"></span>
-                {{ modalUser.email }}
-              </p>
+            <span class="icon-[tabler--x] size-4"></span>
+          </button>
+        </div>
+        <div class="modal-body space-y-2">
+          <div class="flex lg:flex-row flex-col gap-6 items-center">
+            <app-avatar [src]="modalUser.avatar" size="xl" />
+            <div
+              class="grid grid-cols-2 gap-2 text-sm text-gray-600 lg:flex-1 w-full"
+            >
+              <div>
+                <p class="flex flex-row items-center gap-2">
+                  <span class="icon-[tabler--phone]"></span>
+                  {{ modalUser.phone }}
+                </p>
+                <p class="flex flex-row items-center gap-2">
+                  <span class="icon-[tabler--map]"></span>
+                  {{ modalUser.country }}
+                </p>
+                <p class="flex flex-row items-center gap-2">
+                  <span class="icon-[tabler--mail]"></span>
+                  {{ modalUser.email }}
+                </p>
+              </div>
+              <div>
+                <p class="flex flex-row items-center gap-2">
+                  <span class="icon-[tabler--world]"></span>
+                  {{ modalUser.language }}
+                </p>
+                <p class="flex flex-row items-center gap-2">
+                  <span class="icon-[tabler--category]"></span>
+                  {{ modalUser.advisor?.category }}
+                </p>
+              </div>
             </div>
-            <div>
-              <p class="flex flex-row items-center gap-2">
-                <span class="icon-[tabler--world]"></span>
-                {{ modalUser.language }}
-              </p>
-              <p class="flex flex-row items-center gap-2">
-                <span class="icon-[tabler--category]"></span>
-                {{ modalUser.advisor?.category }}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <p class="text-base">Descripción</p>
-          <p class="text-gray-600 text-sm">
-            {{ modalUser.advisor?.description }}
-          </p>
-        </div>
-        <div>
-          <p class="text-base">Experiencia</p>
-          <p class="text-gray-600 text-sm">
-            {{ modalUser.advisor?.experience }}
-          </p>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div>
-            <p class="text-base mb-2">Dni / Pasaporte</p>
-            <img
-              [src]="modalUser.advisor?.dniImage"
-              alt="dni"
-              srcset=""
-              class="border-2 border-black rounded-md"
-            />
           </div>
           <div>
-            <p class="text-base mb-2">Video presentación</p>
-            <video
-              class="border-2 border-black rounded-md"
-              [src]="modalUser.advisor?.videoIntro"
-              controls
-            ></video>
+            <p class="text-base">Descripción</p>
+            <p class="text-gray-600 text-sm">
+              {{ modalUser.advisor?.description }}
+            </p>
+          </div>
+          <div>
+            <p class="text-base">Experiencia</p>
+            <p class="text-gray-600 text-sm">
+              {{ modalUser.advisor?.experience }}
+            </p>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
+              <p class="text-base mb-2">Dni / Pasaporte</p>
+              <img
+                [src]="modalUser.advisor?.dniImage"
+                alt="dni"
+                srcset=""
+                class="border-2 border-black rounded-md"
+              />
+            </div>
+            <div>
+              <p class="text-base mb-2">Video presentación</p>
+              <video
+                class="border-2 border-black rounded-md"
+                [src]="modalUser.advisor?.videoIntro"
+                controls
+              ></video>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-soft btn-outline btn-primary"
-          (click)="closeModal('#nominated-modal')"
-        >
-          Cerrar
-        </button>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-soft btn-outline btn-primary"
+            (click)="closeModal('#nominated-modal')"
+          >
+            Cerrar
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
 }
