@@ -25,14 +25,14 @@ export const routes: Routes = [
             (m) => m.VerifyAccountComponent
           ),
       },
-      {
-        path: '**',
-        title: RoutesTitlesEnum.PageNotFound,
-        loadComponent: () =>
-          import('./pages/not-found/not-found.component').then(
-            (m) => m.NotFoundComponent
-          ),
-      },
+      // {
+      //   path: '**',
+      //   title: RoutesTitlesEnum.PageNotFound,
+      //   loadComponent: () =>
+      //     import('./pages/not-found/not-found.component').then(
+      //       (m) => m.NotFoundComponent
+      //     ),
+      // },
     ]
   },
   {
@@ -67,14 +67,14 @@ export const routes: Routes = [
             (m) => m.AdvisorPolicyComponent
           ),
       },
-      {
-        path: '**',
-        title: RoutesTitlesEnum.PageNotFound,
-        loadComponent: () =>
-          import('./pages/not-found/not-found.component').then(
-            (m) => m.NotFoundComponent
-          ),
-      },
+      // {
+      //   path: '**',
+      //   title: RoutesTitlesEnum.PageNotFound,
+      //   loadComponent: () =>
+      //     import('./pages/not-found/not-found.component').then(
+      //       (m) => m.NotFoundComponent
+      //     ),
+      // },
     ],
   },
   {
@@ -174,14 +174,14 @@ export const routes: Routes = [
             (m) => m.RequestLogsComponent
           ),
       },
-      {
-        path: '**',
-        title: RoutesTitlesEnum.PageNotFound,
-        loadComponent: () =>
-          import('./pages/not-found/not-found.component').then(
-            (m) => m.NotFoundComponent
-          ),
-      },
+      // {
+      //   path: '**',
+      //   title: RoutesTitlesEnum.PageNotFound,
+      //   loadComponent: () =>
+      //     import('./pages/not-found/not-found.component').then(
+      //       (m) => m.NotFoundComponent
+      //     ),
+      // },
     ],
   },
 ];
