@@ -1,12 +1,13 @@
-@defer (on viewport) { @if (isVerified()) {
-<ng-container [ngTemplateOutlet]="verified"></ng-container>
-}@else {
-<ng-container [ngTemplateOutlet]="error"></ng-container>
-
-} }@loading {
-<img alt="loading..." src="loading.gif" />
+@defer (on viewport) {
+  @if (isVerified()) {
+    <ng-container [ngTemplateOutlet]="verified"></ng-container>
+  } @else {
+    <ng-container [ngTemplateOutlet]="error"></ng-container>
+  }
+} @loading {
+  <img alt="loading..." src="loading.gif" />
 } @placeholder {
-<p>Placeholder content</p>
+  <p>Placeholder content</p>
 }
 
 <ng-template #verified>
@@ -16,6 +17,9 @@
       <h2>Felicidades</h2>
       <p class="text-xl">
         Tu dirección de correo electrónico ha sido verificada exitosamente.
+        Ahora puedes ingresar a tu cuenta y disfrutar de todas las
+        funcionalidades que <span class="font-semibold">OrbeApp</span> tiene
+        para ofrecerte.
       </p>
       <p class="text-xl">
         Ya puedes iniciar sesión en tu cuenta

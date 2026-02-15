@@ -4,7 +4,7 @@ import {
   LOCALE_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -47,7 +47,7 @@ export const appConfig: ApplicationConfig = {
     provideEnvironmentNgxMask(),
     { provide: LOCALE_ID, useValue: 'es-Ar' },
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withHashLocation()),
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideClientHydration(),
