@@ -23,5 +23,8 @@ export class AvatarComponent {
   size = input<SIZE>('md');
   src = input.required<string>();
 
-  statusConn = computed(() => `${ConnStatus[this.status()!]}`)
+  statusConn = computed(() => {
+    if (!this.status()) return '';
+    return ConnStatus[this.status() as keyof typeof ConnStatus] || '';
+  });
 }

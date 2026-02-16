@@ -104,21 +104,29 @@
     <h6>Top 10 asesores</h6>
     <div class="flex overflow-x-auto gap-2 relative p-2 bg-gray-50 rounded-md">
       @for (item of topRatedAdvisors; track $index) {
-      <div class="card sm:card-side w-72 min-h-16 ps-2 border bordered">
-        <app-avatar [src]="item.avatar" size="lg" class="m-auto" />
-        <div class="card-body justify-between flex flex-row">
-          <div class="flex flex-col">
-            <span class="font-semibold"
-              >{{ item.name }} {{ item.lastName }}</span
-            >
-            <small>{{ item.advisorDetail.category }}</small>
+        <div class="card sm:card-side w-72 min-h-16 ps-2 border bordered">
+          <!-- <app-avatar [src]="item.avatar" size="lg" class="m-auto" /> -->
+          <div class="avatar">
+            <div class="size-10 rounded-full m-auto">
+              <img
+                [src]="item.avatar"
+                alt="{{ item.name }} {{ item.lastName }}"
+              />
+            </div>
           </div>
-          <span>
-            <app-icon icon="star-filled" theme="warning" />
-            <small> {{ item.averageRating }} </small>
-          </span>
+          <div class="card-body justify-between flex flex-row">
+            <div class="flex flex-col">
+              <span class="font-semibold"
+                >{{ item.name }} {{ item.lastName }}</span
+              >
+              <small>{{ item.advisorDetail.category }}</small>
+            </div>
+            <span>
+              <app-icon icon="star-filled" theme="warning" />
+              <small> {{ item.averageRating }} </small>
+            </span>
+          </div>
         </div>
-      </div>
       }
     </div>
   </div>
@@ -144,29 +152,29 @@
           class="divide-base-content/25 divide-y *:py-3 mt-2 divide-secondary"
         >
           @for (user of nominatedAdvisors; track $index) {
-          <li>
-            <a
-              class="flex items-start sm:items-center"
-              [routerLink]="['users/user', user._id]"
-            >
-              <app-avatar [src]="user.avatar" class="me-3" />
-              <div
-                class="flex grow flex-col items-start justify-between sm:flex-row"
+            <li>
+              <a
+                class="flex items-start sm:items-center"
+                [routerLink]="['users/user', user._id]"
               >
-                <div class="user-info flex flex-col w-full">
-                  <span class="text-sm text-base-content font-medium">
-                    {{ user.name }} {{ user.lastName }}
-                  </span>
-                  <small class="text-base-content/50">
-                    {{ user.phone }}
-                  </small>
-                  <small class="text-base-content/50 self-end">
-                    {{ user.status }}
-                  </small>
+                <app-avatar [src]="user.avatar" class="me-3" />
+                <div
+                  class="flex grow flex-col items-start justify-between sm:flex-row"
+                >
+                  <div class="user-info flex flex-col w-full">
+                    <span class="text-sm text-base-content font-medium">
+                      {{ user.name }} {{ user.lastName }}
+                    </span>
+                    <small class="text-base-content/50">
+                      {{ user.phone }}
+                    </small>
+                    <small class="text-base-content/50 self-end">
+                      {{ user.status }}
+                    </small>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </li>
+              </a>
+            </li>
           }
         </ul>
       </div>
@@ -180,45 +188,6 @@
       <h6 class="title">Top asesores</h6>
       <ul class="divide-base-content/25 divide-y *:py-3 mt-2 divide-secondary">
         @for (user of topRatedAdvisors; track $index) {
-        <li>
-          <a
-            class="flex items-start sm:items-center"
-            [routerLink]="['users/user', user._id]"
-          >
-            <app-avatar [src]="user.avatar" class="me-3" />
-            <div
-              class="flex grow flex-col items-start justify-between sm:flex-row"
-            >
-              <div class="user-info flex flex-col">
-                <span class="text-sm text-base-content font-medium">
-                  {{ user.name }} {{ user.lastName }}
-                </span>
-                <small class="text-base-content/50">
-                  {{ user.advisorDetail.category }}
-                </small>
-              </div>
-              <div class="action max-sm:mt-1 flex flex-col items-center gap-1">
-                <span class="flex gap-1">
-                  <app-icon icon="star-filled" theme="warning" size="3" />
-                  <small>{{ user.averageRating }}</small>
-                </span>
-              </div>
-            </div>
-          </a>
-        </li>
-        }
-      </ul>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #newRegistrations>
-  <div class="h-96 overflow-auto">
-    <div class="card grow border bordered">
-      <div class="card-body">
-        <h6 class="title">Nuevos registros</h6>
-        <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-          @for (user of newUsers; track $index) {
           <li>
             <a
               class="flex items-start sm:items-center"
@@ -233,22 +202,63 @@
                     {{ user.name }} {{ user.lastName }}
                   </span>
                   <small class="text-base-content/50">
-                    {{ user.createdAt | date }}
+                    {{ user.advisorDetail.category }}
                   </small>
                 </div>
                 <div
                   class="action max-sm:mt-1 flex flex-col items-center gap-1"
                 >
-                  <app-badge
-                    [text]="user.role"
-                    [theme]="user.role === 'Advisor' ? 'success' : 'primary'"
-                    [outline]="true"
-                    size="sm"
-                  />
+                  <span class="flex gap-1">
+                    <app-icon icon="star-filled" theme="warning" size="3" />
+                    <small>{{ user.averageRating }}</small>
+                  </span>
                 </div>
               </div>
             </a>
           </li>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #newRegistrations>
+  <div class="h-96 overflow-auto">
+    <div class="card grow border bordered">
+      <div class="card-body">
+        <h6 class="title">Nuevos registros</h6>
+        <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+          @for (user of newUsers; track $index) {
+            <li>
+              <a
+                class="flex items-start sm:items-center"
+                [routerLink]="['users/user', user._id]"
+              >
+                <app-avatar [src]="user.avatar" class="me-3" />
+                <div
+                  class="flex grow flex-col items-start justify-between sm:flex-row"
+                >
+                  <div class="user-info flex flex-col">
+                    <span class="text-sm text-base-content font-medium">
+                      {{ user.name }} {{ user.lastName }}
+                    </span>
+                    <small class="text-base-content/50">
+                      {{ user.createdAt | date }}
+                    </small>
+                  </div>
+                  <div
+                    class="action max-sm:mt-1 flex flex-col items-center gap-1"
+                  >
+                    <app-badge
+                      [text]="user.role"
+                      [theme]="user.role === 'Advisor' ? 'success' : 'primary'"
+                      [outline]="true"
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </a>
+            </li>
           }
         </ul>
       </div>
