@@ -6,7 +6,6 @@ export interface TopRatedInterface {
   name: string;
   lastName: string;
   role: string;
-  advisor: string;
   averageRating: number;
-  advisorDetail: AdvisorInterface;
+  advisor: AdvisorInterface;
 }
