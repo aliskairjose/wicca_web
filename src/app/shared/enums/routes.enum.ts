@@ -19,7 +19,8 @@ export enum RoutesEnum {
   Payments = 'payments',
   Categories = 'categories',
   Banks = 'banks',
-  BanksAccounts = 'bank-accounts'
+  BanksAccounts = 'bank-accounts',
+  Wompi = 'wompi',
 }
 
 export enum RoutesTitlesEnum {

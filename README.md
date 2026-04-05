@@ -25,3 +25,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Generar Firma de integridad Wompi
+Para validar la integridad de la información de la transacción y evitar alteraciones, Wompi utiliza un hash criptográfico asimétrico. 
+Concatenar: <Referencia><Monto><Moneda><SecretoIntegridad>
+Generar SHA256

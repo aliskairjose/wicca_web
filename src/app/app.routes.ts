@@ -25,6 +25,13 @@ export const routes: Routes = [
             (m) => m.VerifyAccountComponent
           ),
       },
+      {
+        path: `${RoutesEnum.Wompi}`,
+        loadComponent: () =>
+          import('./pages/auth/wompi/wompi.component').then(
+            (m) => m.WompiComponent
+          ),
+      },
     ]
   },
   {
