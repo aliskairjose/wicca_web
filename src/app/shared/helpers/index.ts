@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WidgetCheckoutPayloadInterface } from 'src/app/pages/auth/wompi/interfaces/widget-checkout.interface';
 
 type ErrorMapCallBackFn = (result: string) => void;
 
@@ -46,6 +47,23 @@ export class Helper {
     }
 
     return password;
+  }
+
+  static async generateIntegrityFirm(_payload: string, integrationKey: string): Promise<string> {
+    const payload: WidgetCheckoutPayloadInterface = JSON.parse(atob(_payload));
+
+    const { reference, amountInCents, currency } = payload;
+
+    const encode = `${reference}${amountInCents}${currency}${integrationKey}`;
+
+    const ckecsum = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(encode));
+
+    const hashArray = Array.from(new Uint8Array(ckecsum));
+
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    return hashHex;
+
   }
 
 }

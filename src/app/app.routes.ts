@@ -26,7 +26,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: `${RoutesEnum.Wompi}`,
+        path: `${RoutesEnum.Wompi}/:id`,
         loadComponent: () =>
           import('./pages/auth/wompi/wompi.component').then(
             (m) => m.WompiComponent

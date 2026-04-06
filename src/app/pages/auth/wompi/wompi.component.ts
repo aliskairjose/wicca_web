@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { environment } from '@envs/environment';
+import { Helper } from '@shared/helpers';
+import { firstValueFrom } from 'rxjs';
+import { WidgetCheckoutPayloadInterface } from './interfaces/widget-checkout.interface';
 declare var WidgetCheckout: any;
 
 
@@ -12,32 +16,43 @@ declare var WidgetCheckout: any;
 })
 export class WompiComponent implements OnInit {
 
-  publicKey = environment.wompiPublicKey;
+  #publicKey = environment.wompiPublicKey;
+  #integrationKey = environment.wompiIntegrationKey;
+
+  #route = inject(ActivatedRoute);
 
   ngOnInit() {
-    this.openWompi();
+    const payload: string = this.#route.snapshot.paramMap.get('id')!;
+    this._openWompi(payload);
   }
 
-  openWompi() {
-    console.log('Opening Wompi checkout...');
+  private async _openWompi(_payload: string) {
+    const payload: WidgetCheckoutPayloadInterface = JSON.parse(atob(_payload));
+
+    const integrity = await Helper.generateIntegrityFirm(_payload, this.#integrationKey);
+
+    const {
+      currency,
+      amountInCents,
+      customerData: { email, fullName, phoneNumberPrefix, phoneNumber },
+      reference
+    } = payload;
+
     const checkout = new WidgetCheckout({
-      currency: "COP",
-      amountInCents: 2490000,
-      reference: "3b4393bafed398ba4",
-      publicKey: "pub_test_W2AG0iuu4cMtL2w64njejkl5lLj4aVxL",
-      signature: {
-        integrity:
-          "737875286dfe2e5655c840464f0988db9004ab1bf5f22e4e83479dc61e10aab1",
-      },
+      currency,
+      amountInCents,
+      reference,
+      publicKey: this.#publicKey,
+      signature: { integrity },
       customerData: {
-        email: 'user1@test.com',
-        fullName: 'Juan Perez',
-        phoneNumberPrefix: '+58',
-        phoneNumber: '4122419616',
+        email,
+        fullName,
+        phoneNumberPrefix,
+        phoneNumber,
       },
-      defaultLanguage: 'en',
       redirectUrl: "https://orbeapp.net",
     });
+
 
     checkout.open(function (result: any) {
       if (result.status === 'APPROVED') {
