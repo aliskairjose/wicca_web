@@ -52,7 +52,9 @@ export class Helper {
   static async generateIntegrityFirm(_payload: string, integrationKey: string): Promise<string> {
     const payload: WidgetCheckoutPayloadInterface = JSON.parse(atob(_payload));
 
-    const { reference, amountInCents, currency } = payload;
+    const currency = "COP";
+
+    const { reference, amountInCents } = payload;
 
     const encode = `${reference}${amountInCents}${currency}${integrationKey}`;
 

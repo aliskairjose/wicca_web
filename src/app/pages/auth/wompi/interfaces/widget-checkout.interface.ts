@@ -1,5 +1,4 @@
 export interface WidgetCheckoutPayloadInterface {
-  currency: string;
   amountInCents: number;
   reference: string;
   publicKey: string;

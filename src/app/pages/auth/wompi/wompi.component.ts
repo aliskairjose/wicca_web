@@ -17,7 +17,7 @@ declare var WidgetCheckout: any;
 export class WompiComponent implements OnInit {
 
   #publicKey = environment.wompiPublicKey;
-  #integrationKey = environment.wompiIntegrationKey;
+  #integrationKey = environment.wompiIntegrityKey;
 
   #route = inject(ActivatedRoute);
 
@@ -32,14 +32,13 @@ export class WompiComponent implements OnInit {
     const integrity = await Helper.generateIntegrityFirm(_payload, this.#integrationKey);
 
     const {
-      currency,
       amountInCents,
       customerData: { email, fullName, phoneNumberPrefix, phoneNumber },
       reference
     } = payload;
 
     const checkout = new WidgetCheckout({
-      currency,
+      currency: "COP",
       amountInCents,
       reference,
       publicKey: this.#publicKey,
@@ -55,7 +54,9 @@ export class WompiComponent implements OnInit {
 
 
     checkout.open(function (result: any) {
-      if (result.status === 'APPROVED') {
+      var transaction = result.transaction;
+      console.log("Transaction object: ", transaction);
+      if (result.transaction.status === 'APPROVED') {
         console.log('Pago aprobado');
       }
     });

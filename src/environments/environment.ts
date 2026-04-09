@@ -4,6 +4,6 @@ export const environment = {
   socket: '',
   wompiPublicKey: '',
   wompiPrivateKey: '',
-  wompiIntegrationKey: ''
+  wompiIntegrityKey: ''
 
 };
