@@ -31,5 +31,6 @@ export enum Api {
   SummaryMonthlyByYear = 'request-logs/summary/monthly-status',
   Categories = 'categories',
   CategoriesNoParams = 'categories/no-params',
+  RateExchange = 'rate-exchange',
 }
 

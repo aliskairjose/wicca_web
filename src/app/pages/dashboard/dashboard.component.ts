@@ -32,11 +32,6 @@ export class DashboardComponent {
   #notify = inject(ToastService)
   #socketService = inject(SocketService);
 
-
-  // constructor() {
-  //   this.#store.dispatch(new BankActions.ListFull(this.queryParams, this.pagination));
-  // }
-
   signout(): void {
     this.#store.dispatch(new AuthActions.Logout()).subscribe(() => {
       this.#socketService.disconnect();

@@ -3,3 +3,4 @@ export type { ReviewInterface } from './review.interface';
 export type { SideMenuInterface } from './side-menu.interface';
 export type { PaginationInterface } from './pagination.interface';
 export type { ParamsInterface } from './params.interface';
+export type { RateExchangeInterface } from './rate-exchange.interface';

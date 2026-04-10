@@ -10,6 +10,8 @@ import { SummaryMonthlyStatusInterface, SummaryStatusInterface } from './interfa
 import { AccumulatedTimeInterface, UserSummaryInterface } from '../request-logs/interfaces/summary.interface';
 import { TopRatedInterface } from './interfaces/top-rated.interface';
 import { UserInterface } from '../users/user.interface';
+import { RateExchangeInterface } from '@shared/interfaces';
+import { RateExchangeService } from '@shared/services';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +24,8 @@ import { UserInterface } from '../users/user.interface';
 export class HomeComponent implements OnInit {
 
   #store = inject(Store);
+  #rateService = inject(RateExchangeService);
+
   summaryUser: UserSummaryInterface | undefined;
   series: number[] = [];
   labels: string[] = [];
@@ -32,8 +36,17 @@ export class HomeComponent implements OnInit {
   newUsers: UserInterface[] = [];
   nominatedAdvisors: UserInterface[] = [];
 
+  rate: Partial<RateExchangeInterface> = {};
+
   ngOnInit() {
     this.loadData(this.currentYear);
+    this.#rateService.get().subscribe((res) => {
+      this.rate = res[0];
+    });
+  }
+
+  updateRate(): void {
+    console.log('update rate');
   }
 
   private async loadData(year: number) {
