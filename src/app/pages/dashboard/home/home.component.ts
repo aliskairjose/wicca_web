@@ -74,8 +74,9 @@ export class HomeComponent implements OnInit {
   onSubmit(): void {
     this.isSubmited.set(true);
     if (this.form.valid) {
+      const currentRate = this.form.value.currentRate;
       this.closeModal();
-      this.#rateService.update(this.rate()!._id, this.form.value).subscribe((res) => {
+      this.#rateService.update(this.rate()!._id, { currentRate }).subscribe((res) => {
         this.rate.set(res);
       });
     }
