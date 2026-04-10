@@ -1,7 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Inject, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AvatarComponent, IconComponent, BadgeComponent, CircularChartComponent, ColumnChartComponent } from '@shared/components';
-import { CommonModule, DatePipe } from '@angular/common';
+import { AvatarComponent, IconComponent, BadgeComponent, CircularChartComponent, ColumnChartComponent, InputComponent } from '@shared/components';
+import { CommonModule, DatePipe, DOCUMENT } from '@angular/common';
 import { HomeSelectors } from './store/home.selectors';
 import { firstValueFrom } from 'rxjs';
 import { HomeAction } from './store/home.actions';
@@ -12,17 +12,22 @@ import { TopRatedInterface } from './interfaces/top-rated.interface';
 import { UserInterface } from '../users/user.interface';
 import { RateExchangeInterface } from '@shared/interfaces';
 import { RateExchangeService } from '@shared/services';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HSOverlay } from 'flyonui/flyonui';
+import { sign } from 'crypto';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CommonModule, RouterLink, BadgeComponent, CircularChartComponent, ColumnChartComponent],
+  imports: [AvatarComponent, DatePipe, IconComponent, IconComponent, CommonModule, RouterLink, BadgeComponent, CircularChartComponent, ColumnChartComponent, ReactiveFormsModule, InputComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeComponent implements OnInit {
+  form!: FormGroup;
 
+  #fb = inject(FormBuilder);
   #store = inject(Store);
   #rateService = inject(RateExchangeService);
 
@@ -36,17 +41,51 @@ export class HomeComponent implements OnInit {
   newUsers: UserInterface[] = [];
   nominatedAdvisors: UserInterface[] = [];
 
-  rate: Partial<RateExchangeInterface> = {};
+  rate = signal<RateExchangeInterface | undefined>(undefined);
+  isSubmited = signal(false);
+
+  constructor(@Inject(DOCUMENT) private document: Document) {
+  }
+
+  get f() {
+    return this.form.controls;
+  }
 
   ngOnInit() {
+    this._loadForm();
     this.loadData(this.currentYear);
     this.#rateService.get().subscribe((res) => {
-      this.rate = res[0];
+      this.rate.set(res[0]);
     });
   }
 
-  updateRate(): void {
-    console.log('update rate');
+  openModal(): void {
+    const modal = new HSOverlay(this.document.querySelector('#rate-modal')!);
+    modal.open();
+  }
+
+  closeModal(): void {
+    const modal = new HSOverlay(this.document.querySelector('#rate-modal')!);
+    this.isSubmited.set(false);
+    this.form.reset();
+    modal.close();
+  }
+
+  onSubmit(): void {
+    this.isSubmited.set(true);
+    if (this.form.valid) {
+      this.closeModal();
+      this.#rateService.update(this.rate()!._id, this.form.value).subscribe((res) => {
+        this.rate.set(res);
+      });
+    }
+  }
+
+
+  private _loadForm(): void {
+    this.form = this.#fb.group({
+      currentRate: [0, [Validators.required]],
+    });
   }
 
   private async loadData(year: number) {

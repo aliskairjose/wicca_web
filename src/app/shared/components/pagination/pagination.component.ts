@@ -22,10 +22,7 @@ export class PaginationComponent {
   metadata = input.required<MetadataInterface>();
   onChangePage = output<number>();
 
-  currentPage = computed(() => {
-    console.log(this.metadata())
-    return this.metadata().currentPage
-  });
+  currentPage = computed(() => this.metadata().currentPage);
   controlPages = computed(() => [...new Array(this.metadata().totalPages)].map((_, i) => i + 1));
   upperLimit = computed(() => ((this.metadata().currentPage - 1) * this.metadata().itemPerPage) + this.metadata().resultsLength);
   lowerLimit = computed(() => (((this.metadata()!.currentPage! - 1) * this.metadata().itemPerPage) + 1));

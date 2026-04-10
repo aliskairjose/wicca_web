@@ -62,7 +62,6 @@ export class TextareaComponent implements ControlValueAccessor, Validators, OnCh
   }
 
   onValueChange(event: any) {
-    console.log('Textarea onValueChange', event);
     this.#onChange(event);
     this.#onTouched();
     this.validate(this.control());

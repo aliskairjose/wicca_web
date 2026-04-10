@@ -90,7 +90,6 @@ export class ColumnChartComponent implements AfterViewInit, OnInit {
   };
 
   ngOnInit() {
-    console.log(this.title());
     this.chartOptions.yaxis!.title!.text = this.title()?.toUpperCase();
   }
 

@@ -43,7 +43,6 @@ export class BankState {
   bankListFull(
     ctx: StateContext<BankStateModel>,
     { payload, pagination }: BankActions.ListFull) {
-    console.log('bankListFull Action');
     payload ??= {};
     return this.#service
       .banks(payload, pagination)

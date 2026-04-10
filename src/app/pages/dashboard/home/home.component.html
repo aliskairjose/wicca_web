@@ -78,8 +78,8 @@
       <div class="stat">
         <div class="stat-figure">
           <div class="avatar">
-            <div class="size-12 rounded-full">
-              <span (click)="updateRate()" class="cursor-pointer">
+            <div class="size-12 rounded-full tooltip">
+              <span (click)="openModal()" class="cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -97,14 +97,22 @@
                   <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
                 </svg>
               </span>
+              <span
+                class="tooltip-content tooltip-shown:opacity-100 tooltip-shown:visible"
+                role="tooltip"
+              >
+                <span class="tooltip-body">Actualizar tasa </span>
+              </span>
             </div>
           </div>
         </div>
         <div class="stat-title">Tasa de cambio</div>
         <div class="stat-value text-primary/80">
-          {{ rate.currentRate | currency: "COP" }}
+          {{ rate()?.currentRate | currency: "COP" }}
         </div>
-        <div class="stat-desc">Actualizado el {{ rate.updatedAt | date }}</div>
+        <div class="stat-desc">
+          Actualizado el {{ rate()?.updatedAt | date }}
+        </div>
       </div>
     </div>
   </div>
@@ -292,6 +300,54 @@
     </div>
   </div>
 </ng-template>
+
+<div
+  id="rate-modal"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100 modal-dialog-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Actualizar tasa de cambio</h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="w-full space-y-3 overflow-y-auto pb-3">
+            <app-input
+              [isSubmitted]="isSubmited()"
+              [control]="f['currentRate']"
+              formControlName="currentRate"
+              label="Nueva tasa de cambio"
+              type="number"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-error"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- <span class="icon-[tabler--logs] size-10"></span> -->
 
