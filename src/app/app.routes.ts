@@ -158,6 +158,14 @@ export const routes: Routes = [
             (m) => m.RequestLogsComponent
           ),
       },
+      {
+        path: RoutesEnum.Legal,
+        title: RoutesTitlesEnum.Legal,
+        loadComponent: () =>
+          import('./pages/dashboard/legal/legal.component').then(
+            (m) => m.LegalComponent
+          ),
+      },
     ],
   },
 ];
