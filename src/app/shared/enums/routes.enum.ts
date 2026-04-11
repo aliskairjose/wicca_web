@@ -19,7 +19,8 @@ export enum RoutesEnum {
   Payments = 'payments',
   Categories = 'categories',
   Banks = 'banks',
-  BanksAccounts = 'bank-accounts'
+  BanksAccounts = 'bank-accounts',
+  Legal = 'legal',
 }
 
 export enum RoutesTitlesEnum {
@@ -39,5 +40,6 @@ export enum RoutesTitlesEnum {
   Categories = 'Categorías',
   Banks = 'Bancos',
   BanksAccounts = 'Cuentas bancarias',
-  PageNotFound = 'Página no encontrada'
+  PageNotFound = 'Página no encontrada',
+  Legal = 'Aviso legal',
 }
