@@ -52,4 +52,10 @@ export const MENU: SideMenuInterface[] = [
     title: 'Pagos',
     role: [RoleEnum.Admin],
   },
+  {
+    icon: 'report-money',
+    path: 'legal',
+    title: 'Pagos',
+    role: [RoleEnum.Admin],
+  },
 ];
