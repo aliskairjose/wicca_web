@@ -1,0 +1,6 @@
+[data-tab].active.active-tab\:tab-active.tab:not([disabled]) {
+    --tw-border-opacity: 1;
+    border-color: oklch(0.89 0.01 0);
+    color: var(--fallback-p, oklch(var(--p) / var(--tw-text-opacity, 1)));
+    --tw-text-opacity: 1;
+}
