@@ -1,1 +1,84 @@
-<p>planes works!</p>
+<div class="w-full py-6 px-4 card-bordered">
+  <div class="w-full flex justify-end mb-6">
+    <button
+      type="button"
+      class="btn btn-primary btn-outline"
+      (click)="openModal()"
+    >
+      Agregar Plan
+      <span class="icon-[tabler--plus] size-5"></span>
+    </button>
+  </div>
+  <div class="w-full overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="font-bold">#</th>
+          <th class="font-bold">Monto</th>
+          <th class="font-bold">Bono</th>
+          <th class="font-bold">Creado el</th>
+          <th class="font-bold">Actualizado el</th>
+          <th class="font-bold"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (plan of planes; track $index) {
+          <tr>
+            <td class="text-nowrap">{{ $index + 1 }}</td>
+            <td class="text-nowrap">{{ plan.amount | currency }}</td>
+            <td class="text-nowrap">{{ plan.bonus | currency }}</td>
+            <td class="text-nowrap">{{ plan.createdAt | date }}</td>
+            <td class="text-nowrap">{{ plan.updatedAt | date }}</td>
+            <td>
+              <button
+                class="btn btn-square btn-outline btn-primary btn-sm"
+                aria-label="Action button"
+                (click)="openModal(true, $index)"
+              >
+                <span class="icon-[tabler--pencil] size-5"></span>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div
+  id="plan-modal"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          {{ isEdit() ? "Actualizar" : "Agregar" }} plan
+        </h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-error"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="closeModal()">
+          {{ isEdit() ? "Actualizar" : "Guardar" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
