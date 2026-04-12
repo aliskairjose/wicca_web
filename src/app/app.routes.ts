@@ -59,6 +59,30 @@ export const routes: Routes = [
             (m) => m.AdvisorPolicyComponent
           ),
       },
+      {
+        path: RoutesEnum.PrivacyPolicies,
+        title: RoutesTitlesEnum.PrivacyPolicies,
+        loadComponent: () =>
+          import('./pages/landing/privacy-policies/privacy-policies.component').then(
+            (m) => m.PrivacyPoliciesComponent
+          ),
+      },
+      {
+        path: RoutesEnum.UserPolicies,
+        title: RoutesTitlesEnum.UserPolicies,
+        loadComponent: () =>
+          import('./pages/landing/user-policies/user-policies.component').then(
+            (m) => m.UserPoliciesComponent
+          ),
+      },
+      {
+        path: RoutesEnum.PrivacyPolicies,
+        title: RoutesTitlesEnum.PrivacyPolicies,
+        loadComponent: () =>
+          import('./pages/landing/privacy-policies/privacy-policies.component').then(
+            (m) => m.PrivacyPoliciesComponent
+          ),
+      },
     ],
   },
   {

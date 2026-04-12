@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { LegalService } from './legal.service';
 import { LegalInterface } from './interfaces/legal.interface';
 import { LegalType } from './types/legal.type';
+import { LegalEnum } from './enums/legal.enum';
 
 @Component({
   selector: 'app-legal',
@@ -16,8 +17,9 @@ import { LegalType } from './types/legal.type';
   styleUrl: './legal.component.scss',
 })
 export class LegalComponent implements OnInit {
-  termAndCondForm!: FormGroup;
+  userPoliciesForm!: FormGroup;
   advisorPoliciesForm!: FormGroup;
+  privacyPoliciesForm!: FormGroup;
 
   legals = signal<LegalInterface[]>([]);
 
@@ -26,16 +28,20 @@ export class LegalComponent implements OnInit {
 
 
   #onSave = {
-    termAndCond: () => this._onSaveTermsAndConditions(),
+    userPolicies: () => this._onSaveUserPolicies(),
     advisorPolicies: () => this._onSaveAdvisorPolicies(),
+    privacyPolicies: () => this._onSavePrivacyPolicies(),
   }
 
   ngOnInit(): void {
     this._loadData();
-    this.termAndCondForm = this.#fb.group({
+    this.userPoliciesForm = this.#fb.group({
       content: ['']
     });
     this.advisorPoliciesForm = this.#fb.group({
+      content: ['']
+    });
+    this.privacyPoliciesForm = this.#fb.group({
       content: ['']
     });
   }
@@ -46,37 +52,58 @@ export class LegalComponent implements OnInit {
     base_url: '/tinymce', // Root for resources
     suffix: '.min',
     toolbar:
-      'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | help',
+      'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | outdent indent | help',
   };
 
   onSubmit(type: LegalType): void {
     this.#onSave[type]();
   }
 
-  private _onSaveTermsAndConditions(): void {
-    console.log('Saving Terms and Conditions...');
-    const exist = this.legals().find(legal => legal.type === 'termAndCond');
+  private _onSaveUserPolicies(): void {
+    const exist = this.legals().find(legal => legal.type === LegalEnum.UserPolicies);
     (exist !== undefined)
-      ? this._update(exist._id, this.termAndCondForm.value.content)
-      : this._create({ ...this.termAndCondForm.value, type: 'termAndCond' });
+      ? this._update(exist._id, this.userPoliciesForm.value.content)
+      : this._create({ ...this.userPoliciesForm.value, type: LegalEnum.UserPolicies });
+  }
+
+  private _onSavePrivacyPolicies(): void {
+    const exist = this.legals().find(legal => legal.type === LegalEnum.PrivacyPolicies);
+    (exist !== undefined)
+      ? this._update(exist._id, this.privacyPoliciesForm.value.content)
+      : this._create({ ...this.privacyPoliciesForm.value, type: LegalEnum.PrivacyPolicies });
   }
 
   private _onSaveAdvisorPolicies(): void {
-    console.log('Saving Advisor Policies...');
-    const exist = this.legals().find(legal => legal.type === 'advisorPolicies');
+    const exist = this.legals().find(legal => legal.type === LegalEnum.AdvisorPolicies);
     (exist !== undefined)
       ? this._update(exist._id, this.advisorPoliciesForm.value.content)
-      : this._create({ ...this.advisorPoliciesForm.value, type: 'advisorPolicies' });
+      : this._create({ ...this.advisorPoliciesForm.value, type: LegalEnum.AdvisorPolicies });
   }
 
   private _update(id: string, content: string): void {
     this.#service.update(id, { content }).subscribe(() => this._loadData());
   }
+  
   private _create(legal: Omit<LegalInterface, '_id'>): void {
     this.#service.create(legal).subscribe(() => this._loadData());
   }
 
   private _loadData(): void {
-    this.#service.list().subscribe((res) => this.legals.set(res));
+    this.#service.list().subscribe((res) => {
+		this.legals.set(res);
+		const userPolicies = res.find(legal => legal.type === LegalEnum.UserPolicies);
+		const advisorPolicies = res.find(legal => legal.type === LegalEnum.AdvisorPolicies);
+		const privacyPolicies = res.find(legal => legal.type === LegalEnum.PrivacyPolicies);
+
+		if (userPolicies) {
+			this.userPoliciesForm.patchValue({ content: userPolicies.content });
+		}
+		if (advisorPolicies) {
+			this.advisorPoliciesForm.patchValue({ content: advisorPolicies.content });
+		}
+		if (privacyPolicies) {
+			this.privacyPoliciesForm.patchValue({ content: privacyPolicies.content });
+		}
+	});
   }
 }
