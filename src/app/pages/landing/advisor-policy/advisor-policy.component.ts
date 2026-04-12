@@ -13,10 +13,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class AdvisorPolicyComponent implements OnInit {
   #service = inject(LegalService);
+  #sanitizer = inject(DomSanitizer);
 
   advisorPolicies: string | undefined;
 
-  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.#service.list().subscribe((res) => {
@@ -27,6 +27,6 @@ export class AdvisorPolicyComponent implements OnInit {
   }
 
   transformYourHtml(): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(this.advisorPolicies!);
+    return this.#sanitizer.bypassSecurityTrustHtml(this.advisorPolicies!);
   }
 }
