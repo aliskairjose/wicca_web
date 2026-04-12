@@ -1,4 +1,5 @@
 export enum LegalEnum {
-  TermAndCond = 'termAndCond',
   AdvisorPolicies = 'advisorPolicies',
+  UserPolicies = 'userPolicies',
+  PrivacyPolicies = 'privacyPolicies',
 }

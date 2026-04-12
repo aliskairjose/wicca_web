@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { LegalService } from '../../dashboard/legal/legal.service';
-import { LegalInterface } from '../../dashboard/legal/interfaces/legal.interface';
 import { LegalEnum } from '../../dashboard/legal/enums/legal.enum';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 

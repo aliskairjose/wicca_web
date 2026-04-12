@@ -2,7 +2,6 @@
 const { addDynamicIconSelectors } = require("@iconify/tailwind");
 
 module.exports = {
-  important: true,
   content: [
     "./src/**/*.{html,ts}",
     "./node_modules/flyonui/dist/js/*.js",

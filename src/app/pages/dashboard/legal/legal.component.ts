@@ -17,8 +17,9 @@ import { LegalEnum } from './enums/legal.enum';
   styleUrl: './legal.component.scss',
 })
 export class LegalComponent implements OnInit {
-  termAndCondForm!: FormGroup;
+  userPoliciesForm!: FormGroup;
   advisorPoliciesForm!: FormGroup;
+  privacyPoliciesForm!: FormGroup;
 
   legals = signal<LegalInterface[]>([]);
 
@@ -27,16 +28,20 @@ export class LegalComponent implements OnInit {
 
 
   #onSave = {
-    termAndCond: () => this._onSaveTermsAndConditions(),
+    userPolicies: () => this._onSaveUserPolicies(),
     advisorPolicies: () => this._onSaveAdvisorPolicies(),
+    privacyPolicies: () => this._onSavePrivacyPolicies(),
   }
 
   ngOnInit(): void {
     this._loadData();
-    this.termAndCondForm = this.#fb.group({
+    this.userPoliciesForm = this.#fb.group({
       content: ['']
     });
     this.advisorPoliciesForm = this.#fb.group({
+      content: ['']
+    });
+    this.privacyPoliciesForm = this.#fb.group({
       content: ['']
     });
   }
@@ -54,11 +59,18 @@ export class LegalComponent implements OnInit {
     this.#onSave[type]();
   }
 
-  private _onSaveTermsAndConditions(): void {
-    const exist = this.legals().find(legal => legal.type === LegalEnum.TermAndCond);
+  private _onSaveUserPolicies(): void {
+    const exist = this.legals().find(legal => legal.type === LegalEnum.UserPolicies);
     (exist !== undefined)
-      ? this._update(exist._id, this.termAndCondForm.value.content)
-      : this._create({ ...this.termAndCondForm.value, type: LegalEnum.TermAndCond });
+      ? this._update(exist._id, this.userPoliciesForm.value.content)
+      : this._create({ ...this.userPoliciesForm.value, type: LegalEnum.UserPolicies });
+  }
+
+  private _onSavePrivacyPolicies(): void {
+    const exist = this.legals().find(legal => legal.type === LegalEnum.PrivacyPolicies);
+    (exist !== undefined)
+      ? this._update(exist._id, this.privacyPoliciesForm.value.content)
+      : this._create({ ...this.privacyPoliciesForm.value, type: LegalEnum.PrivacyPolicies });
   }
 
   private _onSaveAdvisorPolicies(): void {
@@ -78,13 +90,18 @@ export class LegalComponent implements OnInit {
   private _loadData(): void {
     this.#service.list().subscribe((res) => {
 		this.legals.set(res);
-		const termAndCond = res.find(legal => legal.type === LegalEnum.TermAndCond);
+		const userPolicies = res.find(legal => legal.type === LegalEnum.UserPolicies);
 		const advisorPolicies = res.find(legal => legal.type === LegalEnum.AdvisorPolicies);
-		if (termAndCond) {
-			this.termAndCondForm.patchValue({ content: termAndCond.content });
+		const privacyPolicies = res.find(legal => legal.type === LegalEnum.PrivacyPolicies);
+    
+		if (userPolicies) {
+			this.userPoliciesForm.patchValue({ content: userPolicies.content });
 		}
 		if (advisorPolicies) {
 			this.advisorPoliciesForm.patchValue({ content: advisorPolicies.content });
+		}
+		if (privacyPolicies) {
+			this.privacyPoliciesForm.patchValue({ content: privacyPolicies.content });
 		}
 	});
   }
