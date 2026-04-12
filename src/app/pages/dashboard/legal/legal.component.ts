@@ -83,6 +83,7 @@ export class LegalComponent implements OnInit {
   private _update(id: string, content: string): void {
     this.#service.update(id, { content }).subscribe(() => this._loadData());
   }
+  
   private _create(legal: Omit<LegalInterface, '_id'>): void {
     this.#service.create(legal).subscribe(() => this._loadData());
   }
@@ -93,7 +94,7 @@ export class LegalComponent implements OnInit {
 		const userPolicies = res.find(legal => legal.type === LegalEnum.UserPolicies);
 		const advisorPolicies = res.find(legal => legal.type === LegalEnum.AdvisorPolicies);
 		const privacyPolicies = res.find(legal => legal.type === LegalEnum.PrivacyPolicies);
-    
+
 		if (userPolicies) {
 			this.userPoliciesForm.patchValue({ content: userPolicies.content });
 		}
