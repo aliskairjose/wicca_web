@@ -1,12 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { LegalService } from '../../dashboard/legal/legal.service';
+import { LegalInterface } from '../../dashboard/legal/interfaces/legal.interface';
+import { LegalEnum } from '../../dashboard/legal/enums/legal.enum';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-advisor-policy',
   standalone: true,
   imports: [],
   templateUrl: './advisor-policy.component.html',
-  styleUrl: './advisor-policy.component.scss'
+  styleUrl: './advisor-policy.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
-export class AdvisorPolicyComponent {
+export class AdvisorPolicyComponent implements OnInit {
+  #service = inject(LegalService);
 
+  advisorPolicies: string | undefined;
+
+  constructor(private sanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    this.#service.list().subscribe((res) => {
+      this.advisorPolicies = res.find(
+        (legal) => legal.type === LegalEnum.AdvisorPolicies,
+      )?.content;
+    });
+  }
+
+  transformYourHtml(): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(this.advisorPolicies!);
+  }
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { LegalService } from './legal.service';
 import { LegalInterface } from './interfaces/legal.interface';
 import { LegalType } from './types/legal.type';
+import { LegalEnum } from './enums/legal.enum';
 
 @Component({
   selector: 'app-legal',
@@ -46,7 +47,7 @@ export class LegalComponent implements OnInit {
     base_url: '/tinymce', // Root for resources
     suffix: '.min',
     toolbar:
-      'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | help',
+      'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | outdent indent | help',
   };
 
   onSubmit(type: LegalType): void {
@@ -54,19 +55,17 @@ export class LegalComponent implements OnInit {
   }
 
   private _onSaveTermsAndConditions(): void {
-    console.log('Saving Terms and Conditions...');
-    const exist = this.legals().find(legal => legal.type === 'termAndCond');
+    const exist = this.legals().find(legal => legal.type === LegalEnum.TermAndCond);
     (exist !== undefined)
       ? this._update(exist._id, this.termAndCondForm.value.content)
-      : this._create({ ...this.termAndCondForm.value, type: 'termAndCond' });
+      : this._create({ ...this.termAndCondForm.value, type: LegalEnum.TermAndCond });
   }
 
   private _onSaveAdvisorPolicies(): void {
-    console.log('Saving Advisor Policies...');
-    const exist = this.legals().find(legal => legal.type === 'advisorPolicies');
+    const exist = this.legals().find(legal => legal.type === LegalEnum.AdvisorPolicies);
     (exist !== undefined)
       ? this._update(exist._id, this.advisorPoliciesForm.value.content)
-      : this._create({ ...this.advisorPoliciesForm.value, type: 'advisorPolicies' });
+      : this._create({ ...this.advisorPoliciesForm.value, type: LegalEnum.AdvisorPolicies });
   }
 
   private _update(id: string, content: string): void {
@@ -77,6 +76,16 @@ export class LegalComponent implements OnInit {
   }
 
   private _loadData(): void {
-    this.#service.list().subscribe((res) => this.legals.set(res));
+    this.#service.list().subscribe((res) => {
+		this.legals.set(res);
+		const termAndCond = res.find(legal => legal.type === LegalEnum.TermAndCond);
+		const advisorPolicies = res.find(legal => legal.type === LegalEnum.AdvisorPolicies);
+		if (termAndCond) {
+			this.termAndCondForm.patchValue({ content: termAndCond.content });
+		}
+		if (advisorPolicies) {
+			this.advisorPoliciesForm.patchValue({ content: advisorPolicies.content });
+		}
+	});
   }
 }
