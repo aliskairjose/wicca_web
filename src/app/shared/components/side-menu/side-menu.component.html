@@ -185,6 +185,17 @@
        <li>
         <a
           class="font-light hover:bg-transparent px-0 text-slate-100"
+          routerLink="planes"
+          routerLinkActive="router-link-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <span class="icon-[tabler--gavel] size-6"></span>
+          Planes
+        </a>
+      </li>
+       <li>
+        <a
+          class="font-light hover:bg-transparent px-0 text-slate-100"
           routerLink="legal"
           routerLinkActive="router-link-active"
           [routerLinkActiveOptions]="{ exact: true }"

@@ -190,6 +190,14 @@ export const routes: Routes = [
             (m) => m.LegalComponent
           ),
       },
+      {
+        path: RoutesEnum.Planes,
+        title: RoutesTitlesEnum.Planes,
+        loadComponent: () =>
+          import('./pages/dashboard/planes/planes.component').then(
+            (m) => m.PlanesComponent
+          ),
+      },
     ],
   },
 ];
