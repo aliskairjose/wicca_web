@@ -1,6 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LegalService } from './legal.service';
+import { LegalInterface } from './interfaces/legal.interface';
+import { LegalType } from './types/legal.type';
 
 @Component({
   selector: 'app-legal',
@@ -16,9 +19,19 @@ export class LegalComponent implements OnInit {
   termAndCondForm!: FormGroup;
   advisorPoliciesForm!: FormGroup;
 
+  legals = signal<LegalInterface[]>([]);
+
+  #service = inject(LegalService);
   #fb = inject(FormBuilder);
 
+
+  #onSave = {
+    termAndCond: () => this._onSaveTermsAndConditions(),
+    advisorPolicies: () => this._onSaveAdvisorPolicies(),
+  }
+
   ngOnInit(): void {
+    this._loadData();
     this.termAndCondForm = this.#fb.group({
       content: ['']
     });
@@ -26,7 +39,6 @@ export class LegalComponent implements OnInit {
       content: ['']
     });
   }
-
 
   init: EditorComponent['init'] = {
     menubar: false,
@@ -37,13 +49,34 @@ export class LegalComponent implements OnInit {
       'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | help',
   };
 
-  onSaveTermAndCond() {
-    const content = this.termAndCondForm.value.content;
-    console.log(content);
+  onSubmit(type: LegalType): void {
+    this.#onSave[type]();
   }
 
-  onSaveAdvisorPolicies() {
-    const content = this.advisorPoliciesForm.value.content;
-    console.log(content);
+  private _onSaveTermsAndConditions(): void {
+    console.log('Saving Terms and Conditions...');
+    const exist = this.legals().find(legal => legal.type === 'termAndCond');
+    (exist !== undefined)
+      ? this._update(exist._id, this.termAndCondForm.value.content)
+      : this._create({ ...this.termAndCondForm.value, type: 'termAndCond' });
+  }
+
+  private _onSaveAdvisorPolicies(): void {
+    console.log('Saving Advisor Policies...');
+    const exist = this.legals().find(legal => legal.type === 'advisorPolicies');
+    (exist !== undefined)
+      ? this._update(exist._id, this.advisorPoliciesForm.value.content)
+      : this._create({ ...this.advisorPoliciesForm.value, type: 'advisorPolicies' });
+  }
+
+  private _update(id: string, content: string): void {
+    this.#service.update(id, { content }).subscribe(() => this._loadData());
+  }
+  private _create(legal: Omit<LegalInterface, '_id'>): void {
+    this.#service.create(legal).subscribe(() => this._loadData());
+  }
+
+  private _loadData(): void {
+    this.#service.list().subscribe((res) => this.legals.set(res));
   }
 }

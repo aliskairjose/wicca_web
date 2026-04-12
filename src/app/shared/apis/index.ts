@@ -32,5 +32,6 @@ export enum Api {
   Categories = 'categories',
   CategoriesNoParams = 'categories/no-params',
   RateExchange = 'rate-exchange',
+  Legal = 'legal',
 }
 
