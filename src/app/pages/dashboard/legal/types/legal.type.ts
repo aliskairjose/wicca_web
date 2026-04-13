@@ -1,1 +1,1 @@
-export type LegalType = 'userPolicies' | 'advisorPolicies' | 'privacyPolicies';
+export type LegalType = 'userPolicies' | 'advisorPolicies' | 'privacyPolicies' | 'faq';

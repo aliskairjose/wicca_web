@@ -37,6 +37,17 @@
   >
     Políticas de privacidad
   </button>
+  <button
+    type="button"
+    class="tab active-tab:tab-active"
+    id="tabs-basic-item-4"
+    data-tab="#tabs-basic-4"
+    aria-controls="tabs-basic-4"
+    role="tab"
+    aria-selected="false"
+  >
+    Preguntas frecuentes
+  </button>
   
 </nav>
 
@@ -82,6 +93,23 @@
         class="btn btn-primary mt-4"
         type="submit"
         (click)="onSubmit('privacyPolicies')"
+      >
+        Guardar
+      </button>
+    </form>
+  </div>
+  <div
+    id="tabs-basic-4"
+    class="hidden"
+    role="tabpanel"
+    aria-labelledby="tabs-basic-item-4"
+  >
+    <form [formGroup]="faqForm">
+      <editor [init]="init" licenseKey="gpl" formControlName="content" />
+      <button
+        class="btn btn-primary mt-4"
+        type="submit"
+        (click)="onSubmit('faq')"
       >
         Guardar
       </button>

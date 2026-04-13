@@ -83,6 +83,14 @@ export const routes: Routes = [
             (m) => m.PrivacyPoliciesComponent
           ),
       },
+      {
+        path: RoutesEnum.FAQ,
+        title: RoutesTitlesEnum.FAQ,
+        loadComponent: () =>
+          import('./pages/landing/faq/faq.component').then(
+            (m) => m.FaqComponent
+          ),
+      },
     ],
   },
   {

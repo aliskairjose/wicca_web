@@ -10,6 +10,7 @@ export enum RoutesEnum {
   AdvisorPolicy = 'advisor-policy',
   UserPolicies = 'user-policies',
   PrivacyPolicies = 'privacy-policies',
+  FAQ = 'faq',
   Users = 'users',
   Advisors = 'advisors',
   Advisor = 'advisor',
@@ -48,4 +49,5 @@ export enum RoutesTitlesEnum {
   PageNotFound = 'Página no encontrada',
   Legal = 'Aviso legal',
   Planes = 'Planes y paquetes',
+  FAQ = 'Preguntas frecuentes'
 }
