@@ -42,7 +42,7 @@
               <button
                 class="btn btn-square btn-outline btn-primary btn-sm"
                 aria-label="Action button"
-                (click)="openModal(true, $index)"
+                (click)="openModal(true, plan)"
               >
                 <span class="icon-[tabler--pencil] size-5"></span>
               </button>
@@ -50,7 +50,7 @@
               <button
                 class="btn btn-square btn-outline btn-error btn-sm"
                 aria-label="Action button"
-                (click)="openModal(true, $index)"
+                (click)="openDeleteModal(plan)"
               >
                 <span class="icon-[tabler--trash] size-5"></span>
               </button>
@@ -64,7 +64,7 @@
 
 <div
   id="plan-modal"
-  class="overlay modal overlay-open:opacity-100 hidden modal-middle"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle [--overlay-backdrop:static]"
   role="dialog"
   tabindex="-1"
 >
@@ -116,6 +116,45 @@
         </button>
         <button type="button" class="btn btn-primary" (click)="onSubmit()">
           {{ isEdit() ? "Actualizar" : "Guardar" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  id="delete-modal"
+  class="overlay modal overlay-open:opacity-100 hidden modal-middle [--overlay-backdrop:static]"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog overlay-open:opacity-100">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          Esta seguro que desea eliminar este plan?
+        </h3>
+        <button
+          type="button"
+          class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+          aria-label="Close"
+          (click)="closeDeleteModal()"
+        >
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-soft btn-error"
+          (click)="closeDeleteModal()"
+        >
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onDelete()">
+          Si, eliminar
         </button>
       </div>
     </div>
