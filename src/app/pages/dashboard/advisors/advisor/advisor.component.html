@@ -1,232 +1,235 @@
 @if (user) {
-<main class="space-y-4">
-  <div class="grid md:grid-cols-12 grid-cols-1 md:gap-4 gap-2">
-    <div class="xl:col-span-4 md:col-span-6 col-span-12 space-y-4">
-      <ng-container [ngTemplateOutlet]="profile"></ng-container>
-      <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
-      <ng-container [ngTemplateOutlet]="wallet"></ng-container>
-    </div>
-    <div class="xl:col-span-8 md:col-span-6 col-span-12 space-y-6">
-      <div class="grid xl:grid-cols-2 grid-cols-1 gap-4">
-        <ng-container [ngTemplateOutlet]="rateStats"></ng-container>
+  <main class="space-y-4">
+    <div class="grid md:grid-cols-12 grid-cols-1 md:gap-4 gap-2">
+      <div class="xl:col-span-4 md:col-span-6 col-span-12 space-y-4">
+        <ng-container [ngTemplateOutlet]="profile"></ng-container>
+        <ng-container [ngTemplateOutlet]="dateInfo"></ng-container>
+        <ng-container [ngTemplateOutlet]="wallet"></ng-container>
       </div>
-      <ng-container [ngTemplateOutlet]="bio"></ng-container>
-      <div class="grid xl:grid-cols-2 grid-cols-1 gap-4">
-        <ng-container [ngTemplateOutlet]="chats"></ng-container>
-        <ng-container [ngTemplateOutlet]="advisorReviews"></ng-container>
+      <div class="xl:col-span-8 md:col-span-6 col-span-12 space-y-6">
+        <div class="grid xl:grid-cols-2 grid-cols-1 gap-4">
+          <ng-container [ngTemplateOutlet]="rateStats"></ng-container>
+        </div>
+        <ng-container [ngTemplateOutlet]="bio"></ng-container>
+        <div class="grid xl:grid-cols-2 grid-cols-1 gap-4">
+          <ng-container [ngTemplateOutlet]="chats"></ng-container>
+          <ng-container [ngTemplateOutlet]="advisorReviews"></ng-container>
+        </div>
       </div>
     </div>
-  </div>
-  <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
-</main>
+    <ng-container [ngTemplateOutlet]="requestLogs"></ng-container>
+  </main>
 
-<ng-template #requestLogs>
-  <div class="grid xl:grid-cols-2 grid-cols-1 md:gap-3 gap-8">
+  <ng-template #requestLogs>
+    <div class="grid xl:grid-cols-2 grid-cols-1 md:gap-3 gap-8">
+      <div class="card">
+        <div class="card-body">
+          <h5>Solicitudes</h5>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>
+            Tiempo acumulado
+            <span class="text-sm"
+              >{{ months[timeAccumulatedMonthly!.month] }}
+              {{ timeAccumulatedMonthly!.year }}</span
+            >
+          </h5>
+          <app-circular-chart [labels]="timeLabel" [series]="timeAccumulated" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #profile>
+    <div class="card">
+      <div class="card-header flex flex-col items-center gap-y-4">
+        <div class="avatar" [class]="statusClass()">
+          <div class="size-24 rounded-full">
+            <img [src]="user.avatar" alt="avatar" />
+          </div>
+        </div>
+        <div class="card-title text-primary/80 text-center">
+          {{ fullName() }}
+          <p class="text-base text-secondary font-light text-center">
+            {{ user.email }}
+            <br />
+            <small class="text-sm text-gray-400">{{ user.phone }}</small>
+          </p>
+        </div>
+      </div>
+      <div class="card-body bg-gray-50">
+        <div class="grid grid-cols-2">
+          <ul class="list-none space-y-1.5">
+            <li>
+              <small>Categoría</small>
+              <p class="font-semibold text-secondary/90">
+                {{ user.advisor?.category }}
+              </p>
+            </li>
+            <li>
+              <small>Idiomas</small>
+              <p class="font-semibold text-secondary/90">
+                {{ user.language?.join(" y ") }}
+              </p>
+            </li>
+          </ul>
+          <ul class="list-none space-y-1.5 text-right">
+            <li>
+              <small>Chat</small>
+              <p class="font-semibold text-secondary/90">
+                {{ user.advisor?.chatPrice | currency }}/min.
+              </p>
+            </li>
+            <li>
+              <small>Llamadas</small>
+              <p class="font-semibold text-secondary/90">
+                {{ user.advisor?.callPrice | currency }}/min.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #rateStats>
     <div class="card">
       <div class="card-body">
-        <h5>Solicitudes</h5>
-        <!-- <app-circular-chart
-          type="donut"
-          [labels]="labels"
-          [series]="[requestsStatus.accepts!, requestsStatus.rejects!]"
-        /> -->
+        <app-rate-stats [stats]="user.rateStats!" />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #bio>
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <div class="mt-2.5">
+            <h6 class="mb-1.5 text-secondary">Acerca de mi</h6>
+            <p>{{ user.advisor?.description }}</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card">
       <div class="card-body">
-        <h5>
-          Tiempo acumulado
-          <span class="text-sm"
-            >{{ months[timeAccumulatedMonthly!.month] }}
-            {{ timeAccumulatedMonthly!.year }}</span
+        <div>
+          <div class="mt-2.5">
+            <h6 class="mb-1.5 text-secondary">Experiencia</h6>
+            <p>{{ user.advisor?.experience }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #wallet>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="title">Mi billetera</h5>
+        <div class="grid grid-cols-2">
+          <div class="mt-2">
+            <small>Saldo</small>
+            <p class="font-semibold text-secondary/90">
+              {{ user.wallet.balance | currency }}
+            </p>
+          </div>
+          <div class="mt-2 text-right">
+            <small>Ganancias totales</small>
+            <p class="font-semibold text-secondary/90">
+              {{ totalEarnings() | currency }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #dateInfo>
+    <div class="card">
+      <div class="card-body">
+        <div class="w-full">
+          <ul
+            class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse text-sm"
           >
-        </h5>
-        <app-circular-chart [labels]="timeLabel" [series]="timeAccumulated" />
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #profile>
-  <div class="card">
-    <div class="card-header flex flex-col items-center gap-y-4">
-      <div class="avatar" [class]="statusClass()">
-        <div class="size-24 rounded-full">
-          <img [src]="user.avatar" alt="avatar" />
-        </div>
-      </div>
-      <div class="card-title text-primary/80 text-center">
-        {{ fullName() }}
-        <p class="text-base text-secondary font-light text-center">
-          {{ user.email }}
-          <br />
-          <small class="text-sm text-gray-400">{{ user.phone }}</small>
-        </p>
-      </div>
-    </div>
-    <div class="card-body bg-gray-50">
-      <div class="grid grid-cols-2">
-        <ul class="list-none space-y-1.5">
-          <li>
-            <small>Categoría</small>
-            <p class="font-semibold text-secondary/90">
-              {{ user.advisor?.category }}
-            </p>
-          </li>
-          <li>
-            <small>Idiomas</small>
-            <p class="font-semibold text-secondary/90">
-              {{ user.language?.join(" y ") }}
-            </p>
-          </li>
-        </ul>
-        <ul class="list-none space-y-1.5 text-right">
-          <li>
-            <small>Chat</small>
-            <p class="font-semibold text-secondary/90">
-              {{ user.advisor?.chatPrice | currency }}/min.
-            </p>
-          </li>
-          <li>
-            <small>Llamadas</small>
-            <p class="font-semibold text-secondary/90">
-              {{ user.advisor?.callPrice | currency }}/min.
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #rateStats>
-  <div class="card">
-    <div class="card-body">
-      <app-rate-stats [stats]="user.rateStats!" />
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #bio>
-  <div class="card">
-    <div class="card-body">
-      <div>
-        <div class="mt-2.5">
-          <h6 class="mb-1.5 text-secondary">Acerca de mi</h6>
-          <p>{{ user.advisor?.description }}</p>
+            <li class="w-full text-left">
+              <small>Fecha registro</small>
+              <p class="font-semibold text-secondary/90">
+                {{ user.createdAt | date }}
+              </p>
+            </li>
+            <li class="w-full text-right">
+              <small>Última conexión</small>
+              <p class="font-semibold text-secondary/90">
+                {{ user.lastConnect | date: "medium" }}
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <div>
-        <div class="mt-2.5">
-          <h6 class="mb-1.5 text-secondary">Experiencia</h6>
-          <p>{{ user.advisor?.experience }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
+  </ng-template>
 
-<ng-template #wallet>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="title">Mi billetera</h5>
-      <div class="grid grid-cols-2">
-        <div class="mt-2">
-          <small>Saldo</small>
-          <p class="font-semibold text-secondary/90">
-            {{ user.wallet.balance | currency }}
-          </p>
-        </div>
-        <div class="mt-2 text-right">
-          <small>Ganancias totales</small>
-          <p class="font-semibold text-secondary/90">
-            {{ totalEarnings() | currency }}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #dateInfo>
-  <div class="card">
-    <div class="card-body">
-      <div class="w-full">
-        <ul
-          class="border-base-content/25 divide-base-content/25 flex flex-col divide-y rounded-md first:*:rounded-t-md last:*:rounded-b-md sm:flex-row sm:divide-x sm:divide-y-0 first:*:sm:rounded-s-md first:*:sm:rounded-tr-none last:*:sm:rounded-e-md last:*:sm:rounded-bl-none rtl:divide-x-reverse text-sm"
-        >
-          <li class="w-full text-left">
-            <small>Fecha registro</small>
-            <p class="font-semibold text-secondary/90">
-              {{ user.createdAt | date }}
-            </p>
-          </li>
-          <li class="w-full text-right">
-            <small>Última conexión</small>
-            <p class="font-semibold text-secondary/90">
-              {{ user.lastConnect | date : "medium" }}
-            </p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #advisorReviews>
-  <div class="h-72 overflow-auto">
-    <div class="card">
-      <div class="card-body space-y-3 h-full">
-        <h5 class="title">Reviews</h5>
-        <ul
-          class="border-base-content/25 divide-base-content/25 divide-y-[1px] space-y-2"
-        >
-          @for (review of reviews?.results; track $index;let first=$first) {
-          <li [class.pt-2]="!first">
-            <div class="flex flex-col px-4">
-              <div class="flex justify-between">
-                <div class="flex flex-row gap-2">
-                  <app-avatar [src]="review.reviewedBy.avatar" size="md" />
-                  <div>
-                    <p class="font-semibold">
-                      {{ review.reviewedBy.name }}
-                      {{ review.reviewedBy.lastName }}
-                    </p>
-                    <small class="text-gray-500">{{
-                      review.createdAt | date
-                    }}</small>
+  <ng-template #advisorReviews>
+    <div class="h-72 overflow-auto">
+      <div class="card">
+        <div class="card-body space-y-3 h-full">
+          <h5 class="title">Reviews</h5>
+          <ul
+            class="border-base-content/25 divide-base-content/25 divide-y-[1px] space-y-2"
+          >
+            @for (
+              review of reviews?.results;
+              track $index;
+              let first = $first
+            ) {
+              <li [class.pt-2]="!first">
+                <div class="flex flex-col px-4">
+                  <div class="flex justify-between">
+                    <div class="flex flex-row gap-2">
+                      <app-avatar [src]="review.reviewedBy.avatar" size="md" />
+                      <div>
+                        <p class="font-semibold">
+                          {{ review.reviewedBy.name }}
+                          {{ review.reviewedBy.lastName }}
+                        </p>
+                        <small class="text-gray-500">{{
+                          review.createdAt | date
+                        }}</small>
+                      </div>
+                    </div>
+                    <div>
+                      <span
+                        class="badge badge-secondary badge-soft rounded-full"
+                      >
+                        <span class="font-semibold text-sm">{{
+                          review.rate
+                        }}</span>
+                        <span class="icon-[tabler--star-filled] size-3"></span>
+                      </span>
+                    </div>
                   </div>
+                  <p class="text-sm text-gray-500 pt-2">{{ review.comment }}</p>
                 </div>
-                <div>
-                  <span class="badge badge-secondary badge-soft rounded-full">
-                    <span class="font-semibold text-sm">{{ review.rate }}</span>
-                    <span class="icon-[tabler--star-filled] size-3"></span>
-                  </span>
-                </div>
-              </div>
-              <p class="text-sm text-gray-500 pt-2">{{ review.comment }}</p>
-            </div>
-          </li>
-          }@empty {
-          <h6 class="text-center text-lg">¡No hay comentarios!</h6>
-          }
-        </ul>
+              </li>
+            } @empty {
+              <h6 class="text-center text-lg">¡No hay comentarios!</h6>
+            }
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
 
-<ng-template #chats>
-  <div class="h-72 overflow-auto">
-    <div class="card">
-      <div class="card-body h-full">
-        <h5 class="title">Mis conversaciones</h5>
-        <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
-          <!-- @for (room of user.rooms; track $index) {
+  <ng-template #chats>
+    <div class="h-72 overflow-auto">
+      <div class="card">
+        <div class="card-body h-full">
+          <h5 class="title">Mis conversaciones</h5>
+          <ul class="divide-base-content/25 divide-y *:py-3 mt-2">
+            <!-- @for (room of user.rooms; track $index) {
           <li class="flex items-center justify-between">
             <div class="flex items-center gap-1">
               <app-avatar [src]="room.members[0].avatar" size="sm" />
@@ -240,11 +243,10 @@
           }@empty {
           <h6 class="text-center text-lg">¡Haz tu primera consulta!</h6>
           } -->
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</ng-template>
-<!-- <span class="icon-[tabler--star-filled]"></span> -->
-
+  </ng-template>
+  <!-- <span class="icon-[tabler--star-filled]"></span> -->
 }

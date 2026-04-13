@@ -83,6 +83,14 @@ export const routes: Routes = [
             (m) => m.PrivacyPoliciesComponent
           ),
       },
+      {
+        path: RoutesEnum.FAQ,
+        title: RoutesTitlesEnum.FAQ,
+        loadComponent: () =>
+          import('./pages/landing/faq/faq.component').then(
+            (m) => m.FaqComponent
+          ),
+      },
     ],
   },
   {
@@ -188,6 +196,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/dashboard/legal/legal.component').then(
             (m) => m.LegalComponent
+          ),
+      },
+      {
+        path: RoutesEnum.Planes,
+        title: RoutesTitlesEnum.Planes,
+        loadComponent: () =>
+          import('./pages/dashboard/planes/planes.component').then(
+            (m) => m.PlanesComponent
           ),
       },
     ],

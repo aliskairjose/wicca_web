@@ -20,6 +20,7 @@ export class LegalComponent implements OnInit {
   userPoliciesForm!: FormGroup;
   advisorPoliciesForm!: FormGroup;
   privacyPoliciesForm!: FormGroup;
+  faqForm!: FormGroup;
 
   legals = signal<LegalInterface[]>([]);
 
@@ -31,6 +32,7 @@ export class LegalComponent implements OnInit {
     userPolicies: () => this._onSaveUserPolicies(),
     advisorPolicies: () => this._onSaveAdvisorPolicies(),
     privacyPolicies: () => this._onSavePrivacyPolicies(),
+    faq: () => this._onSaveFAQ(),
   }
 
   ngOnInit(): void {
@@ -42,6 +44,9 @@ export class LegalComponent implements OnInit {
       content: ['']
     });
     this.privacyPoliciesForm = this.#fb.group({
+      content: ['']
+    });
+    this.faqForm = this.#fb.group({
       content: ['']
     });
   }
@@ -80,6 +85,13 @@ export class LegalComponent implements OnInit {
       : this._create({ ...this.advisorPoliciesForm.value, type: LegalEnum.AdvisorPolicies });
   }
 
+  private _onSaveFAQ(): void {
+    const exist = this.legals().find(legal => legal.type === LegalEnum.FAQ);
+    (exist !== undefined)
+      ? this._update(exist._id, this.faqForm.value.content)
+      : this._create({ ...this.faqForm.value, type: LegalEnum.FAQ });
+  }
+
   private _update(id: string, content: string): void {
     this.#service.update(id, { content }).subscribe(() => this._loadData());
   }
@@ -94,6 +106,7 @@ export class LegalComponent implements OnInit {
 		const userPolicies = res.find(legal => legal.type === LegalEnum.UserPolicies);
 		const advisorPolicies = res.find(legal => legal.type === LegalEnum.AdvisorPolicies);
 		const privacyPolicies = res.find(legal => legal.type === LegalEnum.PrivacyPolicies);
+		const faq = res.find(legal => legal.type === LegalEnum.FAQ);
 
 		if (userPolicies) {
 			this.userPoliciesForm.patchValue({ content: userPolicies.content });
@@ -103,6 +116,9 @@ export class LegalComponent implements OnInit {
 		}
 		if (privacyPolicies) {
 			this.privacyPoliciesForm.patchValue({ content: privacyPolicies.content });
+		}
+		if (faq) {
+			this.faqForm.patchValue({ content: faq.content });
 		}
 	});
   }
