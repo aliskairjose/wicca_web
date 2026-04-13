@@ -130,9 +130,9 @@
   <div class="modal-dialog overlay-open:opacity-100">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">
-          Esta seguro que desea eliminar este plan?
-        </h3>
+        <h5 class="modal-title">
+          Eliminar plan {{plan()?.amount | currency}} + bono?
+        </h5>
         <button
           type="button"
           class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
@@ -143,7 +143,7 @@
         </button>
       </div>
       <div class="modal-body">
-       
+       <p>Esta seguro que desea eliminar este plan? esta acción es irreversible.</p>
       </div>
       <div class="modal-footer">
         <button
