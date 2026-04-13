@@ -21,7 +21,7 @@
       <tbody>
         @for (plan of planes; track $index) {
         <tr>
-          <td class="text-nowrap">{{ $index + 1 }}</td>
+          <td class="text-nowrap">00{{ $index + 1 }}</td>
           <td class="text-nowrap">{{ plan.amount | currency }}</td>
           <td class="text-nowrap">{{ plan.bonus | currency }}</td>
           <td class="text-nowrap">
