@@ -16,6 +16,7 @@
           <th class="font-bold">#</th>
           <th class="font-bold">Monto</th>
           <th class="font-bold">Bono</th>
+          <th class="font-bold">Estado</th>
           <th class="font-bold">Creado el</th>
           <th class="font-bold">Actualizado el</th>
           <th class="font-bold"></th>
@@ -27,15 +28,31 @@
             <td class="text-nowrap">{{ $index + 1 }}</td>
             <td class="text-nowrap">{{ plan.amount | currency }}</td>
             <td class="text-nowrap">{{ plan.bonus | currency }}</td>
+            <td class="text-nowrap">
+              <app-badge
+                [text]="isActive ? 'Activo' : 'Inactivo'"
+                size="sm"
+                [theme]="'info'"
+                [outline]="true"
+              />
+            </td>
             <td class="text-nowrap">{{ plan.createdAt | date }}</td>
             <td class="text-nowrap">{{ plan.updatedAt | date }}</td>
-            <td>
+            <td class="space-x-2">
               <button
                 class="btn btn-square btn-outline btn-primary btn-sm"
                 aria-label="Action button"
                 (click)="openModal(true, $index)"
               >
                 <span class="icon-[tabler--pencil] size-5"></span>
+              </button>
+
+              <button
+                class="btn btn-square btn-outline btn-error btn-sm"
+                aria-label="Action button"
+                (click)="openModal(true, $index)"
+              >
+                <span class="icon-[tabler--trash] size-5"></span>
               </button>
             </td>
           </tr>
@@ -66,7 +83,29 @@
           <span class="icon-[tabler--x] size-4"></span>
         </button>
       </div>
-      <div class="modal-body"></div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <app-input
+            [isSubmitted]="isSubmited()"
+            [control]="f['amount']"
+            formControlName="amount"
+            label="Monto"
+            type="number"
+          />
+          <app-input
+            [isSubmitted]="isSubmited()"
+            [control]="f['bonus']"
+            formControlName="bonus"
+            label="Bono"
+            type="number"
+          />
+          <app-switch
+            text="Activo"
+            (onChange)="onChange($event)"
+            [isChecked]="isActive"
+          />
+        </form>
+      </div>
       <div class="modal-footer">
         <button
           type="button"
@@ -75,7 +114,7 @@
         >
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary" (click)="closeModal()">
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">
           {{ isEdit() ? "Actualizar" : "Guardar" }}
         </button>
       </div>

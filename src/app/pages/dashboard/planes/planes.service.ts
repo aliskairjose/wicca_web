@@ -23,7 +23,11 @@ export class PlanesService {
   }
 
   update(id: string, plan: Partial<PlanInterface>): Observable<PlanInterface> {
-    return this.http.put<PlanInterface>(AppConfig.baseUrl(`${Api.Planes}/${id}`), plan);
+    return this.http.patch<PlanInterface>(AppConfig.baseUrl(`${Api.Planes}/${id}`), plan);
+  }
+
+  delete(id: string): Observable<PlanInterface> {
+    return this.http.delete<PlanInterface>(AppConfig.baseUrl(`${Api.Planes}/${id}`));
   }
 
 }
