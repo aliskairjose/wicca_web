@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Api } from '@shared/apis';
 import { AppConfig } from '@shared/classes/app.config';
 import { PaginationInterface, ParamsInterface, ResponseInterface, ReviewInterface } from '@shared/interfaces';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

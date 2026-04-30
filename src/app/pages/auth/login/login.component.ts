@@ -16,17 +16,16 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class LoginComponent {
 
-  form!: FormGroup;
   #fb = inject(FormBuilder);
-
   #store = inject(Store);
   #router = inject(Router);
   #toastService = inject(ToastService);
   #socketService = inject(SocketService);
 
-  ngOnInit(): void {
-    this._loadForm();
-  }
+  form: FormGroup = this.#fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
 
   get f() {
     return this.form.controls;
@@ -44,10 +43,4 @@ export class LoginComponent {
     });
   }
 
-  private _loadForm(): void {
-    this.form = this.#fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-    });
-  }
 }

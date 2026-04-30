@@ -23,7 +23,6 @@ export class PaymentState {
   @Action(PaymentActions.List)
   list(ctx: StateContext<PaymentStateModel>, { payload, pagination }: PaymentActions.List) {
     payload ??= {};
-    let state = ctx.getState();
     return this.#service
       .list(payload, pagination)
       .pipe(

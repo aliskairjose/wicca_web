@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaymentInterface } from './interfaces/payment.interface';
@@ -14,7 +14,10 @@ export class PaymentsService {
   constructor(private readonly http: HttpClient) { }
 
   list(httpParams: ParamsInterface, pagination: PaginationInterface): Observable<ResponseInterface<PaymentInterface>> {
-    return this.http.get<ResponseInterface<PaymentInterface>>(AppConfig.baseUrl(Api.Payments));
+    let params = new HttpParams();
+    Object.entries(httpParams).forEach(([k, v]) => (params = params.set(k, v)));
+    Object.entries(pagination).forEach(([k, v]) => (params = params.set(k, v)));
+    return this.http.get<ResponseInterface<PaymentInterface>>(AppConfig.baseUrl(Api.Payments), { params });
   }
 
 }

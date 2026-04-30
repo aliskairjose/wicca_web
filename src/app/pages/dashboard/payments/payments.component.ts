@@ -33,13 +33,24 @@ export class PaymentsComponent {
     this.getData();
   }
 
-  private async getData() {
+  onChangeTable(e: any): void {
+    this.queryParams['search'] = e.term;
+    console.log(e.term);
+    this.pagination = e.pagination();
+    this.dispatch();
+  }
+
+  private async dispatch() {
     await firstValueFrom(this.#store.dispatch(new PaymentActions.List(this.queryParams, this.pagination)));
+    this.getData();
+  }
 
-    const { results, metadata } = this.#store.selectSnapshot(PaymentSelectors.payments)!;
-    this.payments.set(results);
-    this.metadata.set(metadata);
-
+  private async getData() {
+    this.#store.selectOnce(PaymentSelectors.payments).subscribe(data => {
+      (!data) && this.dispatch();
+      this.payments.set(data!.results);
+      this.metadata.set(data!.metadata);
+    });
   }
 
 }

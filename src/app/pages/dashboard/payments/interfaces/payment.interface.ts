@@ -3,11 +3,11 @@ import { PaymentTypeEnum } from "../enums/payment-type.enum";
 
 export interface PaymentInterface {
   _id: string;
-  stripeId?: string;
-  stripeUnixDate?: number;
+  user: Partial<UserInterface>;
+  reference: string;
   amount: number;
   currency: string;
-  description: PaymentTypeEnum;
+  paymentType: string;
+  transactionType: string;
   createdAt: Date;
-  user: Partial<UserInterface>;
 }
