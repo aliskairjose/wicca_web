@@ -5,7 +5,7 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
     "./node_modules/flyonui/dist/js/*.js",
-    "./node_modules/notyf/**/*.js",
+    "./node_modules/notyf/notyf.min.js",
   ],
   theme: {
     extend: {},

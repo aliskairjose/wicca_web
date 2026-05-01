@@ -14,7 +14,7 @@ export class ToastService {
    * @param {ToastTypeEnum} [type=ToastTypeEnum.Success]
    * @memberof ToastService
    */
-  show(message: string, type: ToastTypeEnum = ToastTypeEnum.Success): void {
+  show(message: string, type = ToastTypeEnum.Success): void {
     this.notyf = new Notyf({
       duration: 3000,
       ripple: true,

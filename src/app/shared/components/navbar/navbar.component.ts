@@ -1,9 +1,9 @@
-import { Component, inject, Signal } from '@angular/core';
-import { ButtonComponent } from '../button/button.component';
+import { Component, inject, signal } from '@angular/core';
 import { RoleEnum, RoutesEnum } from '@shared/enums';
 import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
 import { Store } from '@ngxs/store';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +15,16 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 export class NavbarComponent {
   #router = inject(Router);
   #store = inject(Store);
+
+  isHomePage = signal<boolean>(true);
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.isHomePage.set(event.urlAfterRedirects === '/');
+    });
+  }
 
   goTo(): void {
     const route = this._isAuthorized()
