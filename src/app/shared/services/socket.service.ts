@@ -13,7 +13,10 @@ export class SocketService {
 
   constructor() {
     this.#socket = io(environment.socket, {
+      transports: ['websocket'],
       autoConnect: false,
+      withCredentials: true,
+      query: { source: 'web' },
       auth: { token: this.#token() },
     });
   }
