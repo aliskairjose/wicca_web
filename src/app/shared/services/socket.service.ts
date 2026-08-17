@@ -9,22 +9,25 @@ import { AuthSelectors } from 'src/app/pages/auth/store/auth.selectors';
 })
 export class SocketService {
   #socket: Socket;
-  #token = inject(Store).selectSignal(AuthSelectors.token);
+  // #token = inject(Store).selectSignal(AuthSelectors.token);
+  #store = inject(Store);
+  #token: string | null = null;
 
   constructor() {
+    this.#token = this.#store.selectSnapshot(AuthSelectors.token);
     this.#socket = io(environment.socket, {
       transports: ['websocket'],
       autoConnect: false,
       withCredentials: true,
       query: { source: 'web' },
-      auth: { token: this.#token() },
+      auth: { token: this.#token },
     });
   }
 
 
   connect(): void {
     try {
-      if (this.#token()) {
+      if (this.#token) {
         this.#socket.connect();
       }
     } catch (error) {

@@ -39,15 +39,4 @@ export class AuthState {
       })
     );
   }
-  // @Action(AuthActions.Register)
-  // register(ctx: StateContext<AuthStateModel>, action: AuthActions.Register) {
-  //   return this.#authService.register(action.payload).pipe(
-  //     tap(() => {
-  //       ctx.setState({
-  //         token: null,
-  //         user: null,
-  //       });
-  //     })
-  //   );
-  // }
 }

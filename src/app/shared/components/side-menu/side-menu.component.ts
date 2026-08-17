@@ -3,8 +3,9 @@ import { Component, inject, Inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { MessageEnum } from '@shared/enums';
-import { ToastService } from '@shared/services';
+import { SocketService, ToastService } from '@shared/services';
 import { HSOverlay } from 'flyonui/flyonui';
+import { Socket } from 'socket.io-client';
 import { AuthActions } from 'src/app/pages/auth/store/auth.actions';
 
 @Component({
@@ -16,16 +17,17 @@ import { AuthActions } from 'src/app/pages/auth/store/auth.actions';
 })
 export class SideMenuComponent {
   modal: any;
-
+  #socketService = inject(SocketService);
   #store = inject(Store);
   #router = inject(Router);
   #toastService = inject(ToastService);
 
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor(@Inject(DOCUMENT) private document: Document) { }
 
   logOut() {
     this.modal.close();
     this.#store.dispatch(new AuthActions.Logout()).subscribe(() => {
+      this.#socketService.disconnect();
       this.#toastService.show(MessageEnum.GoodBye);
       this.#router.navigate([''])
     });
